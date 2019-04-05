@@ -40,7 +40,7 @@ export default class login extends Component {
     this.signUp = this.signUp.bind(this);
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   handleInputChange(event) {
     const target = event.target;
@@ -58,32 +58,13 @@ export default class login extends Component {
 
   logIn(e) {
     e.preventDefault();
-    console.log("li");
 
     const email = this.state.user;
     const password = this.state.pass;
-
-    console.log(email);
-    console.log(password);
-
-    // auth.onAuthStateChanged(firebaseUser => {
-    //   console.log("login " + JSON.stringify(firebaseUser));
-    //   if (firebaseUser) {
-    //     this.setState({
-    //       isAuth: true
-    //     });
-    //   } else {
-    //     this.setState({
-    //       isAuth: false
-    //     });
-    //   }
-    // });
-
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(user => {
-        console.log(user);
         this.setState({
           isAuth: true
         });
@@ -104,19 +85,26 @@ export default class login extends Component {
     const email = this.state.sEmail;
     const password = this.state.sPassword1;
 
-    console.log(email);
-    console.log(password);
-
-    console.log("su");
-
     const promise = firebase
       .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .catch(function(error) {
+      .createUserWithEmailAndPassword(email, password).then(data => {
+
+
+        const uid = data.user.uid;
+
+        //TODO: save user's name, uid, and other credentials to DB
+
+        if (data.additionalUserInfo.isNewUser) {
+          //new user
+          //TODO: Show a welcome message for 3 seconds
+          //send user to preference page
+        }
+
+      })
+      .catch((error) => {
         // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // ...
+        //TODO: Show the error to the user why sign up failed
+
       });
 
     promise.catch(e => console.log(e));
@@ -124,7 +112,7 @@ export default class login extends Component {
 
   componentWillUnmount() {
     console.log("will unmount");
-    auth.onAuthStateChanged(firebaseUser => {});
+    auth.onAuthStateChanged(firebaseUser => { });
   }
 
   render() {
@@ -168,6 +156,21 @@ export default class login extends Component {
                 </Row>
                 <Row>
                   <Col>
+                    <Form.Group controlId="sCountry">
+                      <Form.Label>Country</Form.Label>
+                      <Form.Control
+                        as="select"
+                        placeholder="Select Country"
+                        value={this.state.sState || ""}
+                        onChange={this.handleInputChange}
+                      >
+                        <option>Australia</option>
+                        <option>United States</option>
+                        <option>Others</option>
+                      </Form.Control>
+                    </Form.Group>
+                  </Col>
+                  <Col>
                     <Form.Group controlId="sState">
                       <Form.Label>State</Form.Label>
                       <Form.Control
@@ -178,6 +181,7 @@ export default class login extends Component {
                       />
                     </Form.Group>
                   </Col>
+
                   <Col>
                     <Form.Group controlId="sCity">
                       <Form.Label>City</Form.Label>
@@ -252,46 +256,46 @@ export default class login extends Component {
             </Card.Body>
           </Card>
         ) : (
-          <Card style={{ width: "24rem" }} className="login-card">
-            <Card.Body>
-              <Card.Title>Login</Card.Title>
-              <Form onSubmit={this.logIn}>
-                <Form.Group controlId="user">
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="Enter email"
-                    value={this.state.user || ""}
-                    onChange={this.handleInputChange}
-                  />
-                </Form.Group>
-                <Form.Group controlId="pass">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Password"
-                    value={this.state.pass || ""}
-                    onChange={this.handleInputChange}
-                  />
-                </Form.Group>
-                <Button variant="primary" type="submit" block>
-                  Login
+            <Card style={{ width: "24rem" }} className="login-card">
+              <Card.Body>
+                <Card.Title>Login</Card.Title>
+                <Form onSubmit={this.logIn}>
+                  <Form.Group controlId="user">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control
+                      type="email"
+                      placeholder="Enter email"
+                      value={this.state.user || ""}
+                      onChange={this.handleInputChange}
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="pass">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Password"
+                      value={this.state.pass || ""}
+                      onChange={this.handleInputChange}
+                    />
+                  </Form.Group>
+                  <Button variant="primary" type="submit" block>
+                    Login
                 </Button>
-              </Form>
+                </Form>
 
-              <Button
-                variant="link"
-                className="sl-btn"
-                onClick={this.toggleMode}
-              >
-                Sign Up
+                <Button
+                  variant="link"
+                  className="sl-btn"
+                  onClick={this.toggleMode}
+                >
+                  Sign Up
               </Button>
-              <Button variant="link" className="fp-btn">
-                Forgot Password
+                <Button variant="link" className="fp-btn">
+                  Forgot Password
               </Button>
-            </Card.Body>
-          </Card>
-        )}
+              </Card.Body>
+            </Card>
+          )}
       </div>
     );
   }
