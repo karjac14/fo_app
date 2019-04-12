@@ -30,6 +30,21 @@ export function logIn(email, password) {
   };
 }
 
+export function signUp(newUser) {
+  return function(dispatch) {
+
+    let email = newUser.email;
+    let password = newUser.password;
+
+    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // ...
+    });
+  };
+}
+
 export function logOut() {
   return function(dispatch) {
     firebase
@@ -43,3 +58,5 @@ export function logOut() {
       );
   };
 }
+
+

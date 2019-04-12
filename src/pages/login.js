@@ -11,7 +11,7 @@ import propTypes from "prop-types";
 import "../styles/login.scss";
 
 import { connect } from 'react-redux';
-import { logIn } from '../actions/authActions';
+import { logIn, signUp } from '../actions/authActions';
 
 
 
@@ -20,8 +20,7 @@ class login extends Component {
     super(props);
     const queries = queryString.parse(this.props.location.search);
     this.state = {
-      isSignUpMode: queries.signup,
-      isAuth: false
+      isSignUpMode: queries.signup
     };
 
     this.toggleMode = this.toggleMode.bind(this);
@@ -34,10 +33,8 @@ class login extends Component {
 
 
   handleInputChange(event) {
-    const target = event.target;
-    const value = target.value;
-    const name = target.id;
-
+    const value = event.target.value;
+    const name = event.target.id;
     this.setState({
       [name]: value
     });
@@ -53,13 +50,23 @@ class login extends Component {
     const password = this.state.pass;
     this.props.logIn(email, password);
 
-    //TODO: Add some spinner
+    //TODO: Handle errors (like user already exist)
   }
 
   signUp(e) {
     e.preventDefault();
-    const email = this.state.sEmail;
-    const password = this.state.sPassword1;
+
+    const pick = (obj, ...args) => ({
+      ...args.reduce((res, key) => ({ ...res, [key]: obj[key] }), { })
+    })
+    
+    let newUser = pick(this.state, 'f_name', 'l_name', 'email', 'password');
+
+    console.log(newUser);
+
+    //TODO: Validate data (password retyped correctly)
+
+    // this.props.signUp(newUser);
 
     // ADD SIGN UP Action here
   }
@@ -80,25 +87,23 @@ class login extends Component {
               <Form onSubmit={this.signUp}>
                 <Row>
                   <Col>
-                    <Form.Group controlId="sFname">
+                    <Form.Group controlId="f_name">
                       <Form.Label>First name</Form.Label>
                       <Form.Control
-                        name="sFname"
                         type="text"
                         placeholder="First name"
-                        value={this.state.sFname || ""}
+                        value={this.state.f_name || ""}
                         onChange={this.handleInputChange}
                       />
                     </Form.Group>
                   </Col>
                   <Col>
-                    <Form.Group controlId="sLname">
+                    <Form.Group controlId="l_name">
                       <Form.Label>Last name</Form.Label>
                       <Form.Control
-                        name="sLname"
                         type="text"
                         placeholder="Last name"
-                        value={this.state.sLname || ""}
+                        value={this.state.l_name || ""}
                         onChange={this.handleInputChange}
                       />
                     </Form.Group>
@@ -192,17 +197,17 @@ class login extends Component {
                   Sign Up
                 </Button>
               </Form>
-
+              <div className="button-container">
+              <span>Already have an account?</span>
               <Button
                 variant="link"
                 className="sl-btn"
                 onClick={this.toggleMode}
               >
-                Already have an account? Login here
+                Login here
               </Button>
-              <Button variant="link" className="fp-btn">
-                Forgot Password
-              </Button>
+              </div>
+              
             </Card.Body>
           </Card>
         ) : (
@@ -232,7 +237,7 @@ class login extends Component {
                     Login
                 </Button>
                 </Form>
-
+                <div className="button-container">
                 <Button
                   variant="link"
                   className="sl-btn"
@@ -243,6 +248,7 @@ class login extends Component {
                 <Button variant="link" className="fp-btn">
                   Forgot Password
               </Button>
+              </div>
               </Card.Body>
             </Card>
           )}
@@ -264,4 +270,4 @@ function mapStateToProps(state) {
   return { isAuth: auth.isAuth }
 }
 
-export default connect(mapStateToProps, { logIn })(login);
+export default connect(mapStateToProps, { logIn, signUp })(login);
