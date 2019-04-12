@@ -6,33 +6,24 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import queryString from "query-string";
 import { Redirect } from "react-router-dom";
+import propTypes from "prop-types";
 
 import "./login.scss";
 
 import * as firebase from "firebase";
 
-const auth = firebase.auth();
+import { connect } from 'react-redux';
+import { logIn } from '../actions/authActions';
 
-export default class login extends Component {
+
+
+class login extends Component {
   constructor(props) {
     super(props);
     const queries = queryString.parse(this.props.location.search);
     this.state = {
       isSignUpMode: queries.signup
     };
-
-    // auth.onAuthStateChanged(firebaseUser => {
-    //   console.log("login " + JSON.stringify(firebaseUser));
-    //   if (firebaseUser) {
-    //     this.setState({
-    //       isAuth: true
-    //     });
-    //   } else {
-    //     this.setState({
-    //       isAuth: false
-    //     });
-    //   }
-    // });
 
     this.toggleMode = this.toggleMode.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -41,6 +32,7 @@ export default class login extends Component {
   }
 
   componentDidMount() { }
+
 
   handleInputChange(event) {
     const target = event.target;
@@ -61,23 +53,9 @@ export default class login extends Component {
 
     const email = this.state.user;
     const password = this.state.pass;
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(user => {
-        this.setState({
-          isAuth: true
-        });
-      })
-      .catch(error => {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        this.setState({
-          isAuth: false
-        });
-        // ...
-      });
+
+    this.props.logIn(email, password);
+
   }
 
   signUp(e) {
@@ -108,11 +86,6 @@ export default class login extends Component {
       });
 
     promise.catch(e => console.log(e));
-  }
-
-  componentWillUnmount() {
-    console.log("will unmount");
-    auth.onAuthStateChanged(firebaseUser => { });
   }
 
   render() {
@@ -300,3 +273,17 @@ export default class login extends Component {
     );
   }
 }
+
+login.propTypes = {
+  logIn: propTypes.func.isRequired,
+  location: propTypes.object,
+  isAuth: propTypes.bool,
+  user: propTypes.object,
+};
+
+const mapStateToProps = state => ({
+  isAuth: state.isAuth,
+  user: state.user
+});
+
+export default connect(mapStateToProps, { logIn })(login);

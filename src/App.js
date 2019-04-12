@@ -4,14 +4,15 @@ import landing from "./pages/landing";
 import about from "./pages/about";
 import login from "./pages/login";
 import myMeals from "./pages/myMeals";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Provider } from 'react-redux';
+import store from './store';
 
-import "./App.scss";
 
 class App extends Component {
   render() {
     return (
-      <Router>
+      <Provider store={store}><Router>
         <div className="App">
           <Nav />
           <Switch>
@@ -21,7 +22,7 @@ class App extends Component {
             <Route exact path="/myMeals" component={myMeals} />
           </Switch>
         </div>
-      </Router>
+      </Router></Provider>
     );
   }
 }
