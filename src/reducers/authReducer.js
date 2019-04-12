@@ -6,12 +6,21 @@ const initialState = {
 }
 
 const authReducer = function (state = initialState, action) {
+
+    console.log(action);
+
     switch (action.type) {
         case 'LOG_IN': {
             return {
                 ...state,
                 user: action.payload.user,
                 isAuth: true
+            }
+        }
+        case 'LOG_OUT': {
+            return {
+                ...state,
+                isAuth: false
             }
         }
         default:

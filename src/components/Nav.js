@@ -5,50 +5,34 @@ import { Redirect } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import * as firebase from "firebase";
 import { LinkContainer } from "react-router-bootstrap";
+import { connect } from 'react-redux';
+import { logOut } from '../actions/authActions';
+import propTypes from "prop-types";
+
 
 // Initialize Firebase
-var config = {
-  apiKey: "AIzaSyD3kLueJdPx0Ckt2lCpm8MmGjauWzE8cs8",
-  authDomain: "fo-db-e5cab.firebaseapp.com",
-  databaseURL: "https://fo-db-e5cab.firebaseio.com",
-  projectId: "fo-db-e5cab",
-  storageBucket: "fo-db-e5cab.appspot.com",
-  messagingSenderId: "763871220167"
-};
-firebase.initializeApp(config);
+
 const auth = firebase.auth();
 
 class NavFo extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      isAuth: true
-    };
-
+    this.state = {};
     this.logout = this.logout.bind(this);
+  }
 
-    //TODO: move this auth method later on a better location, something that initilized first in the entire app
-    auth.onAuthStateChanged(firebaseUser => {
-      if (firebaseUser) {
-        this.setState({
-          isAuth: true
-        });
-      } else {
-        this.setState({
-          isAuth: false
-        });
-      }
-    });
+  componentDidUpdate(prevProps) {
+    if (!this.props.isAuth && prevProps.isAuth) {
+      this.props.history.push("/");
+    }
   }
 
   logout() {
-    auth.signOut();
-    this.props.history.push("/");
+    this.props.logOut();
   }
 
   render() {
-    const isAuth = this.state.isAuth;
+    const isAuth = this.props.isAuth;
 
     let rightGroupLinks;
 
@@ -88,4 +72,15 @@ class NavFo extends React.Component {
   }
 }
 
-export default withRouter(NavFo);
+NavFo.propTypes = {
+  logOut: propTypes.func.isRequired,
+  isAuth: propTypes.bool,
+};
+
+function mapStateToProps(state) {
+  const { auth } = state
+  return { isAuth: auth.isAuth }
+}
+
+export default withRouter(connect(mapStateToProps, { logOut })(NavFo));
+

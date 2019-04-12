@@ -10,8 +10,6 @@ import propTypes from "prop-types";
 
 import "../styles/login.scss";
 
-import * as firebase from "firebase";
-
 import { connect } from 'react-redux';
 import { logIn } from '../actions/authActions';
 
@@ -51,12 +49,11 @@ class login extends Component {
 
   logIn(e) {
     e.preventDefault();
-
     const email = this.state.user;
     const password = this.state.pass;
-
     this.props.logIn(email, password);
 
+    //TODO: Add some spinner
   }
 
   signUp(e) {
@@ -64,29 +61,7 @@ class login extends Component {
     const email = this.state.sEmail;
     const password = this.state.sPassword1;
 
-    const promise = firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password).then(data => {
-
-
-        const uid = data.user.uid;
-
-        //TODO: save user's name, uid, and other credentials to DB
-
-        if (data.additionalUserInfo.isNewUser) {
-          //new user
-          //TODO: Show a welcome message for 3 seconds
-          //send user to preference page
-        }
-
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        //TODO: Show the error to the user why sign up failed
-
-      });
-
-    promise.catch(e => console.log(e));
+    // ADD SIGN UP Action here
   }
 
   render() {
