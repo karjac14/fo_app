@@ -8,7 +8,7 @@ import queryString from "query-string";
 import { Redirect } from "react-router-dom";
 import propTypes from "prop-types";
 
-import "./login.scss";
+import "../styles/login.scss";
 
 import * as firebase from "firebase";
 
@@ -22,7 +22,8 @@ class login extends Component {
     super(props);
     const queries = queryString.parse(this.props.location.search);
     this.state = {
-      isSignUpMode: queries.signup
+      isSignUpMode: queries.signup,
+      isAuth: false
     };
 
     this.toggleMode = this.toggleMode.bind(this);
@@ -89,7 +90,8 @@ class login extends Component {
   }
 
   render() {
-    if (this.state.isAuth === true) {
+
+    if (this.props.isAuth === true) {
       return <Redirect to="/myMeals" />;
     }
 
@@ -281,9 +283,10 @@ login.propTypes = {
   user: propTypes.object,
 };
 
-const mapStateToProps = state => ({
-  isAuth: state.isAuth,
-  user: state.user
-});
+function mapStateToProps(state) {
+
+  const { auth } = state
+  return { isAuth: auth.isAuth }
+}
 
 export default connect(mapStateToProps, { logIn })(login);

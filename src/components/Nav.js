@@ -4,6 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import { Redirect } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import * as firebase from "firebase";
+import { LinkContainer } from "react-router-bootstrap";
 
 // Initialize Firebase
 var config = {
@@ -61,8 +62,12 @@ class NavFo extends React.Component {
     } else {
       rightGroupLinks = (
         <Nav>
-          <Nav.Link href="/login">Login</Nav.Link>
-          <Nav.Link href="/login?signup=1">Sign up</Nav.Link>
+          <LinkContainer to="/login">
+          <Nav.Link>Login</Nav.Link>
+          </LinkContainer>
+          <LinkContainer to="/login?signup=1">
+          <Nav.Link>Sign up</Nav.Link>
+          </LinkContainer>
         </Nav>
       );
     }
