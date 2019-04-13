@@ -64,12 +64,11 @@ class login extends Component {
       this.setState({ validated: true });
     }
 
-
-    // e.preventDefault();
-
     if (this.state.password !== this.state.password2) {
       this.setState({ errorPassword: true });
       return;
+    } else {
+      this.setState({ errorPassword: false });
     }
 
     const pick = (obj, ...args) => ({
@@ -203,11 +202,14 @@ class login extends Component {
                   placeholder="Password"
                   value={this.state.password || ""}
                   onChange={this.handleInputChange}
+                  minLength="6"
+                  isInvalid={errorPassword}
                   required
                 />
-                <Form.Control.Feedback type="invalid">
-                  Password does not match
-                  </Form.Control.Feedback>
+                {errorPassword ?
+                  <small id="" className="text-danger">
+                    Password does not match</small>
+                  : ''}
               </Form.Group>
               <Form.Group controlId="password2">
                 <Form.Label>Confirm Password</Form.Label>
@@ -217,6 +219,8 @@ class login extends Component {
                   value={this.state.password2 || ""}
                   onChange={this.handleInputChange}
                   isInvalid={errorPassword}
+                  minLength="6"
+                  required
                 />
                 {errorPassword ?
                   <small id="" className="text-danger">
