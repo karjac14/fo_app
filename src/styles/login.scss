@@ -34,3 +34,13 @@
   text-align: center;
   padding-bottom: 20px;
 }
+
+.form-control.is-valid, .was-validated .form-control:valid {
+  background: none;
+  // border-color: #ced4da;
+}
+
+.form-control.is-invalid, .was-validated .form-control:invalid {
+  border-color: #dc3545 !important;
+  background: none;
+}

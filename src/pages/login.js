@@ -20,7 +20,8 @@ class login extends Component {
     super(props);
     const queries = queryString.parse(this.props.location.search);
     this.state = {
-      isSignUpMode: queries.signup
+      isSignUpMode: queries.signup,
+      validated: false
     };
 
     this.toggleMode = this.toggleMode.bind(this);
@@ -54,13 +55,28 @@ class login extends Component {
   }
 
   signUp(e) {
-    e.preventDefault();
+
+
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.setState({ validated: true });
+    }
+
+
+    // e.preventDefault();
+
+    if (this.state.password !== this.state.password2) {
+      this.setState({ errorPassword: true });
+      return;
+    }
 
     const pick = (obj, ...args) => ({
-      ...args.reduce((res, key) => ({ ...res, [key]: obj[key] }), { })
+      ...args.reduce((res, key) => ({ ...res, [key]: obj[key] }), {})
     })
-    
-    let newUser = pick(this.state, 'f_name', 'l_name', 'email', 'password');
+
+    let newUser = pick(this.state, 'f_name', 'l_name', 'email', 'password', 'country', 'state', 'city', 'zip');
 
     console.log(newUser);
 
@@ -77,127 +93,141 @@ class login extends Component {
       return <Redirect to="/myMeals" />;
     }
 
-    let isSignUpMode = this.state.isSignUpMode;
-    return (
-      <div className="login-wrapper">
-        {isSignUpMode ? (
-          <Card style={{ width: "35rem" }} className="login-card">
-            <Card.Body>
-              <Card.Title>Sign Up</Card.Title>
-              <Form onSubmit={this.signUp}>
-                <Row>
-                  <Col>
-                    <Form.Group controlId="f_name">
-                      <Form.Label>First name</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="First name"
-                        value={this.state.f_name || ""}
-                        onChange={this.handleInputChange}
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group controlId="l_name">
-                      <Form.Label>Last name</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Last name"
-                        value={this.state.l_name || ""}
-                        onChange={this.handleInputChange}
-                      />
-                    </Form.Group>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <Form.Group controlId="sCountry">
-                      <Form.Label>Country</Form.Label>
-                      <Form.Control
-                        as="select"
-                        placeholder="Select Country"
-                        value={this.state.sState || ""}
-                        onChange={this.handleInputChange}
-                      >
-                        <option>Australia</option>
-                        <option>United States</option>
-                        <option>Others</option>
-                      </Form.Control>
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group controlId="sState">
-                      <Form.Label>State</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="First name"
-                        value={this.state.sState || ""}
-                        onChange={this.handleInputChange}
-                      />
-                    </Form.Group>
-                  </Col>
+    const { isSignUpMode, validated, errorPassword } = this.state;
 
-                  <Col>
-                    <Form.Group controlId="sCity">
-                      <Form.Label>City</Form.Label>
-                      <Form.Control
-                        name="sCity"
-                        type="text"
-                        placeholder="Last name"
-                        value={this.state.sCity || ""}
-                        onChange={this.handleInputChange}
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group controlId="sZip">
-                      <Form.Label>Zip</Form.Label>
-                      <Form.Control
-                        name="sZip"
-                        type="text"
-                        placeholder="Last name"
-                        value={this.state.sZip || ""}
-                        onChange={this.handleInputChange}
-                      />
-                    </Form.Group>
-                  </Col>
-                </Row>
+    let form;
 
-                <Form.Group controlId="sEmail">
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control
-                    name="sEmail"
-                    type="email"
-                    placeholder="Enter email"
-                    value={this.state.sEmail || ""}
-                    onChange={this.handleInputChange}
-                  />
-                </Form.Group>
-                <Form.Group controlId="sPassword1">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    name="sPassword1"
-                    type="password"
-                    placeholder="Password"
-                    value={this.state.sPassword1 || ""}
-                    onChange={this.handleInputChange}
-                  />
-                </Form.Group>
-                <Form.Group controlId="sPassword2">
-                  <Form.Label>Confirm Password</Form.Label>
-                  <Form.Control
-                    name="sPassword2"
-                    type="password"
-                    placeholder="Confirm Password"
-                    value={this.state.sPassword2 || ""}
-                    onChange={this.handleInputChange}
-                  />
-                </Form.Group>
-                <Button variant="primary" type="submit" block>
-                  Sign Up
+    if (isSignUpMode) {
+      form = (
+        <Card style={{ width: "35rem" }} className="login-card">
+          <Card.Body>
+            <Card.Title>Sign Up</Card.Title>
+            <Form noValidate
+              validated={validated} onSubmit={this.signUp}>
+              <Row>
+                <Col>
+                  <Form.Group controlId="f_name">
+                    <Form.Label>First name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="First name"
+                      value={this.state.f_name || ""}
+                      onChange={this.handleInputChange}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group controlId="l_name">
+                    <Form.Label>Last name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Last name"
+                      value={this.state.l_name || ""}
+                      onChange={this.handleInputChange}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Form.Group controlId="country">
+                    <Form.Label>Country</Form.Label>
+                    <Form.Control
+                      as="select"
+                      placeholder="Select Country"
+                      value={this.state.country || ""}
+                      onChange={this.handleInputChange}
+                      required
+                    >
+                      <option>Australia</option>
+                      <option>United States</option>
+                      <option>Others</option>
+
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group controlId="state">
+                    <Form.Label>State</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder=""
+                      value={this.state.state || ""}
+                      onChange={this.handleInputChange}
+                    />
+                  </Form.Group>
+                </Col>
+
+                <Col>
+                  <Form.Group controlId="city">
+                    <Form.Label>City</Form.Label>
+                    <Form.Control
+                      name="sCity"
+                      type="text"
+                      placeholder=""
+                      value={this.state.city || ""}
+                      onChange={this.handleInputChange}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group controlId="zip">
+                    <Form.Label>Zip</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder=""
+                      value={this.state.zip || ""}
+                      onChange={this.handleInputChange}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <Form.Group controlId="email">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  value={this.state.email || ""}
+                  onChange={this.handleInputChange}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="password">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  value={this.state.password || ""}
+                  onChange={this.handleInputChange}
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  Password does not match
+                  </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group controlId="password2">
+                <Form.Label>Confirm Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Confirm Password"
+                  value={this.state.password2 || ""}
+                  onChange={this.handleInputChange}
+                  isInvalid={errorPassword}
+                />
+                {errorPassword ?
+                  <small id="" className="text-danger">
+                    Password does not match</small>
+                  : ''}
+              </Form.Group>
+              <Button variant="primary" type="submit" block>
+                Sign Up
                 </Button>
-              </Form>
-              <div className="button-container">
+            </Form>
+            <div className="button-container">
               <span>Already have an account?</span>
               <Button
                 variant="link"
@@ -206,52 +236,59 @@ class login extends Component {
               >
                 Login here
               </Button>
-              </div>
-              
-            </Card.Body>
-          </Card>
-        ) : (
-            <Card style={{ width: "24rem" }} className="login-card">
-              <Card.Body>
-                <Card.Title>Login</Card.Title>
-                <Form onSubmit={this.logIn}>
-                  <Form.Group controlId="user">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control
-                      type="email"
-                      placeholder="Enter email"
-                      value={this.state.user || ""}
-                      onChange={this.handleInputChange}
-                    />
-                  </Form.Group>
-                  <Form.Group controlId="pass">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                      type="password"
-                      placeholder="Password"
-                      value={this.state.pass || ""}
-                      onChange={this.handleInputChange}
-                    />
-                  </Form.Group>
-                  <Button variant="primary" type="submit" block>
-                    Login
+            </div>
+
+          </Card.Body>
+        </Card>
+      );
+    } else {
+      form = (
+        <Card style={{ width: "24rem" }} className="login-card">
+          <Card.Body>
+            <Card.Title>Login</Card.Title>
+            <Form onSubmit={this.logIn}>
+              <Form.Group controlId="user">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  value={this.state.user || ""}
+                  onChange={this.handleInputChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="pass">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  value={this.state.pass || ""}
+                  onChange={this.handleInputChange}
+                />
+              </Form.Group>
+              <Button variant="primary" type="submit" block>
+                Login
                 </Button>
-                </Form>
-                <div className="button-container">
-                <Button
-                  variant="link"
-                  className="sl-btn"
-                  onClick={this.toggleMode}
-                >
-                  Sign Up
+            </Form>
+            <div className="button-container">
+              <Button
+                variant="link"
+                className="sl-btn"
+                onClick={this.toggleMode}
+              >
+                Sign Up
               </Button>
-                <Button variant="link" className="fp-btn">
-                  Forgot Password
+              <Button variant="link" className="fp-btn">
+                Forgot Password
               </Button>
-              </div>
-              </Card.Body>
-            </Card>
-          )}
+            </div>
+          </Card.Body>
+        </Card>
+      );
+    }
+
+    return (
+      <div className="login-wrapper">
+        {form}
       </div>
     );
   }
