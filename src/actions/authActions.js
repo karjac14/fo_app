@@ -1,8 +1,9 @@
 import {
-  LOG_IN,
-  LOG_OUT,
-  SIGN_UP,
-  SEND_SIGN_UP_DETAILS
+  LOG_IN_SUCCESS,
+  LOG_OUT_SUCCESS,
+  LOG_IN_FAIL,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_FAIL
 } from "../actions/authTypes";
 import * as firebase from "firebase";
 
@@ -15,44 +16,74 @@ var config = {
   messagingSenderId: "763871220167"
 };
 firebase.initializeApp(config);
+var db = firebase.firestore();
+var auth = firebase.auth();
 
 export function logIn(email, password) {
-  return function(dispatch) {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
+  return function (dispatch) {
+    auth.signInWithEmailAndPassword(email, password)
       .then(user =>
         dispatch({
-          type: LOG_IN,
+          type: LOG_IN_SUCCESS,
           payload: user
         })
-      );
+      ).catch(error => {
+        dispatch({
+          type: LOG_IN_FAIL,
+          payload: error.message
+        })
+      });
   };
 }
 
 export function signUp(newUser) {
-  return function(dispatch) {
+  return function (dispatch) {
 
-    let email = newUser.email;
-    let password = newUser.password;
+    const { f_name, l_name, email, password, country, state, city, zip } = newUser;
 
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // ...
-    });
+    auth.createUserWithEmailAndPassword(email, password)
+      .then(user => {
+
+        //save user's other details to db
+        db.collection("users").add({
+          email,
+          f_name,
+          l_name,
+          country,
+          state,
+          city,
+          zip,
+          uid: user.user.uid,
+          created_date: new Date()
+        })
+          .then(function (docRef) {
+            //TODO: route user to preference page as a new user
+            dispatch({
+              type: SIGN_UP_SUCCESS,
+              payload: true
+            })
+          })
+          .catch(function (error) {
+            //TODO: route user back to sign up page and send error
+            dispatch({
+              type: SIGN_UP_FAIL,
+              payload: error.message
+            })
+          });
+
+      })
+      .catch(function (error) {
+        //TODO: route user back to sign up page and send error
+      });
   };
 }
 
 export function logOut() {
-  return function(dispatch) {
-    firebase
-      .auth()
-      .signOut()
+  return function (dispatch) {
+    auth.signOut()
       .then(() =>
         dispatch({
-          type: LOG_OUT,
+          type: LOG_OUT_SUCCESS,
           payload: true
         })
       );

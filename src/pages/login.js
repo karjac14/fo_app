@@ -30,6 +30,17 @@ class login extends Component {
     this.signUp = this.signUp.bind(this);
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.location.search !== prevProps.location.search) {
+      const queries = queryString.parse(this.props.location.search);
+      if (queries.signup) {
+        this.setState({ isSignUpMode: true });
+      } else {
+        this.setState({ isSignUpMode: false });
+      }
+    }
+  }
+
   componentDidMount() { }
 
 
@@ -56,11 +67,11 @@ class login extends Component {
 
   signUp(e) {
 
+    e.preventDefault();
 
     const form = e.currentTarget;
+    this.setState({ validated: false });
     if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
       this.setState({ validated: true });
     }
 
@@ -77,14 +88,8 @@ class login extends Component {
 
     let newUser = pick(this.state, 'f_name', 'l_name', 'email', 'password', 'country', 'state', 'city', 'zip');
 
-    console.log(newUser);
-
-    //TODO: Validate data (password retyped correctly)
-
-    // this.props.signUp(newUser);
-
-    // ADD SIGN UP Action here
-  }
+    this.props.signUp(newUser);
+  } ß
 
   render() {
 
@@ -300,6 +305,7 @@ class login extends Component {
 
 login.propTypes = {
   logIn: propTypes.func.isRequired,
+  signUp: propTypes.func.isRequired,
   location: propTypes.object,
   isAuth: propTypes.bool,
   user: propTypes.object,

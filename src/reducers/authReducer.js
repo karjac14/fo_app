@@ -1,4 +1,4 @@
-import { LOG_IN, LOG_OUT, SIGN_UP, SEND_SIGN_UP_DETAILS } from '../actions/authTypes';
+import { LOG_IN_SUCCESS, SIGN_UP_SUCCESS, LOG_OUT_SUCCESS, LOG_IN_FAIL, SIGN_UP_FAIL } from '../actions/authTypes';
 
 
 const initialState = {
@@ -7,17 +7,34 @@ const initialState = {
 
 const authReducer = function (state = initialState, action) {
 
-    console.log(action);
-
     switch (action.type) {
-        case 'LOG_IN': {
+        case LOG_IN_SUCCESS: {
             return {
                 ...state,
                 user: action.payload.user,
                 isAuth: true
             }
         }
-        case 'LOG_OUT': {
+        case LOG_IN_FAIL: {
+            return {
+                ...state,
+                isAuth: false
+            }
+        }
+        case SIGN_UP_SUCCESS: {
+            return {
+                ...state,
+                user: action.payload.user,
+                isAuth: true
+            }
+        }
+        case SIGN_UP_FAIL: {
+            return {
+                ...state,
+                isAuth: false
+            }
+        }
+        case LOG_OUT_SUCCESS: {
             return {
                 ...state,
                 isAuth: false
