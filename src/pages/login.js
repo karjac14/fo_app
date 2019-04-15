@@ -11,7 +11,7 @@ import propTypes from "prop-types";
 import "../styles/login.scss";
 
 import { connect } from 'react-redux';
-import { logIn, signUp } from '../actions/authActions';
+import { logIn, signUp } from '../actions/currentUserActions';
 
 
 
@@ -313,8 +313,8 @@ login.propTypes = {
 
 function mapStateToProps(state) {
 
-  const { auth } = state
-  return { isAuth: auth.isAuth }
+  const { currentUser } = state
+  return { isAuth: currentUser.isAuth }
 }
 
 export default connect(mapStateToProps, { logIn, signUp })(login);

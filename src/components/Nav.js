@@ -6,11 +6,13 @@ import { withRouter } from "react-router-dom";
 import * as firebase from "firebase";
 import { LinkContainer } from "react-router-bootstrap";
 import { connect } from 'react-redux';
-import { logOut } from '../actions/authActions';
+import { logOut } from '../actions/currentUserActions';
 import propTypes from "prop-types";
 
 
-// Initialize Firebase
+
+
+
 
 const auth = firebase.auth();
 
@@ -78,8 +80,8 @@ NavFo.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { auth } = state
-  return { isAuth: auth.isAuth }
+  const { currentUser } = state
+  return { isAuth: currentUser.isAuth }
 }
 
 export default withRouter(connect(mapStateToProps, { logOut })(NavFo));

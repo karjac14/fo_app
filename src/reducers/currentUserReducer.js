@@ -1,8 +1,9 @@
-import { LOG_IN_SUCCESS, SIGN_UP_SUCCESS, LOG_OUT_SUCCESS, LOG_IN_FAIL, SIGN_UP_FAIL } from '../actions/authTypes';
+import { LOG_IN_SUCCESS, SIGN_UP_SUCCESS, LOG_OUT_SUCCESS, LOG_IN_FAIL, SIGN_UP_FAIL } from '../actions/currentUserTypes';
 
 
 const initialState = {
     isAuth: false,
+    f_name:''
 }
 
 const authReducer = function (state = initialState, action) {
@@ -11,7 +12,7 @@ const authReducer = function (state = initialState, action) {
         case LOG_IN_SUCCESS: {
             return {
                 ...state,
-                user: action.payload.user,
+                ...action.payload,
                 isAuth: true
             }
         }
@@ -24,7 +25,6 @@ const authReducer = function (state = initialState, action) {
         case SIGN_UP_SUCCESS: {
             return {
                 ...state,
-                user: action.payload.user,
                 isAuth: true
             }
         }
@@ -36,7 +36,6 @@ const authReducer = function (state = initialState, action) {
         }
         case LOG_OUT_SUCCESS: {
             return {
-                ...state,
                 isAuth: false
             }
         }

@@ -4,7 +4,7 @@ import {
   LOG_IN_FAIL,
   SIGN_UP_SUCCESS,
   SIGN_UP_FAIL
-} from "../actions/authTypes";
+} from "./currentUserTypes";
 import * as firebase from "firebase";
 
 var config = {
@@ -16,18 +16,41 @@ var config = {
   messagingSenderId: "763871220167"
 };
 firebase.initializeApp(config);
+
 var db = firebase.firestore();
+var usersRef = db.collection("users");
 var auth = firebase.auth();
+
+
 
 export function logIn(email, password) {
   return function (dispatch) {
     auth.signInWithEmailAndPassword(email, password)
-      .then(user =>
-        dispatch({
-          type: LOG_IN_SUCCESS,
-          payload: user
-        })
-      ).catch(error => {
+      .then(user => {
+
+        let uid = user.user.uid;
+        
+        usersRef.doc(uid).get().then(function(doc) {
+          if (doc.exists) {
+              let user = doc.data();
+              dispatch({
+                type: LOG_IN_SUCCESS,
+                payload: user
+              })
+          } else {
+              // doc.data() will be undefined in this case
+              console.log("No such document!");
+          }
+      }
+
+        
+      ).catch(function(error) {
+          console.log("Error getting document:", error);
+      });
+
+
+        
+    }).catch(error => {
         dispatch({
           type: LOG_IN_FAIL,
           payload: error.message
@@ -44,8 +67,10 @@ export function signUp(newUser) {
     auth.createUserWithEmailAndPassword(email, password)
       .then(user => {
 
+        let uid = user.user.uid;
+
         //save user's other details to db
-        db.collection("users").add({
+        usersRef.doc(uid).set({
           email,
           f_name,
           l_name,
