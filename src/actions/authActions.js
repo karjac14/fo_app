@@ -59,8 +59,7 @@ export function signUp(newUser) {
           .then(function (docRef) {
             //TODO: route user to preference page as a new user
             dispatch({
-              type: SIGN_UP_SUCCESS,
-              payload: true
+              type: SIGN_UP_SUCCESS
             })
           })
           .catch(function (error) {

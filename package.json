@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@mdi/js": "^3.5.95",
     "bootstrap": "^4.3.1",
     "firebase": "^5.9.3",
     "node-sass": "^4.11.0",
@@ -30,6 +31,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@mdi/react": "^1.1.0",
     "eslint-plugin-prettier": "^3.0.1"
   }
 }
