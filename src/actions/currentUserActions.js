@@ -3,7 +3,8 @@ import {
   LOG_OUT_SUCCESS,
   LOG_IN_FAIL,
   SIGN_UP_SUCCESS,
-  SIGN_UP_FAIL
+  SIGN_UP_FAIL,
+  SET_AS_AUTH
 } from "./currentUserTypes";
 import * as firebase from "firebase";
 
@@ -29,28 +30,28 @@ export function logIn(email, password) {
       .then(user => {
 
         let uid = user.user.uid;
-        
-        usersRef.doc(uid).get().then(function(doc) {
+
+        usersRef.doc(uid).get().then(function (doc) {
           if (doc.exists) {
-              let user = doc.data();
-              dispatch({
-                type: LOG_IN_SUCCESS,
-                payload: user
-              })
+            let user = doc.data();
+            dispatch({
+              type: LOG_IN_SUCCESS,
+              payload: user
+            })
           } else {
-              // doc.data() will be undefined in this case
-              console.log("No such document!");
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
           }
-      }
+        }
 
-        
-      ).catch(function(error) {
+
+        ).catch(function (error) {
           console.log("Error getting document:", error);
-      });
+        });
 
 
-        
-    }).catch(error => {
+
+      }).catch(error => {
         dispatch({
           type: LOG_IN_FAIL,
           payload: error.message
@@ -99,6 +100,33 @@ export function signUp(newUser) {
       .catch(function (error) {
         //TODO: route user back to sign up page and send error
       });
+  };
+}
+
+export function setAsAuth(uid) {
+  return function (dispatch) {
+
+    usersRef.doc(uid).get().then(function (doc) {
+      if (doc.exists) {
+        let user = doc.data();
+        dispatch({
+          type: SET_AS_AUTH,
+          payload: user
+        })
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+    }
+
+
+    ).catch(function (error) {
+      console.log("Error getting document:", error);
+    });
+
+
+
+
   };
 }
 

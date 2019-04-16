@@ -1,9 +1,9 @@
-import { LOG_IN_SUCCESS, SIGN_UP_SUCCESS, LOG_OUT_SUCCESS, LOG_IN_FAIL, SIGN_UP_FAIL } from '../actions/currentUserTypes';
+import { LOG_IN_SUCCESS, SIGN_UP_SUCCESS, LOG_OUT_SUCCESS, LOG_IN_FAIL, SIGN_UP_FAIL, SET_AS_AUTH } from '../actions/currentUserTypes';
 
 
 const initialState = {
     isAuth: false,
-    f_name:''
+    f_name: ''
 }
 
 const authReducer = function (state = initialState, action) {
@@ -37,6 +37,13 @@ const authReducer = function (state = initialState, action) {
         case LOG_OUT_SUCCESS: {
             return {
                 isAuth: false
+            }
+        }
+        case SET_AS_AUTH: {
+            return {
+                ...state,
+                ...action.payload,
+                isAuth: true
             }
         }
         default:

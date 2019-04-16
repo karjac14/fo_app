@@ -94,7 +94,7 @@ class login extends Component {
   render() {
 
     if (this.props.isAuth === true) {
-      return <Redirect to="/myMeals" />;
+      return <Redirect to="/my-meals" />;
     }
 
     const { isSignUpMode, validated, errorPassword } = this.state;
