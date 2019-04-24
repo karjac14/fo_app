@@ -1,9 +1,7 @@
 import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import { Redirect } from "react-router-dom";
 import { withRouter } from "react-router-dom";
-import * as firebase from "firebase";
 import { LinkContainer } from "react-router-bootstrap";
 import { connect } from 'react-redux';
 import { logOut } from '../actions/currentUserActions';
@@ -11,10 +9,6 @@ import propTypes from "prop-types";
 
 
 
-
-
-
-const auth = firebase.auth();
 
 class NavFo extends React.Component {
   constructor(props) {
@@ -25,6 +19,7 @@ class NavFo extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (!this.props.isAuth && prevProps.isAuth) {
+      console.log("hey");
       this.props.history.push("/");
     }
   }
@@ -41,7 +36,9 @@ class NavFo extends React.Component {
     if (isAuth) {
       rightGroupLinks = (
         <Nav>
-          <Nav.Link href="/mymeals">My Meals</Nav.Link>
+          <LinkContainer to="/my-meals">
+          <Nav.Link>My Meals</Nav.Link>
+          </LinkContainer>
           <Nav.Link onClick={this.logout}>Logout</Nav.Link>
         </Nav>
       );
@@ -60,11 +57,15 @@ class NavFo extends React.Component {
 
     return (
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
-        <Navbar.Brand href="/">Flour and Oil</Navbar.Brand>
+        <LinkContainer to="/">
+        <Navbar.Brand>Flour and Oil</Navbar.Brand>
+        </LinkContainer>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="/about">About</Nav.Link>
+            <LinkContainer to="/about">
+              <Nav.Link>About</Nav.Link>
+            </LinkContainer>
             <Nav.Link href="#pricing">How it works</Nav.Link>
           </Nav>
           {rightGroupLinks}

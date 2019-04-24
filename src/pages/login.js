@@ -21,7 +21,8 @@ class login extends Component {
     const queries = queryString.parse(this.props.location.search);
     this.state = {
       isSignUpMode: queries.signup,
-      validated: false
+      validated: false,
+      redirectToReferrer: false
     };
 
     this.toggleMode = this.toggleMode.bind(this);
@@ -93,8 +94,11 @@ class login extends Component {
 
   render() {
 
+    const { from } = this.props.location.state || { from: { pathname: '/' } }
+    console.log(from);
+
     if (this.props.isAuth === true) {
-      return <Redirect to="/my-meals" />;
+      return <Redirect to={from} />
     }
 
     const { isSignUpMode, validated, errorPassword } = this.state;
