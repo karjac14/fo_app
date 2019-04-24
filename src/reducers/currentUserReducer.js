@@ -1,8 +1,8 @@
-import { LOG_IN_SUCCESS, SIGN_UP_SUCCESS, LOG_OUT_SUCCESS, LOG_IN_FAIL, SIGN_UP_FAIL, SET_AS_AUTH } from '../actions/currentUserTypes';
+import { LOG_IN_SUCCESS, SIGN_UP_SUCCESS, LOG_OUT_SUCCESS, LOG_IN_FAIL, SIGN_UP_FAIL, SET_AS_AUTH, SET_AS_NOT_AUTH } from '../actions/currentUserTypes';
 
 
 const initialState = {
-    isAuth: false,
+    isAuth: null,
     f_name: ''
 }
 
@@ -44,6 +44,12 @@ const authReducer = function (state = initialState, action) {
                 ...state,
                 ...action.payload,
                 isAuth: true
+            }
+        }
+        case SET_AS_NOT_AUTH: {
+            return {
+                ...state,
+                isAuth: false
             }
         }
         default:

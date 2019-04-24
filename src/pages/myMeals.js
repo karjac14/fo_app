@@ -1,9 +1,12 @@
-import React from "react";
+import React, { Component } from 'react'
 
-export default function myMeals() {
-  return (
-    <div>
-      <h1>My Meals</h1>
+export default class myMeals extends Component {
+  render() {
+    return (
+      <div>
+      <h6>My Meals</h6>
     </div>
-  );
+    )
+  }
 }
+

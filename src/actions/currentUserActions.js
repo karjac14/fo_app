@@ -4,7 +4,8 @@ import {
   LOG_IN_FAIL,
   SIGN_UP_SUCCESS,
   SIGN_UP_FAIL,
-  SET_AS_AUTH
+  SET_AS_AUTH,
+  SET_AS_NOT_AUTH,
 } from "./currentUserTypes";
 import * as firebase from "firebase";
 
@@ -39,8 +40,7 @@ export function logIn(email, password) {
               payload: user
             })
           } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
+            //TODO: Handle if login fails (priority 1)
           }
         }
 
@@ -123,6 +123,25 @@ export function setAsAuth(uid) {
     ).catch(function (error) {
       console.log("Error getting document:", error);
     });
+
+
+
+
+  };
+}
+
+export function setAsNotAuth(){
+  return function (dispatch) {
+
+
+        dispatch({
+          type: SET_AS_NOT_AUTH
+        })
+    
+  
+
+
+
 
 
 
