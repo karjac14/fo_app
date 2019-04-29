@@ -65,13 +65,11 @@ export function signUp(newUser) {
 
     const { f_name, l_name, email, password, country, state, city, zip } = newUser;
 
+
     auth.createUserWithEmailAndPassword(email, password)
       .then(user => {
-
         let uid = user.user.uid;
-
-        //save user's other details to db
-        usersRef.doc(uid).set({
+        const newUserDetails = {
           email,
           f_name,
           l_name,
@@ -81,15 +79,22 @@ export function signUp(newUser) {
           zip,
           uid: user.user.uid,
           created_date: new Date()
-        })
+        };
+
+        console.log("adding details of " + uid);
+        //save user's other details to db
+        usersRef.doc(uid).set(newUserDetails)
           .then(function (docRef) {
             //TODO: route user to preference page as a new user
+            console.log("success added details");
             dispatch({
-              type: SIGN_UP_SUCCESS
+              type: SIGN_UP_SUCCESS,
+              payload: newUserDetails
             })
           })
           .catch(function (error) {
             //TODO: route user back to sign up page and send error
+            console.log("failed adding details");
             dispatch({
               type: SIGN_UP_FAIL,
               payload: error.message
@@ -99,6 +104,8 @@ export function signUp(newUser) {
       })
       .catch(function (error) {
         //TODO: route user back to sign up page and send error
+        console.log(error);
+        console.log("failed adding a user: ");
       });
   };
 }
@@ -115,13 +122,19 @@ export function setAsAuth(uid) {
         })
       } else {
         // doc.data() will be undefined in this case
-        console.log("No such document!");
+        console.log("no document for this signedin user!");
+        dispatch({
+          type: SET_AS_NOT_AUTH
+        })
       }
     }
 
 
     ).catch(function (error) {
       console.log("Error getting document:", error);
+      dispatch({
+        type: SET_AS_NOT_AUTH
+      })
     });
 
 
@@ -130,15 +143,15 @@ export function setAsAuth(uid) {
   };
 }
 
-export function setAsNotAuth(){
+export function setAsNotAuth() {
   return function (dispatch) {
 
 
-        dispatch({
-          type: SET_AS_NOT_AUTH
-        })
-    
-  
+    dispatch({
+      type: SET_AS_NOT_AUTH
+    })
+
+
 
 
 

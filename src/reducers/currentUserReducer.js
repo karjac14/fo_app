@@ -25,6 +25,7 @@ const authReducer = function (state = initialState, action) {
         case SIGN_UP_SUCCESS: {
             return {
                 ...state,
+                ...action.payload,
                 isAuth: true
             }
         }
