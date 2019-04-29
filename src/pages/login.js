@@ -22,7 +22,8 @@ class login extends Component {
     this.state = {
       isSignUpMode: queries.signup,
       validated: false,
-      redirectToReferrer: false
+      redirectToReferrer: false,
+      country: "Australia"
     };
 
     this.toggleMode = this.toggleMode.bind(this);
@@ -46,6 +47,7 @@ class login extends Component {
 
 
   handleInputChange(event) {
+
     const value = event.target.value;
     const name = event.target.id;
     this.setState({
@@ -90,12 +92,11 @@ class login extends Component {
     let newUser = pick(this.state, 'f_name', 'l_name', 'email', 'password', 'country', 'state', 'city', 'zip');
 
     this.props.signUp(newUser);
-  } ß
+  }
 
   render() {
 
     const { from } = this.props.location.state || { from: { pathname: '/' } }
-    console.log(from);
 
     if (this.props.isAuth === true) {
       return <Redirect to={from} />
@@ -145,13 +146,13 @@ class login extends Component {
                     <Form.Control
                       as="select"
                       placeholder="Select Country"
-                      value={this.state.country || ""}
+                      value={this.state.country || "Australia"}
                       onChange={this.handleInputChange}
                       required
                     >
-                      <option>Australia</option>
-                      <option>United States</option>
-                      <option>Others</option>
+                      <option value="Australia">Australia</option>
+                      <option value="United States">United States</option>
+                      <option value="Others">Others</option>
 
                     </Form.Control>
                   </Form.Group>

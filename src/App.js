@@ -10,16 +10,22 @@ import { connect } from 'react-redux';
 import { setAsAuth, setAsNotAuth } from './actions/currentUserActions';
 import * as firebase from "firebase";
 import propTypes from "prop-types";
+import Icon from '@mdi/react';
+import { mdiLoading } from '@mdi/js';
 
 class App extends Component {
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
+    let unsubscribe = firebase.auth().onAuthStateChanged(user => {
       if (user) {
         //set store to isAuth true
+        console.log("signedin from previous session");
         this.props.setAsAuth(user.uid);
+        unsubscribe();
       } else {
+        console.log("not signedin from previous session");
         this.props.setAsNotAuth();
+        unsubscribe();
       }
     });
   }
@@ -33,7 +39,7 @@ class App extends Component {
       return (
         <div className="App">
           <div className="text-center">
-            Spinner!
+            <Icon path={mdiLoading} spin />
           </div>
         </div>
       );
@@ -66,13 +72,13 @@ function PrivateRoute({ component: Component, isAuth, ...rest }) {
         isAuth === true ? (
           <Component {...props} />
         ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: props.location }
-            }}
-          />
-        )
+            <Redirect
+              to={{
+                pathname: "/login",
+                state: { from: props.location }
+              }}
+            />
+          )
       }
     />
   );
