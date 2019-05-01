@@ -6,44 +6,181 @@ import Button from "react-bootstrap/Button";
 import { connect } from 'react-redux';
 import propTypes from "prop-types";
 
+import defaultPreferences from "../hard-data/preferences";
+
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+
+var db = firebase.firestore();
+var prefRef = db.collection("user_preferences");
+
 class myPreferences extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      diet: "balanced"
+      preferences: defaultPreferences,
     };
 
-    // this.toggleMode = this.toggleMode.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-    // this.logIn = this.logIn.bind(this);
-    // this.signUp = this.signUp.bind(this);
+    this.submit = this.submit.bind(this);
   }
 
 
   handleInputChange(event) {
     const value = event.target.value;
     const name = event.target.name;
+
+    console.log(name, value);
+
     this.setState({
       [name]: value
     });
   }
 
+  handleCheckboxChange = (i) => changeEvent => {
+    const { name } = changeEvent.target;
+    this.setState(prevState => ({
+      preferences: {
+        ...prevState.preferences,
+        ...prevState.preferences.moreFilters.options[i].selected = !prevState.preferences.moreFilters.options[i].selected
+      }
+    }));
+
+    
+  };
+
+
+
+  submit(e){
+    e.preventDefault();
+
+    console.log(this.state);
+
+    const { diet, time, servings, dishCount, moreFilters } = this.state;
+    const { isAuth, uid } = this.props.currentUser;
+
+    if(isAuth){
+
+      // let newPref = {
+      //   diet,
+      //   time,
+      //   servings,
+      //   dishCount,
+      //   moreFilters
+      // };
+
+      // console.log(newPref)
+
+      prefRef.doc(uid).set(this.state.preferences)
+          .then(function (docRef) {
+            //TODO: route user to preference page as a new user
+            console.log("success added pref");
+          })
+          .catch(function (error) {
+            //TODO: route user back to sign up page and send error
+            console.log(error);
+            console.log("failed adding pref");
+          });
+    }
+
+    
+
+
+  }
+
+  componentDidMount() { 
+
+    const { isAuth, uid } = this.props.currentUser;
+
+    if(isAuth){
+
+      prefRef.doc(uid).get().then((doc) => {
+          if (doc.exists) {
+            let db_preferences = doc.data();
+            this.setState({preferences: db_preferences});
+          } else {
+            console.log("no saved pref");
+          }
+        }
+
+
+        ).catch(function (error) {
+          console.log(error);
+          console.log("fail getting pref");
+        });
+
+    }
+  }
+
+  
+
   render() {
     const { f_name, uid } = this.props.currentUser;
+    const { preferences } = this.state;
     return (
       <div>
         <h4>Hi {f_name}!</h4>
         <h6>My Preferences</h6>
 
-        <Form>
+        <Form onSubmit={this.submit}>
+        <fieldset>
+            <Form.Group as={Row}>
+              <Form.Label as="legend" column sm={2}>
+                How many people are you cooking for?
+              </Form.Label>
+              <Col sm={10}>
+                {preferences.servingsFilters.options.map(option => (
+                  <div key={option.value}>
+                    <Form.Check
+                      custom
+                      inline
+                      name="servings"
+                      value={option.value}
+                      label={option.label}
+                      type={preferences.servingsFilters.type}
+                      id={`servings-${option.value}`}
+                      checked={this.state.servings === option.value}
+                      onChange={this.handleInputChange} />
+                    <br />
+                    <small>{option.definition}</small>
+                  </div>
+                ))}
+              </Col>
+            </Form.Group>
+          </fieldset>
+        <fieldset>
+            <Form.Group as={Row}>
+              <Form.Label as="legend" column sm={2}>
+                Whats the default number of dishes you plan to cook this week?
+              </Form.Label>
+              <Col sm={10}>
+                {preferences.dishCountFilters.options.map(option => (
+                  <div key={option.value}>
+                    <Form.Check
+                      custom
+                      inline
+                      name="dishCount"
+                      value={option.value}
+                      label={option.label}
+                      type={preferences.dishCountFilters.type}
+                      id={`dishCount-${option.value}`}
+                      checked={this.state.dishCount === option.value}
+                      onChange={this.handleInputChange} />
+                    <br />
+                    <small>{option.definition}</small>
+                  </div>
+                ))}
+              </Col>
+            </Form.Group>
+          </fieldset>
           <fieldset>
             <Form.Group as={Row}>
               <Form.Label as="legend" column sm={2}>
                 Diet
               </Form.Label>
               <Col sm={10}>
-                {dietFilters.options.map(option => (
+                {preferences.dietFilters.options.map(option => (
                   <div key={option.value}>
                     <Form.Check
                       custom
@@ -51,9 +188,59 @@ class myPreferences extends Component {
                       name="diet"
                       value={option.value}
                       label={option.label}
-                      type={dietFilters.type}
+                      type={preferences.dietFilters.type}
                       id={`diet-${option.value}`}
                       checked={this.state.diet === option.value}
+                      onChange={this.handleInputChange} />
+                    <br />
+                    <small>{option.definition}</small>
+                  </div>
+                ))}
+              </Col>
+            </Form.Group>
+          </fieldset>
+          <fieldset>
+            <Form.Group as={Row}>
+              <Form.Label as="legend" column sm={2}>
+                More Filters
+              </Form.Label>
+              <Col sm={10}>
+                {preferences.moreFilters.options.map((option, i) => (
+                  <div key={option.value}>
+                    <Form.Check
+                      custom
+                      inline
+                      name={option.value}
+                      value={option.value}
+                      label={option.label}
+                      type={preferences.moreFilters.type}
+                      id={`diet-${option.value}`}
+                      checked={option.selected}
+                      onChange={this.handleCheckboxChange(i)} />
+                    <br />
+                    <small>{option.definition}</small>
+                  </div>
+                ))}
+              </Col>
+            </Form.Group>
+          </fieldset>
+          <fieldset>
+            <Form.Group as={Row}>
+              <Form.Label as="legend" column sm={2}>
+                Preparation and Cooking Time?
+              </Form.Label>
+              <Col sm={10}>
+                {preferences.timeFilters.options.map(option => (
+                  <div key={option.value}>
+                    <Form.Check
+                      custom
+                      inline
+                      name="time"
+                      value={option.value}
+                      label={option.label}
+                      type={preferences.timeFilters.type}
+                      id={`diet-${option.value}`}
+                      checked={this.state.time === option.value}
                       onChange={this.handleInputChange} />
                     <br />
                     <small>{option.definition}</small>
@@ -86,36 +273,13 @@ function mapStateToProps(state) {
   return { currentUser: currentUser }
 }
 
-let dietFilters = {
-  type: "radio",
-  options: [{
-    label: "Balanced",
-    value: "balanced",
-    definition: "Protein/Fat/Carb values in 15/35/50 ratio",
-    selected: false
-  }, {
-    label: "Low-fat",
-    value: "low-fat",
-    definition: "Less than 15% of total calories from fat",
-    selected: false
-  }, {
-    label: "Low-carbs",
-    value: "low-carb",
-    definition: "Less than 20% of total calories from carbs",
-    selected: false
-  }, {
-    label: "High-protein",
-    value: "high-protien",
-    definition: "More than 50% of total calories from proteins",
-    selected: false
-  }, {
-    label: "Keto",
-    value: "keto",
-    subtext: 'new!',
-    definition: "Less than 5 grams of carbs per serving",
-    selected: false
-  }]
-};
+
+
+
+
+
+
+
 
 export default connect(mapStateToProps, {})(myPreferences);
 

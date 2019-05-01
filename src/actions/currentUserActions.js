@@ -56,6 +56,7 @@ export function logIn(email, password) {
 
 
       }).catch(error => {
+        console.log("Error logging in:", error);
         dispatch({
           type: LOG_IN_FAIL,
           payload: error.message
