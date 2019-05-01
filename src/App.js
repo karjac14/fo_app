@@ -8,7 +8,8 @@ import myPreferences from "./pages/myPreferences";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import { setAsAuth, setAsNotAuth } from './actions/currentUserActions';
-import * as firebase from "firebase";
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import propTypes from "prop-types";
 import Icon from '@mdi/react';
 import { mdiLoading } from '@mdi/js';
@@ -18,12 +19,9 @@ class App extends Component {
   componentDidMount() {
     let unsubscribe = firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        //set store to isAuth true
-        console.log("signedin from previous session");
         this.props.setAsAuth(user.uid);
         unsubscribe();
       } else {
-        console.log("not signedin from previous session");
         this.props.setAsNotAuth();
         unsubscribe();
       }

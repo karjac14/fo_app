@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import * as firebase from "firebase";
+import firebase from 'firebase/app';
+import 'firebase/functions';
+import 'firebase/firestore';
 
 const functions = firebase.functions();
 
@@ -7,14 +9,12 @@ export default class myMeals extends Component {
 
   componentDidMount() {
     const recipes = functions.httpsCallable('recipes/');
-    const test1 = functions.httpsCallable('test1');
 
-    // recipes().then(data => {
-    //   console.log(data);
-    // });
-
-    test1().then(data => {
+    recipes().then(data => {
+      console.log("success");
       console.log(data);
+    }).catch(error => {
+      console.log(error);
     });
   }
 
