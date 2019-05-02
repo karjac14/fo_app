@@ -22,24 +22,29 @@ class myPreferences extends Component {
       preferences: defaultPreferences,
     };
 
-    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleRadioChange = this.handleRadioChange.bind(this);
     this.submit = this.submit.bind(this);
   }
 
 
-  handleInputChange(event) {
-    const value = event.target.value;
-    const name = event.target.name;
+  handleRadioChange = (i) => event => {
+    const name = event.target.name + "Filters";
 
-    console.log(name, value);
-
-    this.setState({
-      [name]: value
+    const filter = Object.assign({}, this.state.preferences[name]);
+    filter.options.forEach((el, j) => {
+      filter.options[j].selected = i === j ? true : false;
     });
+
+    this.setState(prevState => ({
+      ...prevState,
+      preferences: {
+        ...prevState.preferences,
+        [name]: filter
+      }
+    }));
   }
 
   handleCheckboxChange = (i) => changeEvent => {
-    const { name } = changeEvent.target;
     this.setState(prevState => ({
       preferences: {
         ...prevState.preferences,
@@ -47,73 +52,59 @@ class myPreferences extends Component {
       }
     }));
 
-    
+
   };
 
 
 
-  submit(e){
+  submit(e) {
     e.preventDefault();
-
-    console.log(this.state);
-
-    const { diet, time, servings, dishCount, moreFilters } = this.state;
     const { isAuth, uid } = this.props.currentUser;
 
-    if(isAuth){
-
-      // let newPref = {
-      //   diet,
-      //   time,
-      //   servings,
-      //   dishCount,
-      //   moreFilters
-      // };
-
-      // console.log(newPref)
+    if (isAuth) {
 
       prefRef.doc(uid).set(this.state.preferences)
-          .then(function (docRef) {
-            //TODO: route user to preference page as a new user
-            console.log("success added pref");
-          })
-          .catch(function (error) {
-            //TODO: route user back to sign up page and send error
-            console.log(error);
-            console.log("failed adding pref");
-          });
+        .then(function (docRef) {
+          //TODO: route user to preference page as a new user
+          console.log("success added pref");
+        })
+        .catch(function (error) {
+          //TODO: route user back to sign up page and send error
+          console.log(error);
+          console.log("failed adding pref");
+        });
     }
 
-    
+
 
 
   }
 
-  componentDidMount() { 
+  componentDidMount() {
 
     const { isAuth, uid } = this.props.currentUser;
 
-    if(isAuth){
+    if (isAuth) {
 
       prefRef.doc(uid).get().then((doc) => {
-          if (doc.exists) {
-            let db_preferences = doc.data();
-            this.setState({preferences: db_preferences});
-          } else {
-            console.log("no saved pref");
-          }
+        if (doc.exists) {
+          let db_preferences = doc.data();
+          this.setState({ preferences: db_preferences });
+        } else {
+          console.log("no saved pref");
         }
+      }
 
 
-        ).catch(function (error) {
-          console.log(error);
-          console.log("fail getting pref");
-        });
+      ).catch(function (error) {
+        console.log(error);
+        console.log("fail getting pref");
+      });
 
     }
   }
 
-  
+
 
   render() {
     const { f_name, uid } = this.props.currentUser;
@@ -124,13 +115,13 @@ class myPreferences extends Component {
         <h6>My Preferences</h6>
 
         <Form onSubmit={this.submit}>
-        <fieldset>
+          <fieldset>
             <Form.Group as={Row}>
               <Form.Label as="legend" column sm={2}>
                 How many people are you cooking for?
               </Form.Label>
               <Col sm={10}>
-                {preferences.servingsFilters.options.map(option => (
+                {preferences.servingsFilters.options.map((option, i) => (
                   <div key={option.value}>
                     <Form.Check
                       custom
@@ -140,8 +131,8 @@ class myPreferences extends Component {
                       label={option.label}
                       type={preferences.servingsFilters.type}
                       id={`servings-${option.value}`}
-                      checked={this.state.servings === option.value}
-                      onChange={this.handleInputChange} />
+                      checked={option.selected}
+                      onChange={this.handleRadioChange(i)} />
                     <br />
                     <small>{option.definition}</small>
                   </div>
@@ -149,13 +140,13 @@ class myPreferences extends Component {
               </Col>
             </Form.Group>
           </fieldset>
-        <fieldset>
+          <fieldset>
             <Form.Group as={Row}>
               <Form.Label as="legend" column sm={2}>
                 Whats the default number of dishes you plan to cook this week?
               </Form.Label>
               <Col sm={10}>
-                {preferences.dishCountFilters.options.map(option => (
+                {preferences.dishCountFilters.options.map((option, i) => (
                   <div key={option.value}>
                     <Form.Check
                       custom
@@ -165,8 +156,8 @@ class myPreferences extends Component {
                       label={option.label}
                       type={preferences.dishCountFilters.type}
                       id={`dishCount-${option.value}`}
-                      checked={this.state.dishCount === option.value}
-                      onChange={this.handleInputChange} />
+                      checked={option.selected}
+                      onChange={this.handleRadioChange(i)} />
                     <br />
                     <small>{option.definition}</small>
                   </div>
@@ -180,7 +171,7 @@ class myPreferences extends Component {
                 Diet
               </Form.Label>
               <Col sm={10}>
-                {preferences.dietFilters.options.map(option => (
+                {preferences.dietFilters.options.map((option, i) => (
                   <div key={option.value}>
                     <Form.Check
                       custom
@@ -190,8 +181,8 @@ class myPreferences extends Component {
                       label={option.label}
                       type={preferences.dietFilters.type}
                       id={`diet-${option.value}`}
-                      checked={this.state.diet === option.value}
-                      onChange={this.handleInputChange} />
+                      checked={option.selected}
+                      onChange={this.handleRadioChange(i)} />
                     <br />
                     <small>{option.definition}</small>
                   </div>
@@ -230,7 +221,7 @@ class myPreferences extends Component {
                 Preparation and Cooking Time?
               </Form.Label>
               <Col sm={10}>
-                {preferences.timeFilters.options.map(option => (
+                {preferences.timeFilters.options.map((option, i) => (
                   <div key={option.value}>
                     <Form.Check
                       custom
@@ -240,8 +231,8 @@ class myPreferences extends Component {
                       label={option.label}
                       type={preferences.timeFilters.type}
                       id={`diet-${option.value}`}
-                      checked={this.state.time === option.value}
-                      onChange={this.handleInputChange} />
+                      checked={option.selected}
+                      onChange={this.handleRadioChange(i)} />
                     <br />
                     <small>{option.definition}</small>
                   </div>
@@ -272,13 +263,6 @@ function mapStateToProps(state) {
   const { currentUser } = state
   return { currentUser: currentUser }
 }
-
-
-
-
-
-
-
 
 
 export default connect(mapStateToProps, {})(myPreferences);
