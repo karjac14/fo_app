@@ -7,7 +7,11 @@ import {
   SET_AS_AUTH,
   SET_AS_NOT_AUTH,
 } from "./currentUserTypes";
-import * as firebase from "firebase";
+
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
+
 
 var config = {
   apiKey: "AIzaSyD3kLueJdPx0Ckt2lCpm8MmGjauWzE8cs8",
@@ -52,6 +56,7 @@ export function logIn(email, password) {
 
 
       }).catch(error => {
+        console.log("Error logging in:", error);
         dispatch({
           type: LOG_IN_FAIL,
           payload: error.message

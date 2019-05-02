@@ -91,6 +91,14 @@ class login extends Component {
 
     let newUser = pick(this.state, 'f_name', 'l_name', 'email', 'password', 'country', 'state', 'city', 'zip');
 
+    const hasEmpty = Object.values(newUser).every(x => (x === null || x === '' || x=== undefined));
+
+    if(hasEmpty){
+      console.log("One Empty Value")
+      return;
+    } 
+
+
     this.props.signUp(newUser);
   }
 
@@ -99,7 +107,11 @@ class login extends Component {
     const { from } = this.props.location.state || { from: { pathname: '/' } }
 
     if (this.props.isAuth === true) {
-      return <Redirect to={from} />
+      if(from.pathname === "/"){
+        return <Redirect to="/my-meals" />
+      } else{
+        return <Redirect to={from} />
+      }
     }
 
     const { isSignUpMode, validated, errorPassword } = this.state;
@@ -165,6 +177,7 @@ class login extends Component {
                       placeholder=""
                       value={this.state.state || ""}
                       onChange={this.handleInputChange}
+                      required
                     />
                   </Form.Group>
                 </Col>
@@ -178,6 +191,7 @@ class login extends Component {
                       placeholder=""
                       value={this.state.city || ""}
                       onChange={this.handleInputChange}
+                      required
                     />
                   </Form.Group>
                 </Col>
