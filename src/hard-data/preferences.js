@@ -6,55 +6,19 @@ export default {
   dietFilters: {
     type: "radio",
     options: [{
-      label: "Balanced",
-      value: "balanced",
-      definition: "Protein/Fat/Carb values in 15/35/50 ratio",
+      label: "No Diet",
+      value: "",
+      definition: "",
       selected: false
     }, {
-      label: "Low-fat",
-      value: "low-fat",
-      definition: "Less than 15% of total calories from fat",
-      selected: false
-    }, {
-      label: "Low-carbs",
-      value: "low-carb",
-      definition: "Less than 20% of total calories from carbs",
-      selected: false
-    }, {
-      label: "High-protein",
-      value: "high-protien",
-      definition: "More than 50% of total calories from proteins",
-      selected: false
-    }, {
-      label: "Keto",
-      value: "keto",
-      subtext: 'new!',
-      definition: "Less than 5 grams of carbs per serving",
-      selected: false
-    }]
-  },
-  moreFilters: {
-    type: "checkbox",
-    options: [{
-      label: "Gluten-free",
-      value: "gluten-free",
-      subtext: '*',
-      definition: "No known gluten according to celiac.org",
+      label: "Paleo",
+      value: "paleo",
+      definition: "Yypically includes lean meats, fish, fruits, vegetables, nuts and seeds — foods that in the past could be obtained by hunting and gathering",
       selected: false
     }, {
       label: "Vegetarian",
       value: "vegetarian",
-      definition: "No meat, poultry, or fish ",
-      selected: false
-    }, {
-      label: "Peanut-free",
-      value: "peanut-free",
-      definition: "No peanuts or products containing peanuts ",
-      selected: false
-    }, {
-      label: "Tree nut-free",
-      value: "tree-nut-free",
-      definition: "No tree nuts or products containing tree nuts ",
+      definition: "No ingredients may contain meat or meat by-products, such as bones or gelatin",
       selected: false
     }, {
       label: "Vegan",
@@ -62,13 +26,71 @@ export default {
       definition: "No meat, poultry, fish, dairy, eggs or honey",
       selected: false
     }, {
-      label: "Alcohol-free",
-      value: "alcohol-free",
-      definition: "No alcohol used or contained",
+      label: "Ketogenic",
+      value: "ketogenic",
+      subtext: 'new!',
+      definition: "Less than 10 grams of carbs per serving",
       selected: false
     }, {
-      label: "Pork-free",
+      label: "Pescetarian",
+      value: "pescetarian",
+      subtext: 'new!',
+      definition: "Less than 10 grams of carbs per serving",
+      selected: false
+    }, {
+      label: "Whole30",
+      value: "whole 30",
+      subtext: 'new!',
+      definition: "Less than 10 grams of carbs per serving",
+      selected: false
+    }]
+  },
+  moreFilters: {
+    type: "checkbox",
+    options: [{
+      label: "Gluten",
+      value: "gluten",
+      subtext: '*',
+      definition: "",
+      selected: false
+    }, {
+      label: "Peanut",
+      value: "peanut",
+      definition: "",
+      selected: false
+    }, {
+      label: "Tree nut",
+      value: "tree nut",
+      definition: "",
+      selected: false
+    }, {
+      label: "Dairy",
+      value: "dairy",
+      definition: "",
+      selected: false
+    }, {
+      label: "Pork",
       value: "pork-free",
+      definition: "Does not contain pork or derivatives ",
+      selected: false
+    }, {
+      label: "Seafood",
+      value: "seafood",
+      definition: "Does not contain pork or derivatives ",
+      selected: false
+    }, {
+      label: "Shellfish",
+      value: "shellfish",
+      definition: "Does not contain pork or derivatives ",
+      selected: false
+    }, {
+      label: "Soy",
+      value: "soy",
+      definition: "Does not contain pork or derivatives ",
+      selected: false
+    }, {
+      label: "Wheat",
+      value: "wheat",
       definition: "Does not contain pork or derivatives ",
       selected: false
     }]
