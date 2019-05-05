@@ -5,6 +5,7 @@ import about from "./pages/about";
 import login from "./pages/login";
 import myMeals from "./pages/myMeals";
 import myPreferences from "./pages/myPreferences";
+import choose from "./pages/choose";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import { setAsAuth, setAsNotAuth } from './actions/currentUserActions';
@@ -54,6 +55,7 @@ class App extends Component {
             <Route exact path="/login" component={login} />
             <PrivateRoute path="/my-meals" component={myMeals} isAuth={isAuth} />
             <PrivateRoute path="/my-preferences" component={myPreferences} isAuth={isAuth} />
+            <PrivateRoute path="/choose" component={choose} isAuth={isAuth} />
           </Switch>
         </div>
       </Router >
