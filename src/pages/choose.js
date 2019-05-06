@@ -13,7 +13,7 @@ class choose extends Component {
 
         const { isAuth, uid } = this.props.currentUser;
 
-        axios.get(fcUrl + "recipeSuggestions", {
+        axios.get(fcUrl + "testRecipes/", {
             params: {
                 uid: uid
             }
@@ -25,8 +25,10 @@ class choose extends Component {
     }
 
     render() {
+        const { f_name, uid } = this.props.currentUser;
         return (
             <div>
+                <h4>Hi {f_name}!</h4>
                 <h2>Choose meals below</h2>
             </div>
         )

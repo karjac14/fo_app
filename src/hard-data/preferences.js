@@ -70,7 +70,7 @@ export default {
       selected: false
     }, {
       label: "Pork",
-      value: "pork-free",
+      value: "pork",
       definition: "Does not contain pork or derivatives ",
       selected: false
     }, {

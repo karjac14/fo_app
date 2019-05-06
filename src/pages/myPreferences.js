@@ -6,6 +6,10 @@ import Button from "react-bootstrap/Button";
 import { connect } from 'react-redux';
 import propTypes from "prop-types";
 
+import { fcUrl } from '../config'
+
+import axios from 'axios';
+
 import defaultPreferences from "../hard-data/preferences";
 
 import firebase from 'firebase/app';
@@ -58,49 +62,43 @@ class myPreferences extends Component {
 
 
   submit(e) {
+
+    //TODO: after success submit, redirect user choose meals
+    //TODO: disble submit buitton to prevent double send, add spinner
+
     e.preventDefault();
     const { isAuth, uid } = this.props.currentUser;
 
     if (isAuth) {
-
-      prefRef.doc(uid).set(this.state.preferences)
-        .then(function (docRef) {
-          //TODO: route user to preference page as a new user
-          console.log("success added pref");
-        })
-        .catch(function (error) {
-          //TODO: route user back to sign up page and send error
-          console.log(error);
-          console.log("failed adding pref");
-        });
+      axios.post(fcUrl + "preferences/", {
+        params: { preferences: this.state.preferences, uid: uid }
+      }).then(res => {
+        console.log(res);
+        console.log("success added pref");
+      }).catch(err => {
+        console.log(err);
+        console.log("failed adding pref");
+      });
     }
-
-
-
-
   }
 
   componentDidMount() {
 
+    // TODO: add spinner while waiting for preferences 
+
     const { isAuth, uid } = this.props.currentUser;
 
     if (isAuth) {
-
-      prefRef.doc(uid).get().then((doc) => {
-        if (doc.exists) {
-          let db_preferences = doc.data();
+      axios.get(fcUrl + "preferences/", {
+        params: { uid: uid }
+      }).then(res => {
+        let db_preferences = res.data;
+        if (db_preferences) {
           this.setState({ preferences: db_preferences });
-        } else {
-          console.log("no saved pref");
         }
-      }
-
-
-      ).catch(function (error) {
-        console.log(error);
-        console.log("fail getting pref");
+      }).catch(err => {
+        console.log(err);
       });
-
     }
   }
 
@@ -115,31 +113,6 @@ class myPreferences extends Component {
         <h6>My Preferences</h6>
 
         <Form onSubmit={this.submit}>
-          {/* <fieldset>
-            <Form.Group as={Row}>
-              <Form.Label as="legend" column sm={2}>
-                How many people are you cooking for?
-              </Form.Label>
-              <Col sm={10}>
-                {preferences.servingsFilters.options.map((option, i) => (
-                  <div key={option.value}>
-                    <Form.Check
-                      custom
-                      inline
-                      name="servings"
-                      value={option.value}
-                      label={option.label}
-                      type={preferences.servingsFilters.type}
-                      id={`servings-${option.value}`}
-                      checked={option.selected}
-                      onChange={this.handleRadioChange(i)} />
-                    <br />
-                    <small>{option.definition}</small>
-                  </div>
-                ))}
-              </Col>
-            </Form.Group>
-          </fieldset> */}
           <fieldset>
             <Form.Group as={Row}>
               <Form.Label as="legend" column sm={2}>
@@ -197,7 +170,7 @@ class myPreferences extends Component {
               </Form.Label>
               <Col sm={10}>
                 {preferences.moreFilters.options.map((option, i) => (
-                  <div style={{border: "solid 2px #333"}} key={option.value}>
+                  <div style={{ border: "solid 2px #333" }} key={option.value}>
                     <Form.Check
                       custom
                       inline
@@ -215,32 +188,6 @@ class myPreferences extends Component {
               </Col>
             </Form.Group>
           </fieldset>
-          {/* <fieldset>
-            <Form.Group as={Row}>
-              <Form.Label as="legend" column sm={2}>
-                Preparation and Cooking Time?
-              </Form.Label>
-              <Col sm={10}>
-                {preferences.timeFilters.options.map((option, i) => (
-                  <div key={option.value}>
-                    <Form.Check
-                      custom
-                      inline
-                      name="time"
-                      value={option.value}
-                      label={option.label}
-                      type={preferences.timeFilters.type}
-                      id={`diet-${option.value}`}
-                      checked={option.selected}
-                      onChange={this.handleRadioChange(i)} />
-                    <br />
-                    <small>{option.definition}</small>
-                  </div>
-                ))}
-              </Col>
-            </Form.Group>
-          </fieldset> */}
-
 
           <Form.Group as={Row}>
             <Col sm={{ span: 10, offset: 2 }}>
