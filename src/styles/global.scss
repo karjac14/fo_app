@@ -1,0 +1,22 @@
+@import 'colors';
+
+body{
+  background-color: $bg;
+  color: $text-dark;
+}
+
+button {
+  border-radius: 9999px !important;
+}
+
+.btn-primary {
+  color: #FFF;
+}
+
+.bg-light{
+  background-color: #fff;
+}
+
+
+@import '~bootstrap/scss/bootstrap.scss';
+

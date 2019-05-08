@@ -12,7 +12,7 @@ export default function landing() {
         <h1>Plan your meals!</h1>
         <p>Get inspired from over a million of recipes</p>
         <p>
-          <Button variant="primary">Plan your Meal</Button>
+          <Button className="btn-lg" variant="primary">Plan your Meal</Button>
         </p>
       </Jumbotron>
       <h5>

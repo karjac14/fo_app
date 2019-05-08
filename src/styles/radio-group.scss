@@ -1,3 +1,5 @@
+@import 'colors';
+
 
 .radio-piece {
   
@@ -25,7 +27,7 @@
     background: #eee;
   } 
   input[type=radio]:checked + .radio-body {
-    background: blue;
+    background: $yellow;
   } 
 
 }
