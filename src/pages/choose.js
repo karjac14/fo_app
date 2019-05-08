@@ -13,7 +13,7 @@ class choose extends Component {
 
         const { isAuth, uid } = this.props.currentUser;
 
-        axios.get(fcUrl + "testRecipes/", {
+        axios.get(fcUrl + "v1/choose/", {
             params: {
                 uid: uid
             }

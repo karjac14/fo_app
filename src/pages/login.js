@@ -106,11 +106,12 @@ class login extends Component {
 
     const { from } = this.props.location.state || { from: { pathname: '/' } }
 
-
-    if (from.pathname === "/") {
-      return <Redirect to="/my-meals" />
-    } else {
-      return <Redirect to={from} />
+    if (this.props.isAuth === true) {
+      if (from.pathname === "/") {
+        return <Redirect to="/my-meals" />
+      } else {
+        return <Redirect to={from} />
+      }
     }
 
 
