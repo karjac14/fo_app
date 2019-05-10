@@ -1,21 +1,35 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import propTypes from "prop-types";
+import moment from 'moment';
 
 import { fcUrl } from '../config'
 
 import axios from 'axios';
+
 
 class choose extends Component {
 
 
     componentDidMount() {
 
+        let week = moment().week();
+        let year = moment().year();
+        let firstDay = moment().startOf('week').toDate();;
+        let lastDay = moment().endOf('week').toDate();;
+
+
+
+
         const { isAuth, uid } = this.props.currentUser;
 
-        axios.get(fcUrl + "v1/choose/", {
+        axios.get(fcUrl + "suggestions/", {
             params: {
-                uid: uid
+                uid: uid,
+                week,
+                year,
+                firstDay,
+                lastDay
             }
         }).then(res => {
             console.log(res);

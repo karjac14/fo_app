@@ -70,7 +70,7 @@ class myPreferences extends Component {
     const { isAuth, uid } = this.props.currentUser;
 
     if (isAuth) {
-      axios.post(fcUrl + "v1/preferences/", {
+      axios.post(fcUrl + "preferences/", {
         params: { preferences: this.state.preferences, uid: uid }
       }).then(res => {
         console.log(res);
@@ -89,7 +89,7 @@ class myPreferences extends Component {
     const { isAuth, uid } = this.props.currentUser;
 
     if (isAuth) {
-      axios.get(fcUrl + "v1/preferences/", {
+      axios.get(fcUrl + "preferences/", {
         params: { uid: uid }
       }).then(res => {
         let db_preferences = res.data;
