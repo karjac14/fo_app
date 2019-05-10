@@ -59,7 +59,7 @@ class NavFo extends React.Component {
     }
 
     return (
-      <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+      <Navbar collapseOnSelect expand="lg" bg="white" variant="light">
         <LinkContainer to="/">
         <Navbar.Brand><img
         src={logo}

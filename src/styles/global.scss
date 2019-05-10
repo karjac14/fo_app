@@ -1,22 +1,33 @@
 @import 'colors';
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700');
 
-body{
-  background-color: $bg;
-  color: $text-dark;
-}
 
-button {
-  border-radius: 9999px !important;
-}
 
-.btn-primary {
-  color: #FFF;
-}
+
 
 .bg-light{
   background-color: #fff;
 }
 
+.page-main{
+  padding-top: 100px;
+}
+
 
 @import '~bootstrap/scss/bootstrap.scss';
 
+body{
+  font-family: 'Roboto', sans-serif;
+  background-color: $bg;
+  color: $text-dark;
+}
+
+.btn-primary, .btn-primary:hover {
+  color: #FFF;
+}
+
+.btn {
+  border-radius: 9999px !important;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}

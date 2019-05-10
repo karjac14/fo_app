@@ -59,7 +59,7 @@ export default {
       definition: "",
       selected: false
     }, {
-      label: "Tree nut",
+      label: "Tree nuts",
       value: "tree nut",
       definition: "",
       selected: false
@@ -69,28 +69,13 @@ export default {
       definition: "",
       selected: false
     }, {
-      label: "Pork",
-      value: "pork",
-      definition: "Does not contain pork or derivatives ",
-      selected: false
-    }, {
-      label: "Seafood",
-      value: "seafood",
-      definition: "Does not contain pork or derivatives ",
-      selected: false
-    }, {
       label: "Shellfish",
       value: "shellfish",
       definition: "Does not contain pork or derivatives ",
       selected: false
     }, {
-      label: "Soy",
-      value: "soy",
-      definition: "Does not contain pork or derivatives ",
-      selected: false
-    }, {
-      label: "Wheat",
-      value: "wheat",
+      label: "Eggs",
+      value: "egg",
       definition: "Does not contain pork or derivatives ",
       selected: false
     }]
