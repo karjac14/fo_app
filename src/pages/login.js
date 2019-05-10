@@ -122,13 +122,14 @@ class login extends Component {
 
     if (isSignUpMode) {
       form = (
-        <Card style={{ width: "35rem" }} className="login-card">
+        <div className="col-xs-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+        <Card className="login-card signup">
           <Card.Body>
             <Card.Title>Sign Up</Card.Title>
             <Form noValidate
               validated={validated} onSubmit={this.signUp}>
               <Row>
-                <Col>
+                <Col xs={12} sm={6}>
                   <Form.Group controlId="f_name">
                     <Form.Label>First name</Form.Label>
                     <Form.Control
@@ -140,7 +141,7 @@ class login extends Component {
                     />
                   </Form.Group>
                 </Col>
-                <Col>
+                <Col xs={12} sm={6}>
                   <Form.Group controlId="l_name">
                     <Form.Label>Last name</Form.Label>
                     <Form.Control
@@ -154,7 +155,7 @@ class login extends Component {
                 </Col>
               </Row>
               <Row>
-                <Col>
+                <Col xs={6} sm={6} lg={3}>
                   <Form.Group controlId="country">
                     <Form.Label>Country</Form.Label>
                     <Form.Control
@@ -171,7 +172,7 @@ class login extends Component {
                     </Form.Control>
                   </Form.Group>
                 </Col>
-                <Col>
+                <Col xs={6} sm={6} lg={3}>
                   <Form.Group controlId="state">
                     <Form.Label>State</Form.Label>
                     <Form.Control
@@ -184,7 +185,7 @@ class login extends Component {
                   </Form.Group>
                 </Col>
 
-                <Col>
+                <Col xs={6} sm={6} lg={3}>
                   <Form.Group controlId="city">
                     <Form.Label>City</Form.Label>
                     <Form.Control
@@ -197,7 +198,7 @@ class login extends Component {
                     />
                   </Form.Group>
                 </Col>
-                <Col>
+                <Col xs={6} sm={6} lg={3}>
                   <Form.Group controlId="zip">
                     <Form.Label>Zip</Form.Label>
                     <Form.Control
@@ -221,6 +222,8 @@ class login extends Component {
                   required
                 />
               </Form.Group>
+              <Row>
+              <Col xs={6}>
               <Form.Group controlId="password">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
@@ -237,6 +240,8 @@ class login extends Component {
                     Password does not match</small>
                   : ''}
               </Form.Group>
+              </Col>
+              <Col xs={6}>
               <Form.Group controlId="password2">
                 <Form.Label>Confirm Password</Form.Label>
                 <Form.Control
@@ -253,27 +258,30 @@ class login extends Component {
                     Password does not match</small>
                   : ''}
               </Form.Group>
-              <Button variant="primary" type="submit" block>
+              </Col>
+              </Row>
+              <br/>
+              <br/>
+              <div className="text-center">
+              <Button variant="primary" type="submit">
                 Sign Up
                 </Button>
+              </div>
             </Form>
             <div className="button-container">
-              <span>Already have an account?</span>
-              <Button
-                variant="link"
-                className="sl-btn"
-                onClick={this.toggleMode}
-              >
+              <span>Already have an account? &nbsp;</span> 
+              <a className="text-primary" onClick={this.toggleMode}>
                 Login here
-              </Button>
+              </a>
             </div>
-
           </Card.Body>
         </Card>
+        </div>
       );
     } else {
       form = (
-        <Card style={{ width: "24rem" }} className="login-card">
+        <div className="col-xs-12 col-sm-10 offset-sm-1 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+        <Card className="login-card login">
           <Card.Body>
             <Card.Title>Login</Card.Title>
             <Form onSubmit={this.logIn}>
@@ -295,30 +303,30 @@ class login extends Component {
                   onChange={this.handleInputChange}
                 />
               </Form.Group>
+              <br/>
               <Button variant="primary" type="submit" block>
                 Login
                 </Button>
             </Form>
-            <div className="button-container">
-              <Button
-                variant="link"
-                className="sl-btn"
-                onClick={this.toggleMode}
-              >
-                Sign Up
-              </Button>
-              <Button variant="link" className="fp-btn">
-                Forgot Password
-              </Button>
+            <div className="button-container d-flex justify-content-between">
+              <a className="text-primary" onClick={this.toggleMode}>
+                Sign up here
+              </a>
+              <a className="text-primary">
+                Forgot password
+              </a>
             </div>
           </Card.Body>
         </Card>
+        </div>
       );
     }
 
     return (
-      <div className="login-wrapper">
+      <div className="container-fluid">
+      <div className="login-wrapper row">
         {form}
+      </div>
       </div>
     );
   }

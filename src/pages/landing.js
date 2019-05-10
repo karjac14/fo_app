@@ -10,30 +10,34 @@ import meal_3 from '../assets/img/meal_3.jpg';
 import meal_4 from '../assets/img/meal_4.jpg';
 
 export default function landing() {
+
+  var divStyle1 = {"float":"left", "marginLeft": "0px", width: '300px'};
+  var divStyle2 = {"float":"left", "marginLeft": "15px", width: '300px' };
+  var divStyle3 = {"float":"left", "marginLeft": "15px", width: '300px' };
+  var divStyle4 = {"float":"left", "marginLeft": "15px", width: '300px' };
+
   return (
     <div>
       <div className="jumbotron text-center">
-        <h1 className="font-weight-bold">Hello, world!</h1>
+        <h1 className="font-weight-bold">Meal Planning?</h1>
         <p>
-          This is a simple hero unit, a simple jumbotron-style component for
-          calling extra attention to featured content or information.
-        </p>
-        <p>
-          It uses utility classes for typography and spacing to space content
-          out within the larger container.
+          We'll narrow down the right options for you and your family based from over 300,000 recipes.
         </p>
         <p className="lead">
           <button className="btn btn-primary btn-lg" href="#" role="button">
-            Learn more
+            Plan meals
           </button>
         </p>
       </div>
 
       {/* TODO some cards here of different diets */}
       <div className="container">
+
+        {/* RECOMMENDED FOR YOU MD UP*/}
+        <div className="d-none d-md-block">
         <h3>Recommended for you</h3>
         <div className="row">
-          <div className="col-xs-12 col-sm-6 col-md-3">
+          <div className="col-md-3 d-none d-md-block">
           <div className="card">
             <img
               className="card-img-top img-fluid" src={meal_1} alt="Card image cap"
@@ -47,7 +51,7 @@ export default function landing() {
             </div>
             </div>
           </div>
-          <div className="col-xs-12 col-sm-6 col-md-3">
+          <div className="col-md-3 d-none d-md-block">
           <div className="card">
             <img className="card-img-top img-fluid" src={meal_2} alt="Card image cap" />
             <div className="card-body">
@@ -59,7 +63,7 @@ export default function landing() {
             </div>
             </div>
           </div>
-          <div className="col-xs-12 col-sm-6 col-md-3">
+          <div className="col-md-3 d-none d-md-block">
           <div className="card">
             <img className="card-img-top img-fluid" src={meal_3} alt="Card image cap" />
             <div className="card-body">
@@ -71,7 +75,7 @@ export default function landing() {
             </div>
             </div>
           </div>
-          <div className="col-xs-12 col-sm-6 col-md-3">
+          <div className="col-md-3 d-none d-md-block">
           <div className="card">
             <img className="card-img-top img-fluid" src={meal_4} alt="Card image cap" />
             <div className="card-body">
@@ -83,6 +87,66 @@ export default function landing() {
             </div>
             </div>
           </div>
+        </div>
+        </div>
+
+        {/* RECOMENDED FOR YOU SM BELOW*/}
+        <div className="d-md-none">
+        <h3>Recommended for you small</h3>
+        <div className="sm-card-container">
+          <div className="sm-card-container-scollable">
+          <span className="sm-card-landing" style={divStyle1}>
+          <div className="card">
+            <img
+              className="card-img-top img-fluid" src={meal_1} alt="Card image cap"
+            />
+            <div className="card-body">
+              <h5 className="card-title">Card title</h5>
+              <p className="card-text">
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.
+              </p>
+            </div>
+            </div>
+          </span>
+          <span className="sm-card-landing" style={divStyle2}>
+          <div className="card">
+            <img className="card-img-top img-fluid" src={meal_2} alt="Card image cap" />
+            <div className="card-body">
+              <h5 className="card-title">Card title</h5>
+              <p className="card-text">
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.
+              </p>
+            </div>
+            </div>
+          </span>
+          <span className="sm-card-landing" style={divStyle3}>
+          <div className="card">
+            <img className="card-img-top img-fluid" src={meal_3} alt="Card image cap" />
+            <div className="card-body">
+              <h5 className="card-title">Card title</h5>
+              <p className="card-text">
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.
+              </p>
+            </div>
+            </div>
+          </span>
+          <span className="sm-card-landing" style={divStyle4}>
+          <div className="card">
+            <img className="card-img-top img-fluid" src={meal_4} alt="Card image cap" />
+            <div className="card-body">
+              <h5 className="card-title">Card title</h5>
+              <p className="card-text">
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.
+              </p>
+            </div>
+            </div>
+          </span>
+        </div>
+        </div>
         </div>
 
         <br/>
@@ -133,7 +197,7 @@ export default function landing() {
         <br/>
         
       </div>
-      <div class="container-fluid landing-footer">
+      <div className="container-fluid landing-footer">
           
         </div>
     </div>
