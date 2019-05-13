@@ -65,4 +65,30 @@ h5 {
 .landing-footer{
   background-color: $bluegreen;
   min-height: 75px;
+  color: #fff;
+  font-size: 12px;
+  padding: 20px;
+}
+
+.card-img-left {
+  border-bottom-left-radius: calc(.25rem - 1px);
+  border-top-left-radius: calc(.25rem - 1px);
+  float: left;
+  padding-right: 1em;
+  margin-bottom: -1.25em;
+}
+
+.recommended-caption {
+  padding: 8px;
+  color: #fff;
+  height: 70px;
+  margin-top: -70px;
+  .recommended-title{
+    margin-bottom: 4px;
+  }
+
+  .recommended-text{
+    font-size: 14px !important;
+  }
+
 }
