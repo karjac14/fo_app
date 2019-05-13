@@ -8,6 +8,8 @@ import propTypes from "prop-types";
 
 import { fcUrl } from '../config'
 
+import "../styles/radio-group.scss";
+
 import axios from 'axios';
 
 import defaultPreferences from "../hard-data/preferences";
@@ -32,6 +34,7 @@ class myPreferences extends Component {
 
 
   handleRadioChange = (i) => event => {
+    console.log(event)
     const name = event.target.name + "Filters";
 
     const filter = Object.assign({}, this.state.preferences[name]);
@@ -49,6 +52,7 @@ class myPreferences extends Component {
   }
 
   handleCheckboxChange = (i) => changeEvent => {
+    console.log("hh");
     this.setState(prevState => ({
       preferences: {
         ...prevState.preferences,
@@ -108,93 +112,69 @@ class myPreferences extends Component {
     const { f_name, uid } = this.props.currentUser;
     const { preferences } = this.state;
     return (
-      <div>
-        <h4>Hi {f_name}!</h4>
-        <h6>My Preferences</h6>
+      <div className="container page-main">
 
+        <h2>Diet Preferences</h2>
+        <p>Answer a few questions to help us personalize your menu options. You can change these any time. </p>
         <Form onSubmit={this.submit}>
           <fieldset>
-            <Form.Group as={Row}>
-              <Form.Label as="legend" column sm={2}>
-                Whats the default number of dishes you plan to cook this week?
-              </Form.Label>
-              <Col sm={10}>
+            <Form.Group className="container">
+              <h4>
+                How many dishes you plan to cook weekly?
+              </h4>
+              <div className="row no-gutters">
                 {preferences.dishCountFilters.options.map((option, i) => (
-                  <div key={option.value}>
-                    <Form.Check
-                      custom
-                      inline
-                      name="dishCount"
-                      value={option.value}
-                      label={option.label}
-                      type={preferences.dishCountFilters.type}
-                      id={`dishCount-${option.value}`}
-                      checked={option.selected}
-                      onChange={this.handleRadioChange(i)} />
-                    <br />
-                    <small>{option.definition}</small>
+                  <div key={option.value} className="radio-piece col-xs-6 col-sm-4 col-md-2">
+                    <label className="text-center">
+                      <input type="radio" name="dishCount" value={option.value} checked={option.selected} onChange={this.handleRadioChange(i)} />
+                      <div className="radio-body">{option.label}</div>
+                    </label>
                   </div>
                 ))}
-              </Col>
+              </div>
             </Form.Group>
           </fieldset>
           <fieldset>
-            <Form.Group as={Row}>
-              <Form.Label as="legend" column sm={2}>
-                Diet
-              </Form.Label>
-              <Col sm={10}>
+            <Form.Group className="container">
+              <h4>
+                Dietary preferences?
+              </h4>
+              <div className="row no-gutters">
                 {preferences.dietFilters.options.map((option, i) => (
-                  <div key={option.value}>
-                    <Form.Check
-                      custom
-                      inline
-                      name="diet"
-                      value={option.value}
-                      label={option.label}
-                      type={preferences.dietFilters.type}
-                      id={`diet-${option.value}`}
-                      checked={option.selected}
-                      onChange={this.handleRadioChange(i)} />
-                    <br />
-                    <small>{option.definition}</small>
+                  <div key={option.value} className="radio-piece col-xs-6 col-sm-4 col-md-2">
+                    <label className="text-center">
+                      <input type="radio" name="diet" value={option.value} checked={option.selected} onChange={this.handleRadioChange(i)} />
+                      <div className="radio-body">{option.label}</div>
+                    </label>
                   </div>
                 ))}
-              </Col>
-            </Form.Group>
+              </div>
+            </Form.Group >
           </fieldset>
           <fieldset>
-            <Form.Group as={Row}>
-              <Form.Label as="legend" column sm={2}>
-                More Filters
-              </Form.Label>
-              <Col sm={10}>
+            <Form.Group className="container">
+              <h4>
+                Intolerances? <span className="text-secondary">(optional)</span>
+              </h4>
+              <div className="row no-gutters">
                 {preferences.moreFilters.options.map((option, i) => (
-                  <div style={{ border: "solid 2px #333" }} key={option.value}>
-                    <Form.Check
-                      custom
-                      inline
-                      name={option.value}
-                      value={option.value}
-                      label={option.label}
-                      type={preferences.moreFilters.type}
-                      id={`diet-${option.value}`}
-                      checked={option.selected}
-                      onChange={this.handleCheckboxChange(i)} />
-                    <br />
-                    <small>{option.definition}</small>
+                  <div key={option.value} className="radio-piece col-xs-6 col-sm-4 col-md-2">
+                    <label className="text-center">
+                      <input type="checkbox" name={option.value} value={option.value} checked={option.selected} onChange={this.handleCheckboxChange(i)} />
+                      <div className="radio-body">{option.label}</div>
+                    </label>
                   </div>
                 ))}
-              </Col>
+              </div>
             </Form.Group>
           </fieldset>
 
-          <Form.Group as={Row}>
-            <Col sm={{ span: 10, offset: 2 }}>
+          <Form.Group>
+            <div className="text-center">
               <Button type="submit">Save Preferences</Button>
-            </Col>
+            </div>
           </Form.Group>
-        </Form>;
+        </Form>
 
 
       </div >

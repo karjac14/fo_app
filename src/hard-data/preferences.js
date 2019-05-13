@@ -59,7 +59,7 @@ export default {
       definition: "",
       selected: false
     }, {
-      label: "Tree nut",
+      label: "Tree nuts",
       value: "tree nut",
       definition: "",
       selected: false

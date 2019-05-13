@@ -52,6 +52,17 @@ class choose extends Component {
         });
     }
 
+    handleCheckboxChange = (i) => changeEvent => {
+        this.setState(prevState => {
+            const suggestions = [...prevState.suggestions];
+            suggestions[i].selected = !prevState.suggestions[i].selected;
+
+            return {
+                suggestions
+            };
+        });
+    };
+
     submit(e) {
 
         //TODO: after success submit, redirect user choose meals
@@ -88,9 +99,9 @@ class choose extends Component {
                                 <Card.Body>
                                     <Card.Title>{suggestion.title}</Card.Title>
                                     <Card.Text>
-                                        Some quick example text to build on the card title and make up the bulk of
-                                        the card's content.
+
                                     </Card.Text>
+                                    <input type="checkbox" name={suggestion.id} value={suggestion.selected} checked={suggestion.selected} onChange={this.handleCheckboxChange(i)} />
                                 </Card.Body>
                             </Card>
                         </div>
@@ -103,13 +114,13 @@ class choose extends Component {
         }
 
         return (
-            <div>
-                <div className="container">
-                    <h4>Hi {f_name}!</h4>
-                    <h2>Choose meals below</h2>
-                    {form}
-                </div>
+
+            <div className="container page-main">
+                <h4>Hi {f_name}!</h4>
+                <h2>Choose meals below</h2>
+                {form}
             </div>
+
         )
     }
 }
