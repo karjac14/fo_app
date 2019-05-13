@@ -7,13 +7,13 @@ export default {
     type: "radio",
     options: [{
       label: "No Diet",
-      value: "",
+      value: "No Diet",
       definition: "",
       selected: false
     }, {
       label: "Paleo",
       value: "paleo",
-      definition: "Yypically includes lean meats, fish, fruits, vegetables, nuts and seeds — foods that in the past could be obtained by hunting and gathering",
+      definition: "Typically includes lean meats, fish, fruits, vegetables, nuts and seeds — foods that in the past could be obtained by hunting and gathering",
       selected: false
     }, {
       label: "Vegetarian",
@@ -32,8 +32,8 @@ export default {
       definition: "Less than 10 grams of carbs per serving",
       selected: false
     }, {
-      label: "Pescetarian",
-      value: "pescetarian",
+      label: "Pescatarian",
+      value: "pescatarian",
       subtext: 'new!',
       definition: "Less than 10 grams of carbs per serving",
       selected: false
@@ -69,28 +69,13 @@ export default {
       definition: "",
       selected: false
     }, {
-      label: "Pork",
-      value: "pork",
-      definition: "Does not contain pork or derivatives ",
-      selected: false
-    }, {
-      label: "Seafood",
-      value: "seafood",
-      definition: "Does not contain pork or derivatives ",
-      selected: false
-    }, {
       label: "Shellfish",
       value: "shellfish",
       definition: "Does not contain pork or derivatives ",
       selected: false
     }, {
-      label: "Soy",
-      value: "soy",
-      definition: "Does not contain pork or derivatives ",
-      selected: false
-    }, {
-      label: "Wheat",
-      value: "wheat",
+      label: "Eggs",
+      value: "egg",
       definition: "Does not contain pork or derivatives ",
       selected: false
     }]
