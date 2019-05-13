@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Card from "react-bootstrap/Card";
 import propTypes from "prop-types";
 import moment from 'moment';
+import { Redirect } from "react-router-dom";
 
 import { fcUrl } from '../config'
 
@@ -14,7 +15,8 @@ class choose extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            suggestions: null
+            suggestions: null,
+            hasPreferences: null
         };
 
         // this.toggleMode = this.toggleMode.bind(this);
@@ -47,6 +49,7 @@ class choose extends Component {
         }).then(res => {
             console.log(res);
             this.setState({ suggestions: res.data.suggestions });
+            this.setState({ hasPreferences: res.data.preferences });
         }).catch(err => {
             console.log(err);
         });
@@ -56,7 +59,6 @@ class choose extends Component {
         this.setState(prevState => {
             const suggestions = [...prevState.suggestions];
             suggestions[i].selected = !prevState.suggestions[i].selected;
-
             return {
                 suggestions
             };
@@ -85,8 +87,14 @@ class choose extends Component {
     }
 
     render() {
-        const { f_name, uid } = this.props.currentUser;
-        const { suggestions } = this.state;
+        const { isAuth, f_name, uid } = this.props.currentUser;
+        const { suggestions, hasPreferences } = this.state;
+
+
+        if(hasPreferences === false){
+            return <Redirect to="/my-preferences" />
+        }
+
 
         let form;
         if (suggestions) {

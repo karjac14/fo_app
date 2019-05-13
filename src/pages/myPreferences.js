@@ -1,24 +1,12 @@
 import React, { Component } from 'react'
 import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { connect } from 'react-redux';
 import propTypes from "prop-types";
-
-import { fcUrl } from '../config'
-
+import foHttp from '../helpers/fohttp';
 import "../styles/radio-group.scss";
-
-import axios from 'axios';
-
 import defaultPreferences from "../hard-data/preferences";
 
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-
-var db = firebase.firestore();
-var prefRef = db.collection("user_preferences");
 
 class myPreferences extends Component {
 
@@ -52,7 +40,6 @@ class myPreferences extends Component {
   }
 
   handleCheckboxChange = (i) => changeEvent => {
-    console.log("hh");
     this.setState(prevState => ({
       preferences: {
         ...prevState.preferences,
@@ -71,39 +58,22 @@ class myPreferences extends Component {
     //TODO: disble submit buitton to prevent double send, add spinner
 
     e.preventDefault();
-    const { isAuth, uid } = this.props.currentUser;
-
-    if (isAuth) {
-      axios.post(fcUrl + "preferences/", {
-        params: { preferences: this.state.preferences, uid: uid }
-      }).then(res => {
-        console.log(res);
-        console.log("success added pref");
-      }).catch(err => {
-        console.log(err);
-        console.log("failed adding pref");
-      });
+    let params = {
+      preferences: this.state.preferences
     }
+    foHttp("POST", "preferences", params).then( data =>
+      console.log(data)
+    )
   }
 
   componentDidMount() {
 
     // TODO: add spinner while waiting for preferences 
-
     const { isAuth, uid } = this.props.currentUser;
+    foHttp("GET", "preferences").then( data =>{
+      console.log(data)
+    })
 
-    if (isAuth) {
-      axios.get(fcUrl + "preferences/", {
-        params: { uid: uid }
-      }).then(res => {
-        let db_preferences = res.data;
-        if (db_preferences) {
-          this.setState({ preferences: db_preferences });
-        }
-      }).catch(err => {
-        console.log(err);
-      });
-    }
   }
 
 
