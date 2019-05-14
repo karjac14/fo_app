@@ -345,7 +345,7 @@ login.propTypes = {
 function mapStateToProps(state) {
 
   const { currentUser } = state
-  return { isAuth: currentUser.isAuth, authErrorMessage : currentUser.authErrorMessage }
+  return { isAuth: currentUser.isAuth, authErrorMessage : currentUser.authErrorMessage, newUser: currentUser.newUser }
 }
 
 export default connect(mapStateToProps, { logIn, signUp, setAsNotAuth })(login);
