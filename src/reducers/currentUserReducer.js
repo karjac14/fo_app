@@ -54,7 +54,8 @@ const authReducer = function (state = initialState, action) {
         case SET_AS_NOT_AUTH: {
             return {
                 ...state,
-                isAuth: false
+                isAuth: false,
+                authErrorMessage: null
             }
         }
         default:

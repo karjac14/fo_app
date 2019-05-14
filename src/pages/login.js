@@ -11,7 +11,7 @@ import propTypes from "prop-types";
 import "../styles/login.scss";
 
 import { connect } from 'react-redux';
-import { logIn, signUp } from '../actions/currentUserActions';
+import { logIn, signUp, setAsNotAuth } from '../actions/currentUserActions';
 
 
 
@@ -57,6 +57,7 @@ class login extends Component {
 
   toggleMode() {
     this.setState(prevState => ({ isSignUpMode: !prevState.isSignUpMode }));
+    this.props.setAsNotAuth();
   }
 
   logIn(e) {
@@ -91,14 +92,6 @@ class login extends Component {
 
     let newUser = pick(this.state, 'f_name', 'l_name', 'email', 'password', 'country', 'state', 'city', 'zip');
 
-    const hasEmpty = Object.values(newUser).every(x => (x === null || x === '' || x === undefined));
-
-    if (hasEmpty) {
-      console.log("One Empty Value")
-      return;
-    }
-
-
     this.props.signUp(newUser);
   }
 
@@ -106,6 +99,10 @@ class login extends Component {
 
     const { from } = this.props.location.state || { from: { pathname: '/' } }
 
+    if (this.props.newUser === true) {
+        //TODO: Show some welcome message, and inform user that he will be redirected to preferences page
+        return <Redirect to="/my-preferences" />
+    }
 
 
     if (this.props.isAuth === true) {
@@ -127,7 +124,7 @@ class login extends Component {
         <Card className="login-card signup">
           <Card.Body>
             <Card.Title>Sign Up</Card.Title>
-            <Form noValidate
+            <Form
               validated={validated} onSubmit={this.signUp}>
               <Row>
                 <Col xs={12} sm={6}>
@@ -217,7 +214,7 @@ class login extends Component {
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
                   type="email"
-                  placeholder="Enter email"
+                  placeholder="Email"
                   value={this.state.email || ""}
                   onChange={this.handleInputChange}
                   required
@@ -271,9 +268,9 @@ class login extends Component {
             </Form>
             <div className="button-container">
               <span>Already have an account? &nbsp;</span> 
-              <a className="text-primary" onClick={this.toggleMode}>
+              <button className="btn btn-link" onClick={this.toggleMode}>
                 Login here
-              </a>
+              </button>
             </div>
           </Card.Body>
         </Card>
@@ -313,12 +310,12 @@ class login extends Component {
               </div>
             </Form>
             <div className="button-container d-flex justify-content-between">
-              <a className="text-primary" onClick={this.toggleMode}>
+              <button className="btn btn-link" onClick={this.toggleMode}>
                 Sign up here
-              </a>
-              <a className="text-primary">
+              </button>
+              <button className="btn btn-link">
                 Forgot password
-              </a>
+              </button>
             </div>
           </Card.Body>
         </Card>
@@ -339,6 +336,7 @@ class login extends Component {
 login.propTypes = {
   logIn: propTypes.func.isRequired,
   signUp: propTypes.func.isRequired,
+  setAsNotAuth: propTypes.func.isRequired,
   location: propTypes.object,
   isAuth: propTypes.bool,
   user: propTypes.object,
@@ -350,4 +348,4 @@ function mapStateToProps(state) {
   return { isAuth: currentUser.isAuth, authErrorMessage : currentUser.authErrorMessage }
 }
 
-export default connect(mapStateToProps, { logIn, signUp })(login);
+export default connect(mapStateToProps, { logIn, signUp, setAsNotAuth })(login);

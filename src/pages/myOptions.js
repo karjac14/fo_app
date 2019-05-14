@@ -7,12 +7,10 @@ import { Redirect } from "react-router-dom";
 import foHttp from '../helpers/fohttp';
 import Button from "react-bootstrap/Button";
 
+import "../styles/options.scss";
 
 
-
-
-
-class choose extends Component {
+class myOptions extends Component {
 
     constructor(props) {
         super(props);
@@ -43,8 +41,9 @@ class choose extends Component {
         };
 
         foHttp("GET", "suggestions", params).then(res => {
-            if (res.data) {
+            if (res.success) {
                 this.setState(res.data);
+            } else{
 
             }
         })
@@ -68,7 +67,6 @@ class choose extends Component {
         //TODO: disble submit buitton to prevent double send, add spinner
 
         e.preventDefault();
-        // const { isAuth, uid } = this.props.currentUser;
 
         let params = this.state;
 
@@ -93,6 +91,7 @@ class choose extends Component {
         let form;
         if (suggestions) {
             form = (
+                <div>
                 <div className="row">
                     {suggestions.map((suggestion, i) => (
                         <div key={suggestion.id} className="col-xs-12 col-sm-6 col-md-4 col-xl-3">
@@ -109,10 +108,17 @@ class choose extends Component {
                         </div>
                     ))}
                 </div>
-
+                <div className="text-center">
+                <Button type="submit" onClick={this.submit}>Save Selection</Button>
+                </div>
+                </div>
             )
         } else {
-            form = 'spinner';
+            form = (
+                <div className="text-center">
+                    <div id="loading-spinner"></div>
+                </div>
+            );
         }
 
         return (
@@ -121,9 +127,7 @@ class choose extends Component {
                 <h4>Hi {f_name}!</h4>
                 <h2>Choose meals below</h2>
                 {form}
-                <div className="text-center">
-                    <Button type="submit" onClick={this.submit}>Save Selection</Button>
-                </div>
+                
             </div>
 
         )
@@ -132,7 +136,7 @@ class choose extends Component {
 
 
 
-choose.propTypes = {
+myOptions.propTypes = {
     currentUser: propTypes.object,
     // submit: propTypes.func.isRequired,
 };
@@ -143,4 +147,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, {})(choose);
+export default connect(mapStateToProps, {})(myOptions);

@@ -1,6 +1,4 @@
 import React from "react";
-import Jumbotron from "react-bootstrap/Jumbotron";
-import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 
 import "../styles/landing.scss";
@@ -24,9 +22,11 @@ export default function landing() {
           We narrow down the right options for you and your family based from over 300,000 recipes.
         </p>
         <p className="lead">
-          <button className="btn btn-primary btn-lg" href="#" role="button">
+        <Link to='/login'>
+          <button className="btn btn-primary btn-lg" href="#">
             Plan meals
           </button>
+          </Link>
         </p>
       </div>
 
@@ -58,7 +58,7 @@ export default function landing() {
           </div>
           <div className="col-md-3 d-none d-md-block">
           <div className="card">
-              <img className="card-img-top img-fluid" src={meal_1} alt="Card image cap"/>
+              <img className="card-img-top img-fluid" src={meal_1} alt="Vegan"/>
               <div className="recommended-caption text-center">
               <h4 className="recommended-title">Vegan</h4>
               <span className="recommended-text">Fish &#38; Veggies</span>
@@ -85,7 +85,7 @@ export default function landing() {
           <span className="sm-card-landing" style={divStyle1}>
           <div className="card">
             <img
-              className="card-img-top img-fluid" src={meal_1} alt="Card image cap"
+              className="card-img-top img-fluid" src={meal_1} alt="Card"
             />
             <div className="card-body">
               <h5 className="card-title">Card title</h5>
@@ -98,7 +98,7 @@ export default function landing() {
           </span>
           <span className="sm-card-landing" style={divStyle2}>
           <div className="card">
-            <img className="card-img-top img-fluid" src={meal_2} alt="Card image cap" />
+            <img className="card-img-top img-fluid" src={meal_2} alt="Card" />
             <div className="card-body">
               <h5 className="card-title">Card title</h5>
               <p className="card-text">
@@ -111,7 +111,7 @@ export default function landing() {
           </span>
           <span className="sm-card-landing" style={divStyle3}>
           <div className="card">
-            <img className="card-img-top img-fluid" src={meal_3} alt="Card image cap" />
+            <img className="card-img-top img-fluid" src={meal_3} alt="Card" />
             <div className="card-body">
               <h5 className="card-title">Card title</h5>
               <p className="card-text">
@@ -123,7 +123,7 @@ export default function landing() {
           </span>
           <span className="sm-card-landing" style={divStyle4}>
           <div className="card">
-            <img className="card-img-top img-fluid" src={meal_4} alt="Card image cap" />
+            <img className="card-img-top img-fluid" src={meal_4} alt="Card" />
             <div className="card-body">
               <h5 className="card-title">Card title</h5>
               <p className="card-text">
@@ -242,9 +242,6 @@ export default function landing() {
         <br/>
         <br/>
         
-      </div>
-      <div className="container-fluid landing-footer text-center">
-        <span className="align-middle">&#xa9; Cook Up, 2019</span>
       </div>
     </div>
   );

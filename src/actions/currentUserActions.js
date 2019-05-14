@@ -34,12 +34,12 @@ export function logIn(email, password) {
 
   return function (dispatch) {
     auth.signInWithEmailAndPassword(email, password)
-      .then(user => {
+      .then(data => {
 
 
 
-        let uid = user.user.uid;
-        user.user.getIdToken().then( idToken => {
+        let uid = data.user.uid;
+        data.user.getIdToken().then( idToken => {
           usersRef.doc(uid).get().then(doc => {
             if (doc.exists) {
               let user = doc.data();
@@ -49,10 +49,22 @@ export function logIn(email, password) {
                 payload: user
               })
             } else {
-              //TODO: Handle if login fails (priority 1)
+              let user = doc.data();
+              user.idToken = idToken;
+              dispatch({
+                type: LOG_IN_SUCCESS,
+                payload: user
+              })
             }
           }).catch(function (error) {
-            console.log("Error getting document:", error);
+            //let the user to login
+            //TODO later: inform user to enter their details in account settings
+              let user = {}
+              user.idToken = idToken;
+              dispatch({
+                type: LOG_IN_SUCCESS,
+                payload: user
+              })
           });
         });
       }).catch(error => {
@@ -63,6 +75,8 @@ export function logIn(email, password) {
           errorMessage = "Email provided not found."
         } else if (error.code === "auth/wrong-password") {
           errorMessage = "Invalid password. Please try again"
+        } else {
+          errorMessage = error.message
         }
 
         dispatch({
@@ -78,10 +92,9 @@ export function signUp(newUser) {
 
     const { f_name, l_name, email, password, country, state, city, zip } = newUser;
 
-
     auth.createUserWithEmailAndPassword(email, password)
-      .then(user => {
-        let uid = user.user.uid;
+      .then(data => {
+        let uid = data.user.uid;
         const newUserDetails = {
           email,
           f_name,
@@ -90,51 +103,39 @@ export function signUp(newUser) {
           state,
           city,
           zip,
-          uid: user.user.uid,
+          uid: data.user.uid,
           created_date: new Date()
         };
 
-        user.user.getIdToken().then( idToken => {
-
-          console.log("adding details of " + uid);
-        //save user's other details to db
+        data.user.getIdToken().then( idToken => {
           usersRef.doc(uid).set(newUserDetails)
           .then(function (docRef) {
-            //TODO: route user to preference page as a new user
-            console.log("success added details");
             newUserDetails.idToken = idToken;
+            newUserDetails.newUser = true;
             dispatch({
               type: SIGN_UP_SUCCESS,
               payload: newUserDetails
             })
           })
           .catch(function (error) {
-            //TODO: route user back to sign up page and send error
-            console.log(error.message);
             dispatch({
               type: SIGN_UP_FAIL,
               payload: error.message
             })
           });
-
-
-
         });
 
-        
-
-      })
-      .catch(function (error) {
-        console.log(error.code);
+      }).catch(function (error) {
 
         let errorMessage;
 
-        if (error.code === "auth/user-not-found"){
-          errorMessage = "User not found"
-        } else if (error.code === "auth/wrong-password") {
-          errorMessage = "Invalid password"
+        if (error.code === "auth/email-already-in-use"){
+          errorMessage = "Email provided is already in use."
+        } else if (error.code === "auth/invalid-email") {
+          errorMessage = "Invalid email address."
+        } else {
+          errorMessage = error.message
         }
-
             dispatch({
               type: SIGN_UP_FAIL,
               payload: errorMessage
@@ -155,44 +156,23 @@ export function setAsAuth(uid, idToken) {
           payload: user
         })
       } else {
-        // doc.data() will be undefined in this case
-        console.log("no document for this signedin user!");
         dispatch({
           type: SET_AS_NOT_AUTH
         })
       }
-    }
-
-
-    ).catch(function (error) {
-      console.log("Error getting document:", error);
+    }).catch(function (error) {
       dispatch({
         type: SET_AS_NOT_AUTH
       })
     });
-
-
-
-
   };
 }
 
 export function setAsNotAuth() {
   return function (dispatch) {
-
-
     dispatch({
       type: SET_AS_NOT_AUTH
     })
-
-
-
-
-
-
-
-
-
   };
 }
 
