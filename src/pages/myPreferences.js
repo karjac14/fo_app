@@ -61,8 +61,8 @@ class myPreferences extends Component {
     let params = {
       preferences: this.state.preferences
     }
-    foHttp("POST", "preferences", params).then( data =>
-      console.log(data)
+    foHttp("POST", "preferences", params).then(res =>
+      console.log(res)
     )
   }
 
@@ -70,8 +70,10 @@ class myPreferences extends Component {
 
     // TODO: add spinner while waiting for preferences 
     const { isAuth, uid } = this.props.currentUser;
-    foHttp("GET", "preferences").then( data =>{
-      console.log(data)
+    foHttp("GET", "preferences").then(res => {
+      if (res.data) {
+        this.setState({ preferences: res.data })
+      }
     })
 
   }

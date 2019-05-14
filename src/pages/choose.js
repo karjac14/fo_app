@@ -4,10 +4,12 @@ import Card from "react-bootstrap/Card";
 import propTypes from "prop-types";
 import moment from 'moment';
 import { Redirect } from "react-router-dom";
+import foHttp from '../helpers/fohttp';
+import Button from "react-bootstrap/Button";
 
-import { fcUrl } from '../config'
 
-import axios from 'axios';
+
+
 
 
 class choose extends Component {
@@ -22,7 +24,7 @@ class choose extends Component {
         // this.toggleMode = this.toggleMode.bind(this);
         // this.handleInputChange = this.handleInputChange.bind(this);
         // this.logIn = this.logIn.bind(this);
-        // this.signUp = this.signUp.bind(this);
+        this.submit = this.submit.bind(this);
     }
 
 
@@ -33,26 +35,21 @@ class choose extends Component {
         let firstDay = moment().startOf('week').toDate();;
         let lastDay = moment().endOf('week').toDate();;
 
+        let params = {
+            week,
+            year,
+            firstDay,
+            lastDay
+        };
 
+        foHttp("GET", "suggestions", params).then(res => {
+            if (res.data) {
+                this.setState(res.data);
 
-
-        const { isAuth, uid } = this.props.currentUser;
-
-        axios.get(fcUrl + "suggestions/", {
-            params: {
-                uid: uid,
-                week,
-                year,
-                firstDay,
-                lastDay
             }
-        }).then(res => {
-            console.log(res);
-            this.setState({ suggestions: res.data.suggestions });
-            this.setState({ hasPreferences: res.data.preferences });
-        }).catch(err => {
-            console.log(err);
-        });
+        })
+
+
     }
 
     handleCheckboxChange = (i) => changeEvent => {
@@ -71,27 +68,24 @@ class choose extends Component {
         //TODO: disble submit buitton to prevent double send, add spinner
 
         e.preventDefault();
-        const { isAuth, uid } = this.props.currentUser;
+        // const { isAuth, uid } = this.props.currentUser;
 
-        if (isAuth) {
-            axios.post(fcUrl + "suggestions/", {
-                params: { data: this.state, uid: uid }
-            }).then(res => {
-                console.log(res);
-                console.log("success added pref");
-            }).catch(err => {
-                console.log(err);
-                console.log("failed adding pref");
-            });
-        }
+        let params = this.state;
+
+        foHttp("POST", "suggestions", params).then(res =>
+            console.log(res)
+        )
+
+
     }
 
     render() {
         const { isAuth, f_name, uid } = this.props.currentUser;
+        const { submit } = this.props;
         const { suggestions, hasPreferences } = this.state;
 
 
-        if(hasPreferences === false){
+        if (hasPreferences === false) {
             return <Redirect to="/my-preferences" />
         }
 
@@ -127,6 +121,9 @@ class choose extends Component {
                 <h4>Hi {f_name}!</h4>
                 <h2>Choose meals below</h2>
                 {form}
+                <div className="text-center">
+                    <Button type="submit" onClick={this.submit}>Save Selection</Button>
+                </div>
             </div>
 
         )
@@ -137,6 +134,7 @@ class choose extends Component {
 
 choose.propTypes = {
     currentUser: propTypes.object,
+    // submit: propTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {

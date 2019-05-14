@@ -2,10 +2,10 @@ import axios from 'axios';
 import store from '../store';
 import { host } from '../config';
 
-const foHttp = async (method, path, params={}) => {
+const foHttp = async (method, path, params = {}) => {
 
   const currentUser = store.getState().currentUser;
-  const {isAuth, idToken, uid} = currentUser;
+  const { isAuth, idToken, uid } = currentUser;
 
   if (!isAuth) {
     return;
@@ -14,49 +14,73 @@ const foHttp = async (method, path, params={}) => {
   let url = host + path + "/";
   params.uid = uid;
 
-  let payload = {
-    params,
-    headers :{
-      authorization : 'Bearer ' + idToken
-    }
-  }
+
+
+
 
   switch (method) {
-    
+
     case "GET": {
-      await axios.get(url, payload)
+
+      let payload = {
+        params,
+        headers: {
+          authorization: 'Bearer ' + idToken
+        }
+      }
+
+      return await axios.get(url, payload)
         .then(res => {
           return res;
         }).catch(err => {
-          return err;
+          console.log(err);
+          return;
         });
     }
+
     case "POST": {
-      await axios.get(url, payload)
-      .then(res => {
-        return res;
-      }).catch(err => {
-        return err;
-      });
+
+      let payload = params;
+      let config = {
+        headers: {
+          authorization: 'Bearer ' + idToken
+        }
+      }
+
+
+      return await axios.post(url, payload, config)
+        .then(res => {
+          return res;
+        }).catch(err => {
+          console.log(err);
+          return;
+        });
     }
+
     case "PUT": {
-      await axios.get(url, payload)
-      .then(res => {
-        return res;
-      }).catch(err => {
-        return err;
-      });
+      let payload = params;
+      return await axios.put(url, payload)
+        .then(res => {
+          return res;
+        }).catch(err => {
+          console.log(err);
+          return;
+        });
     }
+
     case "DELETE": {
-      await axios.get(url, payload)
-      .then(res => {
-        return res;
-      }).catch(err => {
-        return err;
-      });
+      let payload = params;
+      return await axios.delete(url, payload)
+        .then(res => {
+          return res;
+        }).catch(err => {
+          console.log(err);
+          return;
+        });
     }
+
     default:
-      return {error: "unknown http method"};
+      return { error: "unknown http method" };
   }
 }
 
