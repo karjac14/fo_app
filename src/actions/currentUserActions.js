@@ -30,9 +30,13 @@ var auth = firebase.auth();
 
 
 export function logIn(email, password) {
+
+
   return function (dispatch) {
     auth.signInWithEmailAndPassword(email, password)
       .then(user => {
+
+
 
         let uid = user.user.uid;
         user.user.getIdToken().then( idToken => {
@@ -51,16 +55,19 @@ export function logIn(email, password) {
             console.log("Error getting document:", error);
           });
         });
-
-        
-
-
-
       }).catch(error => {
-        console.log("Error logging in:", error);
+
+        let errorMessage;
+
+        if (error.code === "auth/user-not-found"){
+          errorMessage = "Email provided not found."
+        } else if (error.code === "auth/wrong-password") {
+          errorMessage = "Invalid password. Please try again"
+        }
+
         dispatch({
           type: LOG_IN_FAIL,
-          payload: error.message
+          payload: errorMessage
         })
       });
   };
@@ -103,7 +110,7 @@ export function signUp(newUser) {
           })
           .catch(function (error) {
             //TODO: route user back to sign up page and send error
-            console.log("failed adding details");
+            console.log(error.message);
             dispatch({
               type: SIGN_UP_FAIL,
               payload: error.message
@@ -118,9 +125,20 @@ export function signUp(newUser) {
 
       })
       .catch(function (error) {
-        //TODO: route user back to sign up page and send error
-        console.log(error);
-        console.log("failed adding a user: ");
+        console.log(error.code);
+
+        let errorMessage;
+
+        if (error.code === "auth/user-not-found"){
+          errorMessage = "User not found"
+        } else if (error.code === "auth/wrong-password") {
+          errorMessage = "Invalid password"
+        }
+
+            dispatch({
+              type: SIGN_UP_FAIL,
+              payload: errorMessage
+            })
       });
   };
 }

@@ -261,7 +261,7 @@ class login extends Component {
               </Form.Group>
               </Col>
               </Row>
-              <br/>
+              <div className="text-danger text-center">{this.props.authErrorMessage ? this.props.authErrorMessage : <br/>}</div>
               <br/>
               <div className="text-center">
               <Button variant="primary" type="submit">
@@ -304,10 +304,13 @@ class login extends Component {
                   onChange={this.handleInputChange}
                 />
               </Form.Group>
+              <div className="text-danger text-center">{this.props.authErrorMessage ? this.props.authErrorMessage : <br/>}</div>
               <br/>
-              <Button variant="primary" type="submit" block>
+              <div className="text-center">
+              <Button variant="primary" type="submit">
                 Login
-                </Button>
+              </Button>
+              </div>
             </Form>
             <div className="button-container d-flex justify-content-between">
               <a className="text-primary" onClick={this.toggleMode}>
@@ -344,7 +347,7 @@ login.propTypes = {
 function mapStateToProps(state) {
 
   const { currentUser } = state
-  return { isAuth: currentUser.isAuth }
+  return { isAuth: currentUser.isAuth, authErrorMessage : currentUser.authErrorMessage }
 }
 
 export default connect(mapStateToProps, { logIn, signUp })(login);
