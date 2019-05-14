@@ -31,10 +31,14 @@ const foHttp = async (method, path, params = {}) => {
 
       return await axios.get(url, payload)
         .then(res => {
+          res.success = true;
           return res;
         }).catch(err => {
-          console.log(err);
-          return;
+          let res = {
+            success : false,
+            errorMessage: err
+          }
+          return res;
         });
     }
 
@@ -46,14 +50,15 @@ const foHttp = async (method, path, params = {}) => {
           authorization: 'Bearer ' + idToken
         }
       }
-
-
       return await axios.post(url, payload, config)
         .then(res => {
           return res;
         }).catch(err => {
-          console.log(err);
-          return;
+          let res = {
+            success : false,
+            errorMessage: err
+          }
+          return res;
         });
     }
 
@@ -63,8 +68,11 @@ const foHttp = async (method, path, params = {}) => {
         .then(res => {
           return res;
         }).catch(err => {
-          console.log(err);
-          return;
+          let res = {
+            success : false,
+            errorMessage: err
+          }
+          return res;
         });
     }
 
@@ -74,8 +82,11 @@ const foHttp = async (method, path, params = {}) => {
         .then(res => {
           return res;
         }).catch(err => {
-          console.log(err);
-          return;
+          let res = {
+            success : false,
+            errorMessage: err
+          }
+          return res;
         });
     }
 

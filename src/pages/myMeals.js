@@ -1,9 +1,5 @@
 import React, { Component } from 'react'
 import { Redirect } from "react-router-dom";
-import axios from 'axios';
-import { fcUrl } from '../config'
-
-
 
 
 
@@ -30,7 +26,7 @@ export default class myMeals extends Component {
 
     if (1 == 1) {
       // TODO: if no choices this week redirect user to choose page
-      return <Redirect to="/choose" />
+      return <Redirect to="/my-options" />
     } else if (1 == 1) {
       // TODO: if no preferereces this week redirect user to preferences page
       return <Redirect to="/my-preferences" />

@@ -13,26 +13,30 @@ const authReducer = function (state = initialState, action) {
             return {
                 ...state,
                 ...action.payload,
-                isAuth: true
+                isAuth: true,
+                authErrorMessage: null
             }
         }
         case LOG_IN_FAIL: {
             return {
                 ...state,
-                isAuth: false
+                isAuth: false,
+                authErrorMessage: action.payload
             }
         }
         case SIGN_UP_SUCCESS: {
             return {
                 ...state,
                 ...action.payload,
-                isAuth: true
+                isAuth: true,
+                authErrorMessage: null
             }
         }
         case SIGN_UP_FAIL: {
             return {
                 ...state,
-                isAuth: false
+                isAuth: false,
+                authErrorMessage: action.payload
             }
         }
         case LOG_OUT_SUCCESS: {
@@ -50,7 +54,8 @@ const authReducer = function (state = initialState, action) {
         case SET_AS_NOT_AUTH: {
             return {
                 ...state,
-                isAuth: false
+                isAuth: false,
+                authErrorMessage: null
             }
         }
         default:

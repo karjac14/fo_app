@@ -5,15 +5,16 @@ import about from "./pages/about";
 import login from "./pages/login";
 import myMeals from "./pages/myMeals";
 import myPreferences from "./pages/myPreferences";
-import choose from "./pages/choose";
+import myOptions from "./pages/myOptions";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import { setAsAuth, setAsNotAuth } from './actions/currentUserActions';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import propTypes from "prop-types";
-import Icon from '@mdi/react';
-import { mdiLoading } from '@mdi/js';
+
+
+import "./styles/global.scss";
 
 
 
@@ -41,9 +42,9 @@ class App extends Component {
     if (isAuth === null) {
       return (
         <div className="App">
-          <div className="text-center">
-            <Icon path={mdiLoading} spin />
-          </div>
+          {/* <div className="text-center">
+          <div id="loading-spinner"></div>
+          </div> */}
         </div>
       );
     }
@@ -59,7 +60,7 @@ class App extends Component {
             <Route exact path="/login" component={login} />
             <PrivateRoute path="/my-meals" component={myMeals} isAuth={isAuth} />
             <PrivateRoute path="/my-preferences" component={myPreferences} isAuth={isAuth} />
-            <PrivateRoute path="/choose" component={choose} isAuth={isAuth} />
+            <PrivateRoute path="/my-options" component={myOptions} isAuth={isAuth} />
           </Switch>
         </div>
       </Router >
