@@ -12,8 +12,7 @@ import { setAsAuth, setAsNotAuth } from './actions/currentUserActions';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import propTypes from "prop-types";
-import Icon from '@mdi/react';
-import { mdiLoading } from '@mdi/js';
+
 
 import "./styles/global.scss";
 
