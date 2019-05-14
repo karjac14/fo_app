@@ -43,9 +43,9 @@ class App extends Component {
     if (isAuth === null) {
       return (
         <div className="App">
-          <div className="text-center">
+          {/* <div className="text-center">
           <div id="loading-spinner"></div>
-          </div>
+          </div> */}
         </div>
       );
     }

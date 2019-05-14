@@ -116,6 +116,9 @@ class myOptions extends Component {
         } else {
             form = (
                 <div className="text-center">
+                    Fetching meals...
+                    <br/>
+                    <br/>
                     <div id="loading-spinner"></div>
                 </div>
             );
@@ -125,7 +128,7 @@ class myOptions extends Component {
 
             <div className="container page-main">
                 <h4>Hi {f_name}!</h4>
-                <h2>Choose meals below</h2>
+                <h2 className="fo-text">Choose meals below</h2>
                 {form}
                 
             </div>
