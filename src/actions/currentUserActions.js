@@ -35,23 +35,24 @@ export function logIn(email, password) {
       .then(user => {
 
         let uid = user.user.uid;
-
-        usersRef.doc(uid).get().then(function (doc) {
-          if (doc.exists) {
-            let user = doc.data();
-            dispatch({
-              type: LOG_IN_SUCCESS,
-              payload: user
-            })
-          } else {
-            //TODO: Handle if login fails (priority 1)
-          }
-        }
-
-
-        ).catch(function (error) {
-          console.log("Error getting document:", error);
+        user.user.getIdToken().then( idToken => {
+          usersRef.doc(uid).get().then(doc => {
+            if (doc.exists) {
+              let user = doc.data();
+              user.idToken = idToken;
+              dispatch({
+                type: LOG_IN_SUCCESS,
+                payload: user
+              })
+            } else {
+              //TODO: Handle if login fails (priority 1)
+            }
+          }).catch(function (error) {
+            console.log("Error getting document:", error);
+          });
         });
+
+        
 
 
 
@@ -86,12 +87,15 @@ export function signUp(newUser) {
           created_date: new Date()
         };
 
-        console.log("adding details of " + uid);
+        user.user.getIdToken().then( idToken => {
+
+          console.log("adding details of " + uid);
         //save user's other details to db
-        usersRef.doc(uid).set(newUserDetails)
+          usersRef.doc(uid).set(newUserDetails)
           .then(function (docRef) {
             //TODO: route user to preference page as a new user
             console.log("success added details");
+            newUserDetails.idToken = idToken;
             dispatch({
               type: SIGN_UP_SUCCESS,
               payload: newUserDetails
@@ -106,6 +110,12 @@ export function signUp(newUser) {
             })
           });
 
+
+
+        });
+
+        
+
       })
       .catch(function (error) {
         //TODO: route user back to sign up page and send error
@@ -115,12 +125,13 @@ export function signUp(newUser) {
   };
 }
 
-export function setAsAuth(uid) {
+export function setAsAuth(uid, idToken) {
   return function (dispatch) {
 
-    usersRef.doc(uid).get().then(function (doc) {
+    usersRef.doc(uid).get().then(doc => {
       if (doc.exists) {
         let user = doc.data();
+        user.idToken = idToken;
         dispatch({
           type: SET_AS_AUTH,
           payload: user
