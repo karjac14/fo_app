@@ -1,0 +1,30 @@
+@import 'colors';
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700');
+
+.page-main{
+  padding-top: 100px;
+}
+
+
+@import '~bootstrap/scss/bootstrap.scss';
+
+body{
+  font-family: 'Roboto', sans-serif;
+  background-color: $bg;
+  color: $text-dark;
+}
+
+a {
+  cursor: pointer;
+  color: $primary;
+}
+
+.btn-primary, .btn-primary:hover {
+  color: #FFF;
+}
+
+.btn {
+  border-radius: 9999px !important;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}

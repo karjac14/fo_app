@@ -1,0 +1,64 @@
+@import 'colors';
+
+
+.radio-piece {
+  
+  display: inline-block;
+  label {
+
+    width: 100%;
+    height: 40px; ;
+    border: 1px solid #aaa;
+    cursor: pointer;
+  }
+
+  .radio-body{
+    text-align: center;
+
+  }
+
+  input[type=radio]{
+    visibility: hidden;
+    float: left;
+  }
+
+
+  input[type=radio] + .radio-body {
+    height: 100%;
+    font-weight: 400;
+  } 
+
+  input[type=radio] + .radio-body {
+    background: #eee;
+    color: $text-light;
+  } 
+  input[type=radio]:checked + .radio-body {
+    background: $orange;
+    color: #fff;
+    font-weight: 400;
+  } 
+
+  // 
+
+  input[type=checkbox]{
+    visibility: hidden;
+    float: left;
+  }
+
+
+  input[type=checkbox] + .radio-body {
+    height: 100%;
+    font-weight: 400;
+  } 
+
+  input[type=checkbox] + .radio-body {
+    background: #eee;
+    color: $text-light;
+  } 
+  input[type=checkbox]:checked + .radio-body {
+    background: $orange;
+    color: #fff;
+    font-weight: 700;
+  } 
+
+}

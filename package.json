@@ -2,10 +2,13 @@
   "name": "fo_app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://cook-up.co",
   "dependencies": {
     "@mdi/js": "^3.5.95",
+    "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "firebase": "^5.9.3",
+    "moment": "^2.24.0",
     "node-sass": "^4.11.0",
     "query-string": "^6.4.2",
     "react": "^16.8.6",
