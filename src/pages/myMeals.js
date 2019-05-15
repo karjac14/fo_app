@@ -1,42 +1,122 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
 import { Redirect } from "react-router-dom";
+import moment from 'moment';
+import foHttp from '../helpers/fohttp';
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import propTypes from "prop-types";
 
 
 
+class myMeals extends Component {
 
-export default class myMeals extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      noSelection: false
+    };
+
+    // this.toggleMode = this.toggleMode.bind(this);
+    // this.handleInputChange = this.handleInputChange.bind(this);
+    // this.logIn = this.logIn.bind(this);
+    // this.submit = this.submit.bind(this);
+  }
 
   componentDidMount() {
 
+    let week = moment().week();
+    let year = moment().year();
 
-    // axios.get(fcUrl + "recipes", {
-    //   params: {
-    //     uid: 123
-    //   }
-    // }).then(res => {
+    let params = {
+      week,
+      year
+    };
 
-    // }).catch(err => {
+    foHttp("GET", "meals", params).then(res => {
+      if (res.success) {
 
-    // });
+        this.setState(res.data);
+
+
+      } else {
+
+      }
+    })
+
 
 
   }
 
-  render() {
 
-    if (1 == 1) {
+
+  render() {
+    const { f_name } = this.props.currentUser;
+    const { noSelection, meals } = this.state;
+
+    if (noSelection) {
       // TODO: if no choices this week redirect user to choose page
       return <Redirect to="/my-options" />
-    } else if (1 == 1) {
-      // TODO: if no preferereces this week redirect user to preferences page
-      return <Redirect to="/my-preferences" />
     }
 
 
+    let form;
+    if (meals) {
+      form = (
+        <div>
+          <div className="row">
+            {meals.map((suggestion, i) => (
+              <div key={suggestion.id} className="col-xs-12 col-sm-6 col-md-4 col-xl-3">
+                <Card>
+                  <Card.Img variant="top" src={suggestion.image} />
+                  <Card.Body>
+                    <Card.Title>{suggestion.title}</Card.Title>
+                    <Card.Text>
+
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              </div>
+            ))}
+          </div>
+          <div className="text-center">
+            <Button type="submit" onClick={this.submit}>Save Selection</Button>
+          </div>
+        </div>
+      )
+    } else {
+      form = (
+        <div className="text-center">
+          Fetching meals...
+                <br />
+          <br />
+          <div id="loading-spinner"></div>
+        </div>
+      );
+    }
+
     return (
-      <div>
-        <h6>My Meals</h6>
+
+      <div className="container page-main">
+        <h4>Hi {f_name}!</h4>
+        <h2 className="fo-text">Choose meals below</h2>
+        {form}
+
       </div>
+
     )
   }
 }
+
+myMeals.propTypes = {
+  currentUser: propTypes.object,
+  // submit: propTypes.func.isRequired,
+};
+
+function mapStateToProps(state) {
+  const { currentUser } = state
+  return { currentUser: currentUser }
+}
+
+
+export default connect(mapStateToProps, {})(myMeals);
