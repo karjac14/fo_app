@@ -22,7 +22,7 @@ class myPreferences extends Component {
 
 
   handleRadioChange = (i) => event => {
-    console.log(event)
+
     const name = event.target.name + "Filters";
 
     const filter = Object.assign({}, this.state.preferences[name]);
@@ -46,11 +46,7 @@ class myPreferences extends Component {
         ...prevState.preferences.moreFilters.options[i].selected = !prevState.preferences.moreFilters.options[i].selected
       }
     }));
-
-
   };
-
-
 
   submit(e) {
 
@@ -69,7 +65,6 @@ class myPreferences extends Component {
   componentDidMount() {
 
     // TODO: add spinner while waiting for preferences 
-    const { isAuth, uid } = this.props.currentUser;
     foHttp("GET", "preferences").then(res => {
       if (res.data) {
         this.setState({ preferences: res.data })
@@ -81,7 +76,7 @@ class myPreferences extends Component {
 
 
   render() {
-    const { f_name, uid } = this.props.currentUser;
+
     const { preferences } = this.state;
     return (
       <div className="container page-main">
@@ -147,8 +142,6 @@ class myPreferences extends Component {
             </div>
           </Form.Group>
         </Form>
-
-
       </div >
     )
   }

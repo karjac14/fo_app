@@ -43,7 +43,7 @@ class myOptions extends Component {
         foHttp("GET", "suggestions", params).then(res => {
             if (res.success) {
                 this.setState(res.data);
-            } else{
+            } else {
 
             }
         })
@@ -78,8 +78,7 @@ class myOptions extends Component {
     }
 
     render() {
-        const { isAuth, f_name, uid } = this.props.currentUser;
-        const { submit } = this.props;
+        const { f_name } = this.props.currentUser;
         const { suggestions, hasPreferences } = this.state;
 
 
@@ -92,33 +91,33 @@ class myOptions extends Component {
         if (suggestions) {
             form = (
                 <div>
-                <div className="row">
-                    {suggestions.map((suggestion, i) => (
-                        <div key={suggestion.id} className="col-xs-12 col-sm-6 col-md-4 col-xl-3">
-                            <Card>
-                                <Card.Img variant="top" src={suggestion.image} />
-                                <Card.Body>
-                                    <Card.Title>{suggestion.title}</Card.Title>
-                                    <Card.Text>
+                    <div className="row">
+                        {suggestions.map((suggestion, i) => (
+                            <div key={suggestion.id} className="col-xs-12 col-sm-6 col-md-4 col-xl-3">
+                                <Card>
+                                    <Card.Img variant="top" src={suggestion.image} />
+                                    <Card.Body>
+                                        <Card.Title>{suggestion.title}</Card.Title>
+                                        <Card.Text>
 
-                                    </Card.Text>
-                                    <input type="checkbox" name={suggestion.id} value={suggestion.selected} checked={suggestion.selected} onChange={this.handleCheckboxChange(i)} />
-                                </Card.Body>
-                            </Card>
-                        </div>
-                    ))}
-                </div>
-                <div className="text-center">
-                <Button type="submit" onClick={this.submit}>Save Selection</Button>
-                </div>
+                                        </Card.Text>
+                                        <input type="checkbox" name={suggestion.id} value={suggestion.selected} checked={suggestion.selected} onChange={this.handleCheckboxChange(i)} />
+                                    </Card.Body>
+                                </Card>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="text-center">
+                        <Button type="submit" onClick={this.submit}>Save Selection</Button>
+                    </div>
                 </div>
             )
         } else {
             form = (
                 <div className="text-center">
                     Fetching meals...
-                    <br/>
-                    <br/>
+                    <br />
+                    <br />
                     <div id="loading-spinner"></div>
                 </div>
             );
@@ -130,7 +129,7 @@ class myOptions extends Component {
                 <h4>Hi {f_name}!</h4>
                 <h2 className="fo-text">Choose meals below</h2>
                 {form}
-                
+
             </div>
 
         )
