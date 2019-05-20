@@ -1,17 +1,15 @@
+$bg: #f9f8f7;
 
-$bg: #F9F8F7;
-
-$yellow: #FAB131;
-$dark: #2F2F2F;
-
-$text-dark: #54575A;
+$dark: #2f2f2f;
+$text-dark: #54575a;
 $text-light: #6e7272;
-$text-lighter: #909090;
-$greyscale: #bfbdbb;
+$bluegreen: #78b4b5;
 
-$orange: #F35528;
-$bluegreen: #78B4B5;
-$drygreen: #BBC9B4;
+$theme-colors: (
+  "primary": #fb615c,
+  "primary-one": #489577
+);
 
-$primary:#FAB131;
-$danger: #F35528;
+$cu-primary: #fb615c;
+$cu-primary-one: #489577;
+$satin: #e7e1db;

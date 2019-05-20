@@ -1,7 +1,7 @@
 @import "colors";
 
 .radio-piece {
-  display: inline-block;
+  // display: inline-block;
   margin-bottom: 15px;
 
   label {
@@ -53,7 +53,7 @@
     color: $text-light;
   }
   input[type="radio"]:checked + .radio-body {
-    border: 2px solid $orange;
+    border: 2px solid $cu-primary;
     font-weight: 400;
   }
 
@@ -74,6 +74,6 @@
     color: $text-light;
   }
   input[type="checkbox"]:checked + .radio-body {
-    border: 2px solid $orange;
+    border: 2px solid $cu-primary;
   }
 }

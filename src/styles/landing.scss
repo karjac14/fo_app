@@ -1,68 +1,77 @@
-@import 'colors';
+@import "colors";
 
 h5 {
   text-align: center;
 }
 
-.jumbotron{
-  background-position: center; 
+.jumbotron {
+  background-position: center;
+  color: #fff;
+  border-radius: 0 !important;
 }
-
 
 @media (min-width: 601px) {
   .jumbotron {
-    background: url('../assets/img/banner_md.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url("../assets/img/banner_md.jpg");
     background-position: center;
     height: 50vh;
-    color: $dark;
-    h1{
+    h1 {
       padding-top: 5vh;
-      
     }
   }
 }
 
 @media (min-width: 900px) {
   .jumbotron {
-    background: url('../assets/img/banner_lg.jpg');
-    background-position: center; 
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url("../assets/img/banner_lg.jpg");
+    background-position: center;
     height: 60vh;
-    color: $dark;
-    h1{
+    h1 {
       padding-top: 10vh;
+      font-size: 60px;
     }
   }
 }
 
 @media (max-width: 600px) {
-  .jumbotron {      
-     background: url('../assets/img/banner_md.jpg');
-     background-position: center; 
-     height: 50vh;
-     color: $dark;
-     h1{
+  .jumbotron {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url("../assets/img/banner_md.jpg");
+    background-position: center;
+    height: 50vh;
+    h1 {
       padding-top: 5vh;
     }
   }
 }
 
-.sm-card-container{
+.sm-card-container {
   overflow-x: hidden;
   width: 100%;
-  .sm-card-container-scollable{
+  .sm-card-container-scollable {
     width: 1500px;
     flex-wrap: nowrap;
     overflow-x: scroll;
-    .sm-card-landing{
+    .sm-card-landing {
       display: inline;
     }
   }
-  
 }
 
+.landing-notes {
+  background-color: $cu-primary-one;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  .card {
+    border: 1px solid #fff;
+    color: #fff;
+    background-color: $cu-primary-one;
+  }
+}
 
-
-.landing-footer{
+.landing-footer {
   background-color: $bluegreen;
   min-height: 75px;
   color: #fff;
@@ -71,8 +80,8 @@ h5 {
 }
 
 .card-img-left {
-  border-bottom-left-radius: calc(.25rem - 1px);
-  border-top-left-radius: calc(.25rem - 1px);
+  border-bottom-left-radius: calc(0.25rem - 1px);
+  border-top-left-radius: calc(0.25rem - 1px);
   float: left;
   padding-right: 1em;
   margin-bottom: -1.25em;
@@ -83,12 +92,11 @@ h5 {
   color: #fff;
   height: 70px;
   margin-top: -70px;
-  .recommended-title{
+  .recommended-title {
     margin-bottom: 4px;
   }
 
-  .recommended-text{
+  .recommended-text {
     font-size: 14px !important;
   }
-
 }

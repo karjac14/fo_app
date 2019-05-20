@@ -83,7 +83,7 @@ class myPreferences extends Component {
             </div>
           </aside>
           <div className="panel-main col-xs-12 col-md-9">
-            <div className="card">
+            <div className="card shadow">
               <div className="card-body">
                 <h2>Diet Preferences</h2>
                 <p>

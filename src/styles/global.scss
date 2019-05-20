@@ -1,5 +1,6 @@
 @import "colors";
 @import url("https://fonts.googleapis.com/css?family=Roboto:100,400,400i,500,500i,700");
+@import url("https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap");
 
 .page-main {
   padding-top: 50px;
@@ -13,10 +14,10 @@ body {
   color: $text-dark;
 }
 
-a {
-  cursor: pointer;
-  color: $primary;
-}
+// a {
+//   cursor: pointer;
+//   color: $apricot;
+// }
 
 .btn-primary,
 .btn-primary:hover {
