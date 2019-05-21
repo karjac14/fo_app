@@ -10,9 +10,9 @@ h5 {
   border-radius: 0 !important;
 }
 
-@media (min-width: 601px) {
+@media (max-width: 600px) {
   .jumbotron {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
       url("../assets/img/banner_md.jpg");
     background-position: center;
     height: 50vh;
@@ -22,9 +22,24 @@ h5 {
   }
 }
 
+@media (min-width: 601px) {
+  .jumbotron {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+      url("../assets/img/banner_md.jpg");
+    background-position: center;
+    height: 50vh;
+    h1 {
+      padding-top: 5vh;
+    }
+    p {
+      font-size: 1.2em;
+    }
+  }
+}
+
 @media (min-width: 900px) {
   .jumbotron {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
       url("../assets/img/banner_lg.jpg");
     background-position: center;
     height: 60vh;
@@ -32,17 +47,8 @@ h5 {
       padding-top: 10vh;
       font-size: 60px;
     }
-  }
-}
-
-@media (max-width: 600px) {
-  .jumbotron {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url("../assets/img/banner_md.jpg");
-    background-position: center;
-    height: 50vh;
-    h1 {
-      padding-top: 5vh;
+    p {
+      font-size: 1.5em;
     }
   }
 }
@@ -98,5 +104,12 @@ h5 {
 
   .recommended-text {
     font-size: 14px !important;
+  }
+}
+
+.landing-modal {
+  padding: 30px;
+  button {
+    margin: 0 10px;
   }
 }

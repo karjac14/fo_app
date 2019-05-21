@@ -13,3 +13,17 @@
     font-size: 40px !important;
   }
 }
+
+svg.logo-icon {
+  margin-top: -9px;
+  width: 25px;
+  margin-right: 5px;
+  @media (min-width: 768px) {
+    width: 40px;
+    margin-top: -15px;
+  }
+  path {
+    stroke: $cu-primary-one;
+    fill: #fff;
+  }
+}

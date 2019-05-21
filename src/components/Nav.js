@@ -8,6 +8,9 @@ import { connect } from "react-redux";
 import { logOut } from "../actions/currentUserActions";
 import propTypes from "prop-types";
 
+import Icon from "@mdi/react";
+import { mdiChefHat } from "@mdi/js";
+
 import logo from "../assets/img/brand_logo.png";
 import "../styles/navbar.scss";
 
@@ -37,7 +40,7 @@ class NavFo extends React.Component {
     if (isAuth) {
       rightGroupLinks = (
         <Nav>
-          <NavDropdown title="Account" className="ml-auto">
+          <NavDropdown title="Account" alignRight>
             <LinkContainer to="/my-preferences">
               <NavDropdown.Item>Preferences</NavDropdown.Item>
             </LinkContainer>
@@ -69,7 +72,8 @@ class NavFo extends React.Component {
       <Navbar collapseOnSelect expand="lg" bg="white" variant="light">
         <LinkContainer to="/">
           <a className="navbar-brand" href="#">
-            Cook Up.
+            <Icon className="logo-icon" path={mdiChefHat} />
+            Cook Up
           </a>
         </LinkContainer>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
