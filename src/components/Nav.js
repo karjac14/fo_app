@@ -1,17 +1,18 @@
 import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import NavDropdown from "react-bootstrap/NavDropdown";
 import { withRouter } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
-import { connect } from 'react-redux';
-import { logOut } from '../actions/currentUserActions';
+import { connect } from "react-redux";
+import { logOut } from "../actions/currentUserActions";
 import propTypes from "prop-types";
 
-import logo from '../assets/img/brand_logo.png';
+import Icon from "@mdi/react";
+import { mdiChefHat } from "@mdi/js";
+
+import logo from "../assets/img/brand_logo.png";
 import "../styles/navbar.scss";
-
-
-
 
 class NavFo extends React.Component {
   constructor(props) {
@@ -39,20 +40,29 @@ class NavFo extends React.Component {
     if (isAuth) {
       rightGroupLinks = (
         <Nav>
-          <LinkContainer to="/my-meals">
-          <Nav.Link>My Meals</Nav.Link>
-          </LinkContainer>
-          <Nav.Link onClick={this.logout}>Logout</Nav.Link>
+          <NavDropdown title="Account" alignRight>
+            <LinkContainer to="/my-preferences">
+              <NavDropdown.Item>Preferences</NavDropdown.Item>
+            </LinkContainer>
+            <LinkContainer to="/my-options">
+              <NavDropdown.Item>Suggestions</NavDropdown.Item>
+            </LinkContainer>
+            <LinkContainer to="/my-meals">
+              <NavDropdown.Item>My Meals</NavDropdown.Item>
+            </LinkContainer>
+            <NavDropdown.Divider />
+            <NavDropdown.Item onClick={this.logout}>Logout</NavDropdown.Item>
+          </NavDropdown>
         </Nav>
       );
     } else {
       rightGroupLinks = (
         <Nav>
           <LinkContainer to="/login">
-          <Nav.Link>Login</Nav.Link>
+            <Nav.Link>Login</Nav.Link>
           </LinkContainer>
           <LinkContainer to="/login?signup=1">
-          <Nav.Link>Sign up</Nav.Link>
+            <Nav.Link>Sign up</Nav.Link>
           </LinkContainer>
         </Nav>
       );
@@ -61,12 +71,10 @@ class NavFo extends React.Component {
     return (
       <Navbar collapseOnSelect expand="lg" bg="white" variant="light">
         <LinkContainer to="/">
-        <Navbar.Brand><img
-        src={logo}
-        height="40"
-        className="d-inline-block align-top"
-        alt="Cook Up"
-      /></Navbar.Brand>
+          <a className="navbar-brand" href="#">
+            <Icon className="logo-icon" path={mdiChefHat} />
+            Cook Up
+          </a>
         </LinkContainer>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
@@ -85,13 +93,17 @@ class NavFo extends React.Component {
 
 NavFo.propTypes = {
   logOut: propTypes.func.isRequired,
-  isAuth: propTypes.bool,
+  isAuth: propTypes.bool
 };
 
 function mapStateToProps(state) {
-  const { currentUser } = state
-  return { isAuth: currentUser.isAuth }
+  const { currentUser } = state;
+  return { isAuth: currentUser.isAuth };
 }
 
-export default withRouter(connect(mapStateToProps, { logOut })(NavFo));
-
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { logOut }
+  )(NavFo)
+);

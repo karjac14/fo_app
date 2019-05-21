@@ -1,26 +1,27 @@
-@import 'colors';
-@import url('https://fonts.googleapis.com/css?family=Roboto:100,400,400i,500,500i,700');
+@import "colors";
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,400,400i,500,500i,700");
+@import url("https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap");
 
-.page-main{
-  padding-top: 100px;
+.page-main {
+  padding-top: 50px;
 }
 
+@import "~bootstrap/scss/bootstrap.scss";
 
-@import '~bootstrap/scss/bootstrap.scss';
-
-body{
-  font-family: 'Roboto', sans-serif;
+body {
+  font-family: "Roboto", sans-serif;
   background-color: $bg;
   color: $text-dark;
 }
 
-a {
-  cursor: pointer;
-  color: $primary;
-}
+// a {
+//   cursor: pointer;
+//   color: $apricot;
+// }
 
-.btn-primary, .btn-primary:hover {
-  color: #FFF;
+.btn-primary,
+.btn-primary:hover {
+  color: #fff;
 }
 
 .btn {
@@ -33,7 +34,7 @@ a {
   display: inline-block;
   width: 50px;
   height: 50px;
-  border: 3px solid rgba(120,180,181,.3);
+  border: 3px solid rgba(120, 180, 181, 0.3);
   border-radius: 50%;
   border-top-color: $bluegreen;
   animation: spin 1s ease-in-out infinite;
@@ -41,8 +42,12 @@ a {
 }
 
 @keyframes spin {
-  to { -webkit-transform: rotate(360deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
 }
 @-webkit-keyframes spin {
-  to { -webkit-transform: rotate(360deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
 }
