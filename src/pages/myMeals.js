@@ -14,7 +14,8 @@ class myMeals extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      noSelection: false
+      noSelection: false,
+      noSuggestions: false
     };
 
     // this.toggleMode = this.toggleMode.bind(this);
@@ -35,12 +36,13 @@ class myMeals extends Component {
 
     foHttp("GET", "meals", params).then(res => {
       if (res.success) {
-
-        this.setState(res.data);
-
-
-      } else {
-
+        if (res.data.noSelection) {
+          this.setState({ noSelection: true });
+        } else if (res.data.noSuggestions) {
+          this.setState({ noSuggestions: true });
+        } else {
+          this.setState(res.data);
+        }
       }
     })
 
@@ -52,9 +54,9 @@ class myMeals extends Component {
 
   render() {
     const { f_name } = this.props.currentUser;
-    const { noSelection, meals } = this.state;
+    const { noSelection, noSuggestions, meals } = this.state;
 
-    if (noSelection) {
+    if (noSelection || noSuggestions) {
       // TODO: if no choices this week redirect user to choose page
       return <Redirect to="/my-options" />
     }

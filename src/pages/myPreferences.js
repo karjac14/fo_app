@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import propTypes from "prop-types";
 import foHttp from "../helpers/fohttp";
 import moment from "moment";
@@ -60,20 +61,32 @@ class myPreferences extends Component {
       week,
       year
     };
-    foHttp("POST", "preferences", params).then(res => console.log(res));
+    foHttp("POST", "preferences", params).then(res => {
+      this.setState({ redirectToOptions: true })
+    });
   }
 
   componentDidMount() {
     // TODO: add spinner while waiting for preferences
-    foHttp("GET", "preferences").then(res => {
-      if (res.data) {
-        this.setState({ preferences: res.data });
-      }
-    });
+    const { isAuth, isNewUser } = this.props.currentUser;
+
+    if (!isNewUser) {
+      foHttp("GET", "preferences").then(res => {
+        if (res.data) {
+          this.setState({ preferences: res.data });
+        }
+      });
+    }
+
   }
 
   render() {
-    const { preferences } = this.state;
+    const { preferences, redirectToOptions } = this.state;
+
+    if (redirectToOptions) {
+      return <Redirect to="/my-options" />;
+    }
+
     return (
       <div className="container page-main">
         <div className="row">
