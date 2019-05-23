@@ -6,9 +6,12 @@
 
 .navbar-brand {
   color: $cu-primary-one !important;
-  font-family: "Abril Fatface", sans-serif;
+  font-family: "Baloo Bhai", sans-serif;
+  font-weight:700;
   padding: 0 !important;
   font-size: 25px !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   @media (min-width: 768px) {
     font-size: 40px !important;
   }
