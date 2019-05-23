@@ -16,12 +16,8 @@ class myOptions extends Component {
         super(props);
         this.state = {
             suggestions: null,
-            hasPreferences: null
+            noPreferences: null
         };
-
-        // this.toggleMode = this.toggleMode.bind(this);
-        // this.handleInputChange = this.handleInputChange.bind(this);
-        // this.logIn = this.logIn.bind(this);
         this.submit = this.submit.bind(this);
     }
 
@@ -42,13 +38,13 @@ class myOptions extends Component {
 
         foHttp("GET", "suggestions", params).then(res => {
             if (res.success) {
-                this.setState(res.data);
-            } else {
-
+                if (res.data.noPreferences) {
+                    this.setState({ noPreferences: true });
+                } else {
+                    this.setState(res.data);
+                }
             }
         })
-
-
     }
 
     handleCheckboxChange = (i) => changeEvent => {
@@ -70,8 +66,8 @@ class myOptions extends Component {
 
         let params = this.state;
 
-        foHttp("POST", "suggestions", params).then(res =>
-            console.log(res)
+        foHttp("POST", "suggestions", params).then(() =>
+            this.setState({ redirectToMeals: true })
         )
 
 
@@ -79,16 +75,15 @@ class myOptions extends Component {
 
     render() {
         const { f_name } = this.props.currentUser;
-        const { suggestions, hasPreferences } = this.state;
-
-
-        if (hasPreferences === false) {
-            return <Redirect to="/my-preferences" />
-        }
-
+        const { suggestions, noPreferences, redirectToMeals } = this.state;
 
         let form;
-        if (suggestions) {
+
+        if (redirectToMeals) {
+            form = <Redirect to="/my-meals" />
+        } else if (noPreferences) {
+            form = <Redirect to="/my-preferences" />
+        } else if (suggestions) {
             form = (
                 <div>
                     <div className="row">
@@ -115,7 +110,7 @@ class myOptions extends Component {
         } else {
             form = (
                 <div className="text-center">
-                    Fetching meals...
+                    Fetching suggestions...
                     <br />
                     <br />
                     <div id="loading-spinner"></div>
@@ -123,15 +118,39 @@ class myOptions extends Component {
             );
         }
 
+
+
         return (
 
+
+
+
+
+
             <div className="container page-main">
-                <h4>Hi {f_name}!</h4>
-                <h2 className="fo-text">Choose meals below</h2>
-                {form}
+                <div className="row">
+                    <aside className="panel-left d-none d-md-block col-md-3">
+                        <div className="card">
+                            <div className="card-body">{this.state.firstDay}<br />{this.state.lastDay}</div>
+                        </div>
+                    </aside>
+                    <div className="panel-main col-xs-12 col-md-9">
+                        <div className="card shadow">
+                            <div className="card-body">
+                                {/* TODO: fresh options of the week verbiage */}
+                                <h2>Its a brand new week</h2>
+                                <p>
+                                    Answer a few questions to help us personalize your menu
+                                    options. You can change these any time later.
+                                </p>
+                                <br />
+                                {form}
 
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
         )
     }
 }
