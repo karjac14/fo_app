@@ -36,14 +36,13 @@ export function logIn(email, password) {
     auth.signInWithEmailAndPassword(email, password)
       .then(data => {
 
-
-
         let uid = data.user.uid;
-        data.user.getIdToken().then( idToken => {
+        data.user.getIdToken().then(idToken => {
           usersRef.doc(uid).get().then(doc => {
             if (doc.exists) {
               let user = doc.data();
               user.idToken = idToken;
+              user.isNewUser = data.additionalUserInfo.isNewUser;
               dispatch({
                 type: LOG_IN_SUCCESS,
                 payload: user
@@ -51,6 +50,7 @@ export function logIn(email, password) {
             } else {
               let user = doc.data();
               user.idToken = idToken;
+              user.isNewUser = data.additionalUserInfo.isNewUser;
               dispatch({
                 type: LOG_IN_SUCCESS,
                 payload: user
@@ -59,19 +59,19 @@ export function logIn(email, password) {
           }).catch(function (error) {
             //let the user to login
             //TODO later: inform user to enter their details in account settings
-              let user = {}
-              user.idToken = idToken;
-              dispatch({
-                type: LOG_IN_SUCCESS,
-                payload: user
-              })
+            let user = {}
+            user.idToken = idToken;
+            dispatch({
+              type: LOG_IN_SUCCESS,
+              payload: user
+            })
           });
         });
       }).catch(error => {
 
         let errorMessage;
 
-        if (error.code === "auth/user-not-found"){
+        if (error.code === "auth/user-not-found") {
           errorMessage = "Email provided not found."
         } else if (error.code === "auth/wrong-password") {
           errorMessage = "Invalid password. Please try again"
@@ -107,39 +107,39 @@ export function signUp(newUser) {
           created_date: new Date()
         };
 
-        data.user.getIdToken().then( idToken => {
+        data.user.getIdToken().then(idToken => {
           usersRef.doc(uid).set(newUserDetails)
-          .then(function (docRef) {
-            newUserDetails.idToken = idToken;
-            newUserDetails.newUser = true;
-            dispatch({
-              type: SIGN_UP_SUCCESS,
-              payload: newUserDetails
+            .then(function (docRef) {
+              newUserDetails.idToken = idToken;
+              newUserDetails.isNewUser = true;
+              dispatch({
+                type: SIGN_UP_SUCCESS,
+                payload: newUserDetails
+              })
             })
-          })
-          .catch(function (error) {
-            dispatch({
-              type: SIGN_UP_FAIL,
-              payload: error.message
-            })
-          });
+            .catch(function (error) {
+              dispatch({
+                type: SIGN_UP_FAIL,
+                payload: error.message
+              })
+            });
         });
 
       }).catch(function (error) {
 
         let errorMessage;
 
-        if (error.code === "auth/email-already-in-use"){
+        if (error.code === "auth/email-already-in-use") {
           errorMessage = "Email provided is already in use."
         } else if (error.code === "auth/invalid-email") {
           errorMessage = "Invalid email address."
         } else {
           errorMessage = error.message
         }
-            dispatch({
-              type: SIGN_UP_FAIL,
-              payload: errorMessage
-            })
+        dispatch({
+          type: SIGN_UP_FAIL,
+          payload: errorMessage
+        })
       });
   };
 }

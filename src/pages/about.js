@@ -69,6 +69,10 @@ export default function about() {
         <li>Node.js, Express.js, Firebase Cloud Functions</li>
         <li>Firestore</li>
       </ul>
+
+      <br />
+      Karlo Eleuterio<br />
+      <a href="https://github.com/karjac14" rel="noopener noreferrer" target="_blank">Github</a>
     </div>
   );
 }
