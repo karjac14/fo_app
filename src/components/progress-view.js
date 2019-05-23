@@ -24,14 +24,15 @@ class ProgressBar extends React.Component {
 
     render() {
         const isAuth = this.props.isAuth;
+        const {activeRoute} = this.props;
 
         return (
             <div className="container">
                 <div className="status-row">
-                    <div className="col-3 status-col"><div><Icon path={mdiNumeric1CircleOutline}  /></div><div className="status-name">Preferences</div></div>
-                    <div className="col-3 status-col"><div><Icon path={mdiNumeric2CircleOutline}  /></div><div className="status-name">Meal Options</div></div>
-                    <div className="col-3 status-col"><div><Icon path={mdiNumeric3CircleOutline}  /></div><div className="status-name">Chosen Meals</div></div>
-                    <div className="col-3 status-col"><div><Icon path={mdiNumeric4CircleOutline}  /></div><div className="status-name">Order Ingredients</div></div>
+                    <div className={"col-3 status-col " + (activeRoute === '1' ? 'active' : '')}><div><Icon path={mdiNumeric1CircleOutline}  /></div><div className="status-name">Preferences</div></div>
+                    <div className={"col-3 status-col " + (activeRoute === '2' ? 'active' : '')}><div><Icon path={mdiNumeric2CircleOutline}  /></div><div className="status-name">Meal Options</div></div>
+                    <div className={"col-3 status-col " + (activeRoute === '3' ? 'active' : '')}><div><Icon path={mdiNumeric3CircleOutline}  /></div><div className="status-name">Chosen Meals</div></div>
+                    <div className={"col-3 status-col " + (activeRoute === '4' ? 'active' : '')}><div><Icon path={mdiNumeric4CircleOutline}  /></div><div className="status-name">Order Ingredients</div></div>
                 </div>
             </div>
         );

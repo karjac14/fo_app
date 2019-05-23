@@ -91,7 +91,7 @@ class myPreferences extends Component {
     return (
       <div className="container page-main">
         <div className="row">
-          <ProgressBar></ProgressBar>
+          <ProgressBar activeRoute="1"></ProgressBar>
         </div>
         <div className="row">
           <aside className="panel-left d-none d-md-block col-md-3">

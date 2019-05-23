@@ -20,5 +20,15 @@
            padding-left: 4px;
            font-size: .9em;
         }
+
+        &.active {
+            color: $cu-primary-one;
+            svg {
+                width: 20px !important;
+                path {
+                    fill: $cu-primary-one;
+                  }
+            }
+        }
     }
 }
