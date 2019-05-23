@@ -1,0 +1,24 @@
+@import "colors";
+
+.status-row {
+    margin: 0 auto 30px;
+    max-width: 620px;
+    display: flex;
+    justify-content: center;
+    .status-col {
+        display:flex;
+        align-items: center;
+        // justify-content: space-between;
+        color: $text-light;
+        svg {
+            width: 20px !important;
+            path {
+                fill: $text-light;
+              }
+        }
+        .status-name{
+           padding-left: 4px;
+           font-size: .9em;
+        }
+    }
+}

@@ -7,6 +7,7 @@ import foHttp from "../helpers/fohttp";
 import moment from "moment";
 import "../styles/radio-group.scss";
 import defaultPreferences from "../hard-data/preferences";
+import ProgressBar from "../components/progress-view";
 
 class myPreferences extends Component {
   constructor(props) {
@@ -76,6 +77,9 @@ class myPreferences extends Component {
     const { preferences } = this.state;
     return (
       <div className="container page-main">
+        <div className="row">
+          <ProgressBar></ProgressBar>
+        </div>
         <div className="row">
           <aside className="panel-left d-none d-md-block col-md-3">
             <div className="card">
