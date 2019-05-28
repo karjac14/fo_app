@@ -11,7 +11,6 @@ import propTypes from "prop-types";
 import Icon from "@mdi/react";
 import { mdiChefHat } from "@mdi/js";
 
-import logo from "../assets/img/brand_logo.png";
 import "../styles/navbar.scss";
 
 class NavFo extends React.Component {
@@ -71,10 +70,8 @@ class NavFo extends React.Component {
     return (
       <Navbar collapseOnSelect expand="lg" bg="white" variant="light">
         <LinkContainer to="/">
-          <a className="navbar-brand" href="#">
-            <Icon className="logo-icon" path={mdiChefHat} />
-            Cook Up
-          </a>
+          <Navbar.Brand><Icon className="logo-icon" path={mdiChefHat} />
+            Cook Up</Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
