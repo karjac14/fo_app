@@ -6,6 +6,7 @@ import login from "./pages/login";
 import myMeals from "./pages/myMeals";
 import myPreferences from "./pages/myPreferences";
 import myOptions from "./pages/myOptions";
+import moment from 'moment';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import { setAsAuth, setAsNotAuth } from './actions/currentUserActions';
@@ -21,6 +22,14 @@ import "./styles/global.scss";
 class App extends Component {
 
   componentDidMount() {
+
+    moment.updateLocale("en", {
+      week: {
+        dow: 1, // First day of week is Monday
+        doy: 4  // First week of year must contain 4 January (7 + 1 - 4)
+      }
+    });
+
     let unsubscribe = firebase.auth().onAuthStateChanged(user => {
       if (user) {
         user.getIdToken().then(idToken => {

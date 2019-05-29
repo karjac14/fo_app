@@ -7,6 +7,7 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import propTypes from "prop-types";
 import ProgressBar from "../components/progress-view";
+import CalendarIndicator from "../components/calendar-indicator";
 
 
 
@@ -17,7 +18,12 @@ class myMeals extends Component {
     super(props);
     this.state = {
       noSelection: false,
-      noSuggestions: false
+      noSuggestions: false,
+      week: moment().week(),
+      year: moment().year(),
+      today: moment(),
+      firstDay: moment().startOf('week').toDate(),
+      lastDay: moment().endOf('week').toDate()
     };
 
     // this.toggleMode = this.toggleMode.bind(this);
@@ -28,8 +34,7 @@ class myMeals extends Component {
 
   componentDidMount() {
 
-    let week = moment().week();
-    let year = moment().year();
+    const { week, year } = this.state;
 
     let params = {
       week,
@@ -52,10 +57,14 @@ class myMeals extends Component {
 
   }
 
+  changeWeek(date) {
+    console.log(`changing week to: ${date}`); // TODO: use this event later when user wants to see previous meals
+  }
+
 
 
   render() {
-    const { f_name } = this.props.currentUser;
+
     const { progress } = this.props;
     const { noSelection, noSuggestions, meals } = this.state;
 
@@ -104,13 +113,27 @@ class myMeals extends Component {
 
       <div className="container page-main">
         <div className="row">
-          <ProgressBar activeRoute="3" progress={progress}></ProgressBar>
+          <aside className="panel-left d-none d-md-block col-md-3">
+            <div>
+            </div>
+          </aside>
+          <div className="panel-main col-xs-12 col-md-9">
+            <ProgressBar activeRoute="2" progress={progress}></ProgressBar>
+          </div>
         </div>
-        <h4>Hi {f_name}!</h4>
-        <h2 className="fo-text">Choose meals below</h2>
-        {form}
-
-      </div>
+        <div className="row">
+          <aside className="panel-left d-none d-md-block col-md-3">
+            <div>
+              <h5>This Week</h5>
+              <CalendarIndicator weekStart={this.state.firstDay} weekEnd={this.state.lastDay} today={this.state.today} changeWeek={this.changeWeek}></CalendarIndicator>
+            </div>
+          </aside>
+          <div className="panel-main col-xs-12 col-md-9">
+            <div className="card shadow">
+              {form}
+            </div>
+          </div>
+        </div></div>
 
     )
   }

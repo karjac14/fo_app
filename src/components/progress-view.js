@@ -1,5 +1,6 @@
 
 import React from 'react';
+import PropTypes from "prop-types";
 import Icon from "@mdi/react";
 import { mdiNumeric1CircleOutline, mdiNumeric2CircleOutline, mdiNumeric3CircleOutline, mdiNumeric4CircleOutline, mdiCheckboxMarkedCircle } from "@mdi/js";
 import "../styles/progress.scss";
@@ -18,6 +19,15 @@ function ProgressBar(props) {
         </div>
     );
 }
+
+ProgressBar.propTypes = {
+    activeRoute: PropTypes.string,
+    progress: PropTypes.object
+};
+
+ProgressBar.defaultProps = {
+    activeRoute: "1"
+};
 
 export default ProgressBar;
 
