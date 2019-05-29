@@ -6,6 +6,8 @@ import foHttp from '../helpers/fohttp';
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import propTypes from "prop-types";
+import ProgressBar from "../components/progress-view";
+
 
 
 
@@ -54,6 +56,7 @@ class myMeals extends Component {
 
   render() {
     const { f_name } = this.props.currentUser;
+    const { progress } = this.props;
     const { noSelection, noSuggestions, meals } = this.state;
 
     if (noSelection || noSuggestions) {
@@ -100,6 +103,9 @@ class myMeals extends Component {
     return (
 
       <div className="container page-main">
+        <div className="row">
+          <ProgressBar activeRoute="3" progress={progress}></ProgressBar>
+        </div>
         <h4>Hi {f_name}!</h4>
         <h2 className="fo-text">Choose meals below</h2>
         {form}
@@ -116,8 +122,8 @@ myMeals.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { currentUser } = state
-  return { currentUser: currentUser }
+  const { currentUser, progress } = state
+  return { currentUser: currentUser, progress: progress }
 }
 
 
