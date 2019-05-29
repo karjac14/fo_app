@@ -8,6 +8,7 @@ import foHttp from "../helpers/fohttp";
 import moment from "moment";
 import "../styles/radio-group.scss";
 import defaultPreferences from "../hard-data/preferences";
+import ProgressBar from "../components/progress-view";
 
 class myPreferences extends Component {
   constructor(props) {
@@ -82,6 +83,7 @@ class myPreferences extends Component {
 
   render() {
     const { preferences, redirectToOptions } = this.state;
+    const { progress } = this.props;
 
     if (redirectToOptions) {
       return <Redirect to="/my-options" />;
@@ -89,6 +91,9 @@ class myPreferences extends Component {
 
     return (
       <div className="container page-main">
+        <div className="row">
+          <ProgressBar activeRoute="1" progress={progress}></ProgressBar>
+        </div>
         <div className="row">
           <aside className="panel-left d-none d-md-block col-md-3">
             <div className="card">
@@ -212,8 +217,8 @@ myPreferences.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { currentUser } = state;
-  return { currentUser: currentUser };
+  const { currentUser, progress } = state;
+  return { currentUser: currentUser, progress: progress };
 }
 
 export default connect(

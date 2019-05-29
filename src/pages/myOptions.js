@@ -6,6 +6,8 @@ import moment from 'moment';
 import { Redirect } from "react-router-dom";
 import foHttp from '../helpers/fohttp';
 import Button from "react-bootstrap/Button";
+import ProgressBar from "../components/progress-view";
+
 
 import "../styles/options.scss";
 
@@ -36,15 +38,15 @@ class myOptions extends Component {
             lastDay
         };
 
-        foHttp("GET", "suggestions", params).then(res => {
-            if (res.success) {
-                if (res.data.noPreferences) {
-                    this.setState({ noPreferences: true });
-                } else {
-                    this.setState(res.data);
-                }
-            }
-        })
+        // foHttp("GET", "suggestions", params).then(res => {
+        //     if (res.success) {
+        //         if (res.data.noPreferences) {
+        //             this.setState({ noPreferences: true });
+        //         } else {
+        //             this.setState(res.data);
+        //         }
+        //     }
+        // })
     }
 
     handleCheckboxChange = (i) => changeEvent => {
@@ -75,6 +77,7 @@ class myOptions extends Component {
 
     render() {
         const { f_name } = this.props.currentUser;
+        const { progress } = this.props;
         const { suggestions, noPreferences, redirectToMeals } = this.state;
 
         let form;
@@ -129,6 +132,9 @@ class myOptions extends Component {
 
             <div className="container page-main">
                 <div className="row">
+                    <ProgressBar activeRoute="2" progress={progress}></ProgressBar>
+                </div>
+                <div className="row">
                     <aside className="panel-left d-none d-md-block col-md-3">
                         <div className="card">
                             <div className="card-body">{this.state.firstDay}<br />{this.state.lastDay}</div>
@@ -163,8 +169,8 @@ myOptions.propTypes = {
 };
 
 function mapStateToProps(state) {
-    const { currentUser } = state
-    return { currentUser: currentUser }
+    const { currentUser, progress } = state
+    return { currentUser: currentUser, progress: progress }
 }
 
 
