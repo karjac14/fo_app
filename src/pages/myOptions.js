@@ -7,9 +7,11 @@ import { Redirect } from "react-router-dom";
 import foHttp from '../helpers/fohttp';
 import Button from "react-bootstrap/Button";
 import ProgressBar from "../components/progress-view";
+import CalendarIndicator from "../components/calendar-indicator";
 
 
 import "../styles/options.scss";
+import "../styles/pages.scss";
 
 
 class myOptions extends Component {
@@ -18,18 +20,21 @@ class myOptions extends Component {
         super(props);
         this.state = {
             suggestions: null,
-            noPreferences: null
+            noPreferences: null,
+            week: moment().week(),
+            year: moment().year(),
+            today: moment(),
+            firstDay: moment().startOf('week'),
+            lastDay: moment().endOf('week')
         };
+
         this.submit = this.submit.bind(this);
     }
 
 
     componentDidMount() {
 
-        let week = moment().week();
-        let year = moment().year();
-        let firstDay = moment().startOf('week').toDate();;
-        let lastDay = moment().endOf('week').toDate();;
+        const { week, year, firstDay, lastDay } = this.state;
 
         let params = {
             week,
@@ -38,15 +43,15 @@ class myOptions extends Component {
             lastDay
         };
 
-        // foHttp("GET", "suggestions", params).then(res => {
-        //     if (res.success) {
-        //         if (res.data.noPreferences) {
-        //             this.setState({ noPreferences: true });
-        //         } else {
-        //             this.setState(res.data);
-        //         }
-        //     }
-        // })
+        foHttp("GET", "suggestions", params).then(res => {
+            if (res.success) {
+                if (res.data.noPreferences) {
+                    this.setState({ noPreferences: true });
+                } else {
+                    this.setState(res.data);
+                }
+            }
+        })
     }
 
     handleCheckboxChange = (i) => changeEvent => {
@@ -59,6 +64,10 @@ class myOptions extends Component {
         });
     };
 
+    changeWeek(date) {
+        console.log(`changing week to: ${date}`); // TODO: use this event later when user wants to see previous meals
+    }
+
     submit(e) {
 
         //TODO: after success submit, redirect user choose meals
@@ -66,7 +75,13 @@ class myOptions extends Component {
 
         e.preventDefault();
 
-        let params = this.state;
+        const { week, year, suggestions } = this.state;
+
+        let params = {
+            week,
+            year,
+            suggestions
+        };
 
         foHttp("POST", "suggestions", params).then(() =>
             this.setState({ redirectToMeals: true })
@@ -79,6 +94,7 @@ class myOptions extends Component {
         const { f_name } = this.props.currentUser;
         const { progress } = this.props;
         const { suggestions, noPreferences, redirectToMeals } = this.state;
+
 
         let form;
 
@@ -124,20 +140,31 @@ class myOptions extends Component {
 
 
         return (
-
-
-
-
-
-
             <div className="container page-main">
                 <div className="row">
-                    <ProgressBar activeRoute="2" progress={progress}></ProgressBar>
+                    <aside className="panel-left d-none d-md-block col-md-3">
+                        <div>
+                        </div>
+                    </aside>
+                    <div className="panel-main col-xs-12 col-md-9">
+                        <ProgressBar activeRoute="2" progress={progress}></ProgressBar>
+                    </div>
                 </div>
                 <div className="row">
                     <aside className="panel-left d-none d-md-block col-md-3">
-                        <div className="card">
-                            <div className="card-body">{this.state.firstDay}<br />{this.state.lastDay}</div>
+                        <div className="panel-left-sub">
+                            <h5>Week View</h5>
+                            <CalendarIndicator weekStart={this.state.firstDay} weekEnd={this.state.lastDay} today={this.state.today} changeWeek={this.changeWeek}></CalendarIndicator>
+                        </div>
+                        <div className="panel-left-sub">
+                            <h5>Settings</h5>
+                            <ul className="list-unstyled">
+                                <li >Cras justo odio</li>
+                                <li >Dapibus ac facilisis in</li>
+                                <li >Morbi leo risus</li>
+                                <li >Porta ac consectetur ac</li>
+                                <li >Vestibulum at eros</li>
+                            </ul>
                         </div>
                     </aside>
                     <div className="panel-main col-xs-12 col-md-9">
