@@ -5,9 +5,50 @@
   }
 
 .panel-left {
+    text-align: left;
     .panel-left-sub{
-        border-top: 2px solid $text-lightest;
+        border-bottom: 2px solid #ddd;
         padding: 15px 0 25px;
+        .account-pane {
+            h4{
+                margin-bottom: 0;
+            }
+        }
+
+        .refer-pane{
+            img{
+                width: 100%;
+            }
+            .refer-texts{
+                padding: 4px;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                h6 {
+                    text-align: left;
+                    padding: 0 4px;
+                    margin-bottom: 4px;
+                }
+                p {
+                    font-size: 10px;
+                    padding: 0 4px;
+                    margin-bottom: 4px;
+                }
+                a{
+                    margin: 4px 0;
+                    text-align: center;
+                    .btn{
+                        padding: 0 8px;
+                        margin: 4px 0;
+                    }
+                }
+                
+            }
+        }
+        a{
+            font-size: 12px;
+        }
     }
     h5{
         text-align: left;

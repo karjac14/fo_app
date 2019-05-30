@@ -8,6 +8,8 @@ import Button from "react-bootstrap/Button";
 import propTypes from "prop-types";
 import ProgressBar from "../components/progress-view";
 import CalendarIndicator from "../components/calendar-indicator";
+import AccountPane from "../components/account-pane";
+
 
 
 import "../styles/pages.scss";
@@ -66,7 +68,7 @@ class myMeals extends Component {
 
   render() {
 
-    const { progress } = this.props;
+    const { progress, currentUser } = this.props;
     const { noSelection, noSuggestions, meals } = this.state;
 
     if (noSelection || noSuggestions) {
@@ -124,7 +126,10 @@ class myMeals extends Component {
         </div>
         <div className="row">
           <aside className="panel-left d-none d-md-block col-md-3">
-            <div>
+            <div className="panel-left-sub">
+              <AccountPane currentUser={currentUser}></AccountPane>
+            </div>
+            <div className="panel-left-sub">
               <h5>This Week</h5>
               <CalendarIndicator weekStart={this.state.firstDay} weekEnd={this.state.lastDay} today={this.state.today} changeWeek={this.changeWeek}></CalendarIndicator>
             </div>
