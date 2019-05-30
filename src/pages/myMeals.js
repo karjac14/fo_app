@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import moment from 'moment';
 import foHttp from '../helpers/fohttp';
 import Card from "react-bootstrap/Card";
@@ -9,6 +9,7 @@ import propTypes from "prop-types";
 import ProgressBar from "../components/progress-view";
 import CalendarIndicator from "../components/calendar-indicator";
 import AccountPane from "../components/account-pane";
+import ReferPane from "../components/refer-pane";
 
 
 
@@ -130,8 +131,19 @@ class myMeals extends Component {
               <AccountPane currentUser={currentUser}></AccountPane>
             </div>
             <div className="panel-left-sub">
-              <h5>This Week</h5>
+              <h6>This Week</h6>
               <CalendarIndicator weekStart={this.state.firstDay} weekEnd={this.state.lastDay} today={this.state.today} changeWeek={this.changeWeek}></CalendarIndicator>
+            </div>
+            <div className="panel-left-sub">
+              <h6>Quicklinks</h6>
+              <ul className="list-unstyled">
+                <li ><Link to="/my-preferences">Modify diet preferences</Link></li>
+                <li ><Link to="/">Invite Friends</Link></li>
+                <li ><Link to="/">Account info</Link></li>
+              </ul>
+            </div>
+            <div className="panel-left-sub">
+              <ReferPane></ReferPane>
             </div>
           </aside>
           <div className="panel-main col-xs-12 col-md-9">

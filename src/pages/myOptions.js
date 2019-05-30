@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Card from "react-bootstrap/Card";
 import propTypes from "prop-types";
 import moment from 'moment';
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import foHttp from '../helpers/fohttp';
 import Button from "react-bootstrap/Button";
 import ProgressBar from "../components/progress-view";
@@ -159,17 +159,15 @@ class myOptions extends Component {
                             <AccountPane currentUser={currentUser}></AccountPane>
                         </div>
                         <div className="panel-left-sub">
-                            <h5>Week View</h5>
+                            <h6>Week View</h6>
                             <CalendarIndicator weekStart={this.state.firstDay} weekEnd={this.state.lastDay} today={this.state.today} changeWeek={this.changeWeek}></CalendarIndicator>
                         </div>
                         <div className="panel-left-sub">
-                            <h5>Settings</h5>
+                            <h6>Quicklinks</h6>
                             <ul className="list-unstyled">
-                                <li >Cras justo odio</li>
-                                <li >Dapibus ac facilisis in</li>
-                                <li >Morbi leo risus</li>
-                                <li >Porta ac consectetur ac</li>
-                                <li >Vestibulum at eros</li>
+                                <li ><Link to="/my-preferences">Modify diet preferences</Link></li>
+                                <li ><Link to="/">Invite Friends</Link></li>
+                                <li ><Link to="/">Account info</Link></li>
                             </ul>
                         </div>
                         <div className="panel-left-sub">

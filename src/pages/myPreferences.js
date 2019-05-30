@@ -111,6 +111,13 @@ class myPreferences extends Component {
                 <AccountPane currentUser={currentUser}></AccountPane>
               </div>
               <div className="panel-left-sub">
+                <h6>Quicklinks</h6>
+                <ul className="list-unstyled">
+                  <li ><Link to="/">Invite Friends</Link></li>
+                  <li ><Link to="/">Account info</Link></li>
+                </ul>
+              </div>
+              <div className="panel-left-sub">
                 <ReferPane></ReferPane>
               </div>
             </div>

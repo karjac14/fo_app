@@ -9,6 +9,9 @@
     .panel-left-sub{
         border-bottom: 2px solid #ddd;
         padding: 15px 0 25px;
+        &:last-child{
+            border-bottom: 0;
+          }
         .account-pane {
             h4{
                 margin-bottom: 0;
@@ -47,7 +50,7 @@
             }
         }
         a{
-            font-size: 12px;
+            font-size: 14px;
         }
     }
     h5{
