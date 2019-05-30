@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import propTypes from "prop-types";
 import foHttp from "../helpers/fohttp";
 import moment from "moment";
 import defaultPreferences from "../hard-data/preferences";
 import ProgressBar from "../components/progress-view";
+import AccountPane from "../components/account-pane";
+import ReferPane from "../components/refer-pane";
 
 import "../styles/radio-group.scss";
 import "../styles/pages.scss";
@@ -85,7 +87,7 @@ class myPreferences extends Component {
 
   render() {
     const { preferences, redirectToOptions } = this.state;
-    const { progress } = this.props;
+    const { progress, currentUser } = this.props;
 
     if (redirectToOptions) {
       return <Redirect to="/my-options" />;
@@ -105,7 +107,19 @@ class myPreferences extends Component {
         <div className="row">
           <aside className="panel-left d-none d-md-block col-md-3">
             <div>
-
+              <div className="panel-left-sub">
+                <AccountPane currentUser={currentUser}></AccountPane>
+              </div>
+              <div className="panel-left-sub">
+                <h6>Quicklinks</h6>
+                <ul className="list-unstyled">
+                  <li ><Link to="/">Invite Friends</Link></li>
+                  <li ><Link to="/">Account info</Link></li>
+                </ul>
+              </div>
+              <div className="panel-left-sub">
+                <ReferPane></ReferPane>
+              </div>
             </div>
           </aside>
           <div className="panel-main col-xs-12 col-md-9">

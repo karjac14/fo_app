@@ -3,11 +3,14 @@ import { connect } from 'react-redux';
 import Card from "react-bootstrap/Card";
 import propTypes from "prop-types";
 import moment from 'moment';
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import foHttp from '../helpers/fohttp';
 import Button from "react-bootstrap/Button";
 import ProgressBar from "../components/progress-view";
 import CalendarIndicator from "../components/calendar-indicator";
+import AccountPane from "../components/account-pane";
+import ReferPane from "../components/refer-pane";
+
 
 
 import "../styles/options.scss";
@@ -48,7 +51,7 @@ class myOptions extends Component {
                 if (res.data.noPreferences) {
                     this.setState({ noPreferences: true });
                 } else {
-                    this.setState(res.data);
+                    this.setState({ suggestions: res.data.suggestions });
                 }
             }
         })
@@ -91,8 +94,8 @@ class myOptions extends Component {
     }
 
     render() {
-        const { f_name } = this.props.currentUser;
-        const { progress } = this.props;
+
+        const { progress, currentUser } = this.props;
         const { suggestions, noPreferences, redirectToMeals } = this.state;
 
 
@@ -153,18 +156,22 @@ class myOptions extends Component {
                 <div className="row">
                     <aside className="panel-left d-none d-md-block col-md-3">
                         <div className="panel-left-sub">
-                            <h5>Week View</h5>
+                            <AccountPane currentUser={currentUser}></AccountPane>
+                        </div>
+                        <div className="panel-left-sub">
+                            <h6>Week View</h6>
                             <CalendarIndicator weekStart={this.state.firstDay} weekEnd={this.state.lastDay} today={this.state.today} changeWeek={this.changeWeek}></CalendarIndicator>
                         </div>
                         <div className="panel-left-sub">
-                            <h5>Settings</h5>
+                            <h6>Quicklinks</h6>
                             <ul className="list-unstyled">
-                                <li >Cras justo odio</li>
-                                <li >Dapibus ac facilisis in</li>
-                                <li >Morbi leo risus</li>
-                                <li >Porta ac consectetur ac</li>
-                                <li >Vestibulum at eros</li>
+                                <li ><Link to="/my-preferences">Modify diet preferences</Link></li>
+                                <li ><Link to="/">Invite Friends</Link></li>
+                                <li ><Link to="/">Account info</Link></li>
                             </ul>
+                        </div>
+                        <div className="panel-left-sub">
+                            <ReferPane></ReferPane>
                         </div>
                     </aside>
                     <div className="panel-main col-xs-12 col-md-9">

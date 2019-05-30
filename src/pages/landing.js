@@ -287,7 +287,7 @@ class landing extends Component {
         <Modal show={this.state.showModal} onHide={this.handleModalClose}>
           <Modal.Body>
             <div className="landing-modal text-center">
-              <h3>Thank you for checking out Cook Up!</h3>
+              <h3>Thank you for checking out <br/> Cook Up!</h3>
               <br />
               This web application is currently in the prototype stage and will
               be ready soon (May 2019). Feel free to visit the 'about' section

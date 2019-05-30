@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import moment from 'moment';
 import foHttp from '../helpers/fohttp';
 import Card from "react-bootstrap/Card";
@@ -8,6 +8,9 @@ import Button from "react-bootstrap/Button";
 import propTypes from "prop-types";
 import ProgressBar from "../components/progress-view";
 import CalendarIndicator from "../components/calendar-indicator";
+import AccountPane from "../components/account-pane";
+import ReferPane from "../components/refer-pane";
+
 
 
 import "../styles/pages.scss";
@@ -66,7 +69,7 @@ class myMeals extends Component {
 
   render() {
 
-    const { progress } = this.props;
+    const { progress, currentUser } = this.props;
     const { noSelection, noSuggestions, meals } = this.state;
 
     if (noSelection || noSuggestions) {
@@ -124,9 +127,23 @@ class myMeals extends Component {
         </div>
         <div className="row">
           <aside className="panel-left d-none d-md-block col-md-3">
-            <div>
-              <h5>This Week</h5>
+            <div className="panel-left-sub">
+              <AccountPane currentUser={currentUser}></AccountPane>
+            </div>
+            <div className="panel-left-sub">
+              <h6>This Week</h6>
               <CalendarIndicator weekStart={this.state.firstDay} weekEnd={this.state.lastDay} today={this.state.today} changeWeek={this.changeWeek}></CalendarIndicator>
+            </div>
+            <div className="panel-left-sub">
+              <h6>Quicklinks</h6>
+              <ul className="list-unstyled">
+                <li ><Link to="/my-preferences">Modify diet preferences</Link></li>
+                <li ><Link to="/">Invite Friends</Link></li>
+                <li ><Link to="/">Account info</Link></li>
+              </ul>
+            </div>
+            <div className="panel-left-sub">
+              <ReferPane></ReferPane>
             </div>
           </aside>
           <div className="panel-main col-xs-12 col-md-9">
