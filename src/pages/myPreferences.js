@@ -6,9 +6,11 @@ import { Redirect } from "react-router-dom";
 import propTypes from "prop-types";
 import foHttp from "../helpers/fohttp";
 import moment from "moment";
-import "../styles/radio-group.scss";
 import defaultPreferences from "../hard-data/preferences";
 import ProgressBar from "../components/progress-view";
+
+import "../styles/radio-group.scss";
+import "../styles/pages.scss";
 
 class myPreferences extends Component {
   constructor(props) {
@@ -92,12 +94,18 @@ class myPreferences extends Component {
     return (
       <div className="container page-main">
         <div className="row">
-          <ProgressBar activeRoute="1" progress={progress}></ProgressBar>
+          <aside className="panel-left d-none d-md-block col-md-3">
+            <div>
+            </div>
+          </aside>
+          <div className="panel-main col-xs-12 col-md-9">
+            <ProgressBar activeRoute="3" progress={progress}></ProgressBar>
+          </div>
         </div>
         <div className="row">
           <aside className="panel-left d-none d-md-block col-md-3">
-            <div className="card">
-              <div className="card-body">Hi</div>
+            <div>
+
             </div>
           </aside>
           <div className="panel-main col-xs-12 col-md-9">

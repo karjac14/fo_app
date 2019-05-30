@@ -10,6 +10,7 @@ import ProgressBar from "../components/progress-view";
 import CalendarIndicator from "../components/calendar-indicator";
 
 
+import "../styles/pages.scss";
 
 
 class myMeals extends Component {
@@ -22,8 +23,8 @@ class myMeals extends Component {
       week: moment().week(),
       year: moment().year(),
       today: moment(),
-      firstDay: moment().startOf('week').toDate(),
-      lastDay: moment().endOf('week').toDate()
+      firstDay: moment().startOf('week'),
+      lastDay: moment().endOf('week')
     };
 
     // this.toggleMode = this.toggleMode.bind(this);
@@ -93,9 +94,9 @@ class myMeals extends Component {
               </div>
             ))}
           </div>
-          <div className="text-center">
+          {/* <div className="text-center">
             <Button type="submit" onClick={this.submit}>Save Selection</Button>
-          </div>
+          </div> */}
         </div>
       )
     } else {
@@ -118,7 +119,7 @@ class myMeals extends Component {
             </div>
           </aside>
           <div className="panel-main col-xs-12 col-md-9">
-            <ProgressBar activeRoute="2" progress={progress}></ProgressBar>
+            <ProgressBar activeRoute="3" progress={progress}></ProgressBar>
           </div>
         </div>
         <div className="row">
@@ -130,7 +131,15 @@ class myMeals extends Component {
           </aside>
           <div className="panel-main col-xs-12 col-md-9">
             <div className="card shadow">
-              {form}
+              <div className="card-body">
+                <h2>Your Meals!</h2>
+                <p>
+                  Answer a few questions to help us personalize your menu
+                  options. You can change these any time later.
+                                </p>
+                <br />
+                {form}
+              </div>
             </div>
           </div>
         </div></div>

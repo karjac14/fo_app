@@ -3,15 +3,9 @@ $radius: 12px;
 
 @import "colors";
 
-body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #f8f7fa;
-  color: #333;
-}
-
 .calendar {
   width: 100%;
-  padding: 15px;
+  padding: 15px 0;
   border-radius: $radius;
   overflow: hidden;
 
@@ -37,60 +31,33 @@ body {
         cursor: initial;
       }
 
-      &.active {
-        font-weight: 700;
-        background-color: transparentize($cu-primary-one, 0.95);
-        border-radius: $radius;
-      }
-
-      &.muted {
-        color: rgba(0, 0, 0, 0.3);
-      }
-
-      &.between {
+      &.active-week {
         border-radius: 0;
-      }
-
-      &.start, &.between, &.end {
         background-color: $cu-primary-one;
         color: #fff;
-      }
-
-      &.start {
-        border-radius: $radius 0 0 $radius;
-      }
-
-      &.end {
-        border-radius: 0 $radius $radius 0;
-      }
-
-      &.start.end {
-        border-radius: $radius;
-      }
-
-      &.between:nth-child(7n):after, &.start:nth-child(7n):after {
-        content: "";
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 100%;
-        background-color: #b670f4;
-        width: 20px;
-      }
-
-      &.between:nth-child(7n + 1):after, &.end:nth-child(7n + 1):after {
-        content: "";
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 100%;
-        background-color: #b670f4;
-        width: 20px;
-      }
-
-      &.start.end:after {
-        display: none;
+        &:first-child{
+          border-radius: $radius 0 0 $radius;
+        }
+        &:last-child{
+          border-radius: 0 $radius $radius 0;
+        }
       }
     }
   }
+  .inactive-week-container:hover{
+    span {
+      border-radius: 0;
+        background-color: $cu-primary-one;
+        color: #fff;
+        &:first-child{
+          border-radius: $radius 0 0 $radius;
+        }
+        &:last-child{
+          border-radius: 0 $radius $radius 0;
+        }
+    }
+  }
+  // .days-container{
+  //   background-color: #fff;
+  // }
 }

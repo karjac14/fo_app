@@ -11,6 +11,7 @@ import CalendarIndicator from "../components/calendar-indicator";
 
 
 import "../styles/options.scss";
+import "../styles/pages.scss";
 
 
 class myOptions extends Component {
@@ -23,8 +24,8 @@ class myOptions extends Component {
             week: moment().week(),
             year: moment().year(),
             today: moment(),
-            firstDay: moment().startOf('week').toDate(),
-            lastDay: moment().endOf('week').toDate()
+            firstDay: moment().startOf('week'),
+            lastDay: moment().endOf('week')
         };
 
         this.submit = this.submit.bind(this);
@@ -74,7 +75,13 @@ class myOptions extends Component {
 
         e.preventDefault();
 
-        let params = this.state.suggestions;
+        const { week, year, suggestions } = this.state;
+
+        let params = {
+            week,
+            year,
+            suggestions
+        };
 
         foHttp("POST", "suggestions", params).then(() =>
             this.setState({ redirectToMeals: true })
@@ -145,9 +152,19 @@ class myOptions extends Component {
                 </div>
                 <div className="row">
                     <aside className="panel-left d-none d-md-block col-md-3">
-                        <div>
-                            <h5>This Week</h5>
+                        <div className="panel-left-sub">
+                            <h5>Week View</h5>
                             <CalendarIndicator weekStart={this.state.firstDay} weekEnd={this.state.lastDay} today={this.state.today} changeWeek={this.changeWeek}></CalendarIndicator>
+                        </div>
+                        <div className="panel-left-sub">
+                            <h5>Settings</h5>
+                            <ul className="list-unstyled">
+                                <li >Cras justo odio</li>
+                                <li >Dapibus ac facilisis in</li>
+                                <li >Morbi leo risus</li>
+                                <li >Porta ac consectetur ac</li>
+                                <li >Vestibulum at eros</li>
+                            </ul>
                         </div>
                     </aside>
                     <div className="panel-main col-xs-12 col-md-9">

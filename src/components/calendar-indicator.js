@@ -1,116 +1,67 @@
 
 import React from 'react';
-// import PropTypes from "prop-types";
-// import Icon from "@mdi/react";
-// import { mdiNumeric1CircleOutline, mdiNumeric2CircleOutline, mdiNumeric3CircleOutline, mdiNumeric4CircleOutline, mdiCheckboxMarkedCircle } from "@mdi/js";
-import "../styles/calendar-indicator.scss";
 import moment from 'moment';
+import propTypes from "prop-types";
+import "../styles/calendar-indicator.scss";
 
-// This calendar component is inspired from an amazing sample code in https://codepen.io/RobVermeer/pen/zBgdwg
+// This calendar component is inspired by an amazing sample code in https://codepen.io/RobVermeer/pen/zBgdwg
 // Heavy Modifications were done to fit use cases for Cook up
 
-
-const Heading = ({ date, changeMonth, resetDate }) => (
-    <nav className="calendar--nav text-center">
-        <small>{date.format("MMMM")} {date.format("YYYY")}</small>
+const Heading = ({ date, endDate }) => (
+    <nav className="text-center">
+        {date.format("MMMM")} {date.format("MMMM") !== endDate.format("MMMM") ? " - " + endDate.format("MMMM") : ""}
     </nav>
 );
 
-const Day = ({ currentDate, date, startDate, endDate, onClick }) => {
+const Week = ({ startDate, current, onClick }) => {
     let className = [];
+    let days = [];
+    let _startDate = startDate.clone();
 
-    if (moment().isSame(date, "day")) {
-        className.push("active");
+    if (current) {
+        className.push("active-week");
     }
 
-    if (date.isSame(startDate, "day")) {
-        className.push("start");
+    for (let i = 0; i < 7; i++) {
+        days.push(
+            <span
+                key={_startDate.date()}
+                onClick={() => onClick(_startDate.week())}
+                week={_startDate.week()}
+                className={className.join(" ")}
+            >
+                {_startDate.clone().date()}
+            </span>
+        )
+        _startDate.add(1, 'days')
     }
-
-    if (date.isBetween(startDate, endDate, "day")) {
-        className.push("between");
-    }
-
-    if (date.isSame(endDate, "day")) {
-        className.push("end");
-    }
-
-    if (!date.isSame(currentDate, "month")) {
-        className.push("muted");
-    }
-
     return (
-        <span
-            onClick={() => onClick(date)}
-            currentdate={date}
-            className={className.join(" ")}
-        >
-            {date.date()}
-        </span>
+        <div className={"week-container " + (current ? "active-week-container" : "inactive-week-container")}>
+            {days.concat()}
+        </div >
     );
 };
 
-const Days = ({ date, startDate, endDate, onClick }) => {
-    const thisDate = moment(date);
-    const daysInMonth = moment(date).daysInMonth();
-    const firstDayDate = moment(date).startOf("month");
-    const previousMonth = moment(date).subtract(1, "month");
-    const previousMonthDays = previousMonth.daysInMonth();
-    const nextsMonth = moment(date).add(1, "month");
-    let days = [];
+const Weeks = ({ startDate, onClick }) => {
+
+    let weeks = [];
     let labels = [];
 
     for (let i = 1; i <= 7; i++) {
         labels.push(
             <span key={i} className="label">
-                {moment()
-                    .day(i)
-                    .format("dd")}
+                {moment().day(i).format("dd")}
             </span>
         );
     }
 
-    for (let i = firstDayDate.day(); i > 1; i--) {
-        previousMonth.date(previousMonthDays - i + 2);
-
-        days.push(
-            <Day
-                key={moment(previousMonth).format("DD MM YYYY")}
+    for (let i = 2; i >= 0; i--) {
+        weeks.push(
+            <Week
+                key={moment().subtract(i, "weeks").date()}
                 onClick={date => onClick(date)}
-                currentDate={date}
-                date={moment(previousMonth)}
-                startDate={startDate}
-                endDate={endDate}
-            />
-        );
-    }
-
-    for (let i = 1; i <= daysInMonth; i++) {
-        thisDate.date(i);
-
-        days.push(
-            <Day
-                key={moment(thisDate).format("DD MM YYYY")}
-                onClick={date => onClick(date)}
-                currentDate={date}
-                date={moment(thisDate)}
-                startDate={startDate}
-                endDate={endDate}
-            />
-        );
-    }
-
-    const daysCount = days.length;
-    for (let i = 1; i <= 42 - daysCount; i++) {
-        nextsMonth.date(i);
-        days.push(
-            <Day
-                key={moment(nextsMonth).format("DD MM YYYY")}
-                onClick={date => onClick(date)}
-                currentDate={date}
-                date={moment(nextsMonth)}
-                startDate={startDate}
-                endDate={endDate}
+                startDate={startDate.clone().subtract(i, "weeks")}
+                current={i === 0 ? true : false}
             />
         );
     }
@@ -118,46 +69,33 @@ const Days = ({ date, startDate, endDate, onClick }) => {
     return (
         <nav className="calendar--days">
             {labels.concat()}
-            {days.concat()}
+            <div className="days-container">{weeks.concat()}</div>
         </nav>
     );
 };
-
-
-
-
-
-
-
-
 
 function CalendarIndicator(props) {
 
     const { weekStart, weekEnd, today, changeWeek } = props;
     return (
         <div className="calendar">
-            <Heading date={today} />
-            <Days
+            <Heading date={today} endDate={weekEnd} />
+            <Weeks
                 onClick={date => changeWeek(date)}
-                date={today}
                 startDate={weekStart}
-                endDate={weekEnd}
             />
         </div>
     );
 }
 
-// CalendarIndicator.propTypes = {
-//     activeRoute: PropTypes.string,
-//     progress: PropTypes.string
-// };
+CalendarIndicator.propTypes = {
+    weekStart: propTypes.object.isRequired,
+    weekEnd: propTypes.object.isRequired,
+};
 
-// CalendarIndicator.defaultProps = {
-//     activeRoute: "1",
-//     progress: {
-//         hasPreferences: true
-//     }
-// };
+CalendarIndicator.defaultProps = {
+    today: moment()
+};
 
 export default CalendarIndicator;
 
