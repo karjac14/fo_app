@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Card from "react-bootstrap/Card";
 import propTypes from "prop-types";
 import moment from 'moment';
+import Truncate from 'react-truncate';
 import { Redirect, Link } from "react-router-dom";
 import foHttp from '../helpers/fohttp';
 import Button from "react-bootstrap/Button";
@@ -10,6 +11,9 @@ import ProgressBar from "../components/progress-view";
 import CalendarIndicator from "../components/calendar-indicator";
 import AccountPane from "../components/account-pane";
 import ReferPane from "../components/refer-pane";
+
+import Icon from "@mdi/react";
+import { mdiCheckCircle, mdiPlusCircleOutline, mdiMinusCircle, mdiAccountGroup, mdiBarleyOff } from "@mdi/js";
 
 
 
@@ -107,18 +111,41 @@ class myOptions extends Component {
             form = <Redirect to="/my-preferences" />
         } else if (suggestions) {
             form = (
-                <div>
-                    <div className="row">
+                <div className="options-container">
+                    <div className="row row-eq-height">
                         {suggestions.map((suggestion, i) => (
-                            <div key={suggestion.id} className="col-xs-12 col-sm-6 col-md-4 col-xl-3">
+                            <div key={suggestion.id} className="col col-12 col-sm-6 col-lg-4">
                                 <Card>
                                     <Card.Img variant="top" src={suggestion.image} />
                                     <Card.Body>
-                                        <Card.Title>{suggestion.title}</Card.Title>
-                                        <Card.Text>
-
-                                        </Card.Text>
-                                        <input type="checkbox" name={suggestion.id} value={suggestion.selected} checked={suggestion.selected} onChange={this.handleCheckboxChange(i)} />
+                                        <h5>
+                                            <Truncate lines={2} ellipsis={<span>... <a href='/'></a></span>}>
+                                                {suggestion.title} &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                                            </Truncate>
+                                        </h5>
+                                        <p>
+                                            {suggestion.readyInMinutes &&
+                                                <span title="preparation and cooking time">{suggestion.readyInMinutes} mins &nbsp; | &nbsp; </span>
+                                            }
+                                            {suggestion.servings &&
+                                                <span title="no. of servings"> <Icon size={.7} path={mdiAccountGroup} /> <span> {suggestion.servings}  &nbsp; | &nbsp;  </span></span>
+                                            }
+                                            {suggestion.glutenFree &&
+                                                <span className="gluten-free" title="*gluten-free"> <Icon size={.7} path={mdiBarleyOff} /> </span>
+                                            }
+                                        </p>
+                                        <label className="checkbox-body">
+                                            <input type="checkbox" name={suggestion.id} value={suggestion.selected} checked={suggestion.selected} onChange={this.handleCheckboxChange(i)} />
+                                            <div className="checkbox-mask">
+                                                <div className="checked">
+                                                    <Icon className="plus" path={mdiCheckCircle} />
+                                                    <Icon className="minus" path={mdiMinusCircle} />
+                                                </div>
+                                                <div className="unchecked">
+                                                    <Icon path={mdiPlusCircleOutline} />
+                                                </div>
+                                            </div>
+                                        </label>
                                     </Card.Body>
                                 </Card>
                             </div>
@@ -143,7 +170,7 @@ class myOptions extends Component {
 
 
         return (
-            <div className="container page-main">
+            <div className="container page-main page-options">
                 <div className="row">
                     <aside className="panel-left d-none d-md-block col-md-3">
                         <div>

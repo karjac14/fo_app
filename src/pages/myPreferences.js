@@ -101,7 +101,7 @@ class myPreferences extends Component {
             </div>
           </aside>
           <div className="panel-main col-xs-12 col-md-9">
-            <ProgressBar activeRoute="3" progress={progress}></ProgressBar>
+            <ProgressBar activeRoute="1" progress={progress}></ProgressBar>
           </div>
         </div>
         <div className="row">
