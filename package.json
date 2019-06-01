@@ -2,7 +2,7 @@
   "name": "fo_app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://cook-up.co",
+  "homepage": "https://cook-up.co/",
   "dependencies": {
     "@mdi/js": "^3.5.95",
     "axios": "^0.18.0",

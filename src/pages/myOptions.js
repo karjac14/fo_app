@@ -56,6 +56,7 @@ class myOptions extends Component {
                     this.setState({ noPreferences: true });
                 } else {
                     this.setState({ suggestions: res.data.suggestions });
+                    this.setState({ newWeek: res.data.newWeek });
                 }
             }
         })
@@ -100,7 +101,7 @@ class myOptions extends Component {
     render() {
 
         const { progress, currentUser } = this.props;
-        const { suggestions, noPreferences, redirectToMeals } = this.state;
+        const { suggestions, noPreferences, redirectToMeals, newWeek } = this.state;
 
 
         let form;
@@ -204,11 +205,10 @@ class myOptions extends Component {
                     <div className="panel-main col-xs-12 col-md-9">
                         <div className="card shadow">
                             <div className="card-body">
-                                {/* TODO: fresh options of the week verbiage */}
-                                <h2>Its a brand new week</h2>
+
+                                <h2>{newWeek ? `New meal suggestions for you this week` : `Here are your options for this week`}</h2>
                                 <p>
-                                    Answer a few questions to help us personalize your menu
-                                    options. You can change these any time later.
+                                    Click the plus buttons to select meals below that you wan to cook this week.
                                 </p>
                                 <br />
                                 {form}
