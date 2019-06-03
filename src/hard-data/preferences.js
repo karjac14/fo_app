@@ -34,21 +34,21 @@ export default {
       {
         label: "Ketogenic",
         value: "ketogenic",
-        subtext: "new!",
+        subtext: "",
         definition: "Less than 10 grams of carbs per serving",
         selected: false
       },
       {
         label: "Pescatarian",
         value: "pescatarian",
-        subtext: "new!",
+        subtext: "",
         definition: "Fish and Seafood",
         selected: false
       },
       {
         label: "Whole30",
         value: "whole 30",
-        subtext: "new!",
+        subtext: 174,
         definition: "Follows the program rule",
         selected: false
       }

@@ -11,6 +11,8 @@ import ProgressBar from "../components/progress-view";
 import CalendarIndicator from "../components/calendar-indicator";
 import AccountPane from "../components/account-pane";
 import ReferPane from "../components/refer-pane";
+import { updateHasPreferences, updateHasOptions } from '../actions/progressActions';
+
 
 import Icon from "@mdi/react";
 import { mdiCheckCircle, mdiPlusCircleOutline, mdiMinusCircle, mdiAccountGroup, mdiBarleyOff } from "@mdi/js";
@@ -53,8 +55,10 @@ class myOptions extends Component {
         foHttp("GET", "suggestions", params).then(res => {
             if (res.success) {
                 if (res.data.noPreferences) {
+                    this.props.updateHasPreferences(false);
                     this.setState({ noPreferences: true });
                 } else {
+                    this.props.updateHasPreferences(true);
                     this.setState({ suggestions: res.data.suggestions });
                     this.setState({ newWeek: res.data.newWeek });
                 }
@@ -78,7 +82,7 @@ class myOptions extends Component {
 
     submit(e) {
 
-        //TODO: after success submit, redirect user choose meals
+
         //TODO: disble submit buitton to prevent double send, add spinner
 
         e.preventDefault();
@@ -91,9 +95,12 @@ class myOptions extends Component {
             suggestions
         };
 
-        foHttp("POST", "suggestions", params).then(() =>
+        foHttp("POST", "suggestions", params).then(() => {
+
+            this.props.updateHasPreferences(true);
+            this.props.updateHasOptions(true);
             this.setState({ redirectToMeals: true })
-        )
+        })
 
 
     }
@@ -119,34 +126,36 @@ class myOptions extends Component {
                                 <Card>
                                     <Card.Img variant="top" src={suggestion.image} />
                                     <Card.Body>
-                                        <h5>
-                                            <Truncate lines={2} ellipsis={<span>... <a href='/'></a></span>}>
+                                        <h6>
+                                            <Truncate lines={3} ellipsis={<span>... <a href='/'></a></span>}>
                                                 {suggestion.title} &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
                                             </Truncate>
-                                        </h5>
-                                        <p>
-                                            {suggestion.readyInMinutes &&
-                                                <span title="preparation and cooking time">{suggestion.readyInMinutes} mins &nbsp; | &nbsp; </span>
-                                            }
-                                            {suggestion.servings &&
-                                                <span title="no. of servings"> <Icon size={.7} path={mdiAccountGroup} /> <span> {suggestion.servings}  &nbsp; | &nbsp;  </span></span>
-                                            }
-                                            {suggestion.glutenFree &&
-                                                <span className="gluten-free" title="*gluten-free"> <Icon size={.7} path={mdiBarleyOff} /> </span>
-                                            }
-                                        </p>
-                                        <label className="checkbox-body">
-                                            <input type="checkbox" name={suggestion.id} value={suggestion.selected} checked={suggestion.selected} onChange={this.handleCheckboxChange(i)} />
-                                            <div className="checkbox-mask">
-                                                <div className="checked">
-                                                    <Icon className="plus" path={mdiCheckCircle} />
-                                                    <Icon className="minus" path={mdiMinusCircle} />
+                                        </h6>
+                                        <div>
+                                            <p>
+                                                {suggestion.readyInMinutes &&
+                                                    <span title="preparation and cooking time">{suggestion.readyInMinutes} mins &nbsp; | &nbsp; </span>
+                                                }
+                                                {suggestion.servings &&
+                                                    <span title="no. of servings"> <Icon size={.7} path={mdiAccountGroup} /> <span> {suggestion.servings}  &nbsp; | &nbsp;  </span></span>
+                                                }
+                                                {suggestion.glutenFree &&
+                                                    <span className="gluten-free" title="*gluten-free"> <Icon size={.7} path={mdiBarleyOff} /> </span>
+                                                }
+                                            </p>
+                                            <label className="checkbox-body">
+                                                <input type="checkbox" name={suggestion.id} value={suggestion.selected} checked={suggestion.selected} onChange={this.handleCheckboxChange(i)} />
+                                                <div className="checkbox-mask">
+                                                    <div className="checked">
+                                                        <Icon className="plus" path={mdiCheckCircle} />
+                                                        <Icon className="minus" path={mdiMinusCircle} />
+                                                    </div>
+                                                    <div className="unchecked">
+                                                        <Icon path={mdiPlusCircleOutline} />
+                                                    </div>
                                                 </div>
-                                                <div className="unchecked">
-                                                    <Icon path={mdiPlusCircleOutline} />
-                                                </div>
-                                            </div>
-                                        </label>
+                                            </label>
+                                        </div>
                                     </Card.Body>
                                 </Card>
                             </div>
@@ -226,7 +235,9 @@ class myOptions extends Component {
 
 myOptions.propTypes = {
     currentUser: propTypes.object,
-    // submit: propTypes.func.isRequired,
+    updateHasOptions: propTypes.func,
+    updateHasPreferences: propTypes.func,
+    proress: propTypes.object
 };
 
 function mapStateToProps(state) {
@@ -235,4 +246,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, {})(myOptions);
+export default connect(mapStateToProps, { updateHasOptions, updateHasPreferences })(myOptions);

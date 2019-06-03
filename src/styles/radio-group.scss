@@ -12,19 +12,31 @@
     cursor: pointer;
   }
 
-  .radio-body {
-    text-align: center;
-    border-radius: 0.5em;
-    height: 40px;
-    border: 1px solid #ddd;
-  }
+  
 
   &.single-info {
     vertical-align: middle;
     font-size: 1.5em;
+    .radio-body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 0.5em;
+      height: 40px;
+      border: 1px solid #ddd;
+    }
   }
 
   &.multi-info {
+    .radio-body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      border-radius: 0.5em;
+      height: 40px;
+      border: 1px solid #ddd;
+    }
     .option-title {
       font-size: 1.5em;
     }

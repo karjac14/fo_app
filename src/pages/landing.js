@@ -178,7 +178,7 @@ class landing extends Component {
                 />
 
                 <Carousel.Caption>
-                  <h3>Whole 30&#174;</h3>
+                  <h3>Whole 30<sup>&#174;</sup></h3>
                   <p>Follows the program rule</p>
                 </Carousel.Caption>
               </Carousel.Item>
@@ -290,7 +290,7 @@ class landing extends Component {
               <h3>Thank you for checking out <br/> Cook Up!</h3>
               <br />
               This web application is currently in the prototype stage and will
-              be ready soon (May 2019). Feel free to visit the 'about' section
+              be ready soon (June 2019). Feel free to visit the 'about' section
               to learn about the technicals of this project or you may continue
               exploring the app.
               <br />

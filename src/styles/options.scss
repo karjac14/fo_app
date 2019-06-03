@@ -10,7 +10,11 @@
             height: 100%;
             .card-body {
                 padding: 8px;
-                h5{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                h6{
                     text-align: left;
                     margin-bottom: 30px;
                     font-weight: 400;
@@ -57,7 +61,10 @@
                         }
                         .unchecked {
                             
-                            display: block
+                            display: block;
+                            &:hover{
+                                filter: brightness(75%);
+                            }
                         }
                       }
 

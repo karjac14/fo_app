@@ -10,6 +10,8 @@ import defaultPreferences from "../hard-data/preferences";
 import ProgressBar from "../components/progress-view";
 import AccountPane from "../components/account-pane";
 import ReferPane from "../components/refer-pane";
+import { updateHasPreferences } from '../actions/progressActions';
+
 
 import "../styles/radio-group.scss";
 import "../styles/pages.scss";
@@ -18,7 +20,9 @@ class myPreferences extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      preferences: defaultPreferences
+      preferences: defaultPreferences,
+      fetchingPreferences: true,
+      disableSave: true
     };
 
     this.handleRadioChange = this.handleRadioChange.bind(this);
@@ -38,7 +42,7 @@ class myPreferences extends Component {
       preferences: {
         ...prevState.preferences,
         [name]: filter
-      }
+      }, disableSave: false
     }));
   };
 
@@ -48,15 +52,14 @@ class myPreferences extends Component {
         ...prevState.preferences,
         ...(prevState.preferences.moreFilters.options[i].selected = !prevState
           .preferences.moreFilters.options[i].selected)
-      }
+      }, disableSave: false
     }));
   };
 
   submit(e) {
-    //TODO: after success submit, redirect user choose meals
-    //TODO: disble submit buitton to prevent double send, add spinner
-
     e.preventDefault();
+    this.setState({ disableSave: true });
+    this.setState({ submitting: true });
 
     let week = moment().week();
     let year = moment().year();
@@ -67,18 +70,25 @@ class myPreferences extends Component {
       year
     };
     foHttp("POST", "preferences", params).then(res => {
+      this.props.updateHasPreferences(true);
       this.setState({ redirectToOptions: true })
+      this.setState({ submitting: true });
     });
   }
+
+
 
   componentDidMount() {
     // TODO: add spinner while waiting for preferences
     const { isAuth, isNewUser } = this.props.currentUser;
 
     if (!isNewUser) {
+      this.setState({ fetchingPreferences: true });
       foHttp("GET", "preferences").then(res => {
+        this.setState({ fetchingPreferences: false });
         if (res.data) {
           this.setState({ preferences: res.data });
+          this.props.updateHasPreferences(true);
         }
       });
     }
@@ -86,11 +96,119 @@ class myPreferences extends Component {
   }
 
   render() {
-    const { preferences, redirectToOptions } = this.state;
+    const { preferences, redirectToOptions, disableSave, submitting, fetchingPreferences } = this.state;
     const { progress, currentUser } = this.props;
 
     if (redirectToOptions) {
       return <Redirect to="/my-options" />;
+    }
+
+    let view;
+
+    if (fetchingPreferences) {
+      view = (
+        <div className="text-center">
+          Fetching suggestions...
+          <br />
+          <br />
+          <div id="loading-spinner"></div>
+        </div>
+      );
+    } else {
+      view = (<Form onSubmit={this.submit}>
+        <fieldset>
+          <Form.Group className="container-fluid">
+            <h4>How many meals you plan to cook weekly?</h4>
+            <div className="row">
+              {preferences.dishCountFilters.options.map(
+                (option, i) => (
+                  <div
+                    key={option.value}
+                    className="radio-piece single-info col-xs-6 col-sm-4 col-md-2"
+                  >
+                    <label className="text-center">
+                      <input
+                        type="radio"
+                        name="dishCount"
+                        value={option.value}
+                        checked={option.selected}
+                        onChange={this.handleRadioChange(i)}
+                      />
+                      <div className="radio-body text-center">
+                        {option.label}
+                      </div>
+                    </label>
+                  </div>
+                )
+              )}
+            </div>
+          </Form.Group>
+        </fieldset>
+        <fieldset>
+          <Form.Group className="container">
+            <h4>Dietary preferences?</h4>
+            <div className="row row-eq-height">
+              {preferences.dietFilters.options.map((option, i) => (
+                <div
+                  key={option.value}
+                  className="radio-piece multi-info col-xs-6 col-sm-4 col-md-3"
+                >
+                  <label className="text-center">
+                    <input
+                      type="radio"
+                      name="diet"
+                      value={option.value}
+                      checked={option.selected}
+                      onChange={this.handleRadioChange(i)}
+                    />
+                    <div className="radio-body align-middle">
+                      <div className="option-title">
+                        {option.label}<sup>{'' + String.fromCharCode(option.subtext)}</sup>
+                      </div>
+                      <div className="option-desc">
+                        {option.definition}
+                      </div>
+                    </div>
+                  </label>
+                </div>
+              ))}
+            </div>
+          </Form.Group>
+        </fieldset>
+        <fieldset>
+          <Form.Group className="container">
+            <h4>
+              Intolerances?{" "}
+              <span className="text-secondary">(optional)</span>
+            </h4>
+            <div className="row">
+              {preferences.moreFilters.options.map((option, i) => (
+                <div
+                  key={option.value}
+                  className="radio-piece single-info col-xs-6 col-sm-4 col-md-3"
+                >
+                  <label className="text-center">
+                    <input
+                      type="checkbox"
+                      name={option.value}
+                      value={option.value}
+                      checked={option.selected}
+                      onChange={this.handleCheckboxChange(i)}
+                    />
+                    <div className="radio-body">{option.label}</div>
+                  </label>
+                </div>
+              ))}
+            </div>
+          </Form.Group>
+        </fieldset>
+
+        <Form.Group>
+          <div className="text-center">
+            <Button type="submit" disabled={disableSave}>{submitting ? "Saving..." : "Save Preferences"}</Button>
+          </div>
+        </Form.Group>
+      </Form>)
     }
 
     return (
@@ -131,100 +249,7 @@ class myPreferences extends Component {
                   options. You can change these any time later.
                 </p>
                 <br />
-                <Form onSubmit={this.submit}>
-                  <fieldset>
-                    <Form.Group className="container-fluid">
-                      <h4>How many meals you plan to cook weekly?</h4>
-                      <div className="row">
-                        {preferences.dishCountFilters.options.map(
-                          (option, i) => (
-                            <div
-                              key={option.value}
-                              className="radio-piece single-info col-xs-6 col-sm-4 col-md-2"
-                            >
-                              <label className="text-center">
-                                <input
-                                  type="radio"
-                                  name="dishCount"
-                                  value={option.value}
-                                  checked={option.selected}
-                                  onChange={this.handleRadioChange(i)}
-                                />
-                                <div className="radio-body text-center align-middle">
-                                  {option.label}
-                                </div>
-                              </label>
-                            </div>
-                          )
-                        )}
-                      </div>
-                    </Form.Group>
-                  </fieldset>
-                  <fieldset>
-                    <Form.Group className="container">
-                      <h4>Dietary preferences?</h4>
-                      <div className="row row-eq-height">
-                        {preferences.dietFilters.options.map((option, i) => (
-                          <div
-                            key={option.value}
-                            className="radio-piece multi-info col-xs-6 col-sm-4 col-md-3"
-                          >
-                            <label className="text-center">
-                              <input
-                                type="radio"
-                                name="diet"
-                                value={option.value}
-                                checked={option.selected}
-                                onChange={this.handleRadioChange(i)}
-                              />
-                              <div className="radio-body align-middle">
-                                <div className="option-title">
-                                  {option.label}
-                                </div>
-                                <div className="option-desc">
-                                  {option.definition}
-                                </div>
-                              </div>
-                            </label>
-                          </div>
-                        ))}
-                      </div>
-                    </Form.Group>
-                  </fieldset>
-                  <fieldset>
-                    <Form.Group className="container">
-                      <h4>
-                        Intolerances?{" "}
-                        <span className="text-secondary">(optional)</span>
-                      </h4>
-                      <div className="row">
-                        {preferences.moreFilters.options.map((option, i) => (
-                          <div
-                            key={option.value}
-                            className="radio-piece single-info col-xs-6 col-sm-4 col-md-3"
-                          >
-                            <label className="text-center">
-                              <input
-                                type="checkbox"
-                                name={option.value}
-                                value={option.value}
-                                checked={option.selected}
-                                onChange={this.handleCheckboxChange(i)}
-                              />
-                              <div className="radio-body">{option.label}</div>
-                            </label>
-                          </div>
-                        ))}
-                      </div>
-                    </Form.Group>
-                  </fieldset>
-
-                  <Form.Group>
-                    <div className="text-center">
-                      <Button type="submit">Save Preferences</Button>
-                    </div>
-                  </Form.Group>
-                </Form>
+                {view}
               </div>
             </div>
           </div>
@@ -235,7 +260,8 @@ class myPreferences extends Component {
 }
 
 myPreferences.propTypes = {
-  currentUser: propTypes.object
+  currentUser: propTypes.object,
+  updateHasPreferences: propTypes.func
 };
 
 function mapStateToProps(state) {
@@ -245,5 +271,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  {}
+  { updateHasPreferences }
 )(myPreferences);
