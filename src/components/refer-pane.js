@@ -15,7 +15,6 @@ function ReferPane(props) {
                         <img src={refer} alt="" />
                     </div>
                     <div className="col refer-texts">
-                        <h6 className="card-title">Refer a friend</h6>
                         <p className="card-text">Share the love, share Cook Up to your friends!</p>
                         <Link to="/">
                             <button className="btn btn-primary btn-sm">

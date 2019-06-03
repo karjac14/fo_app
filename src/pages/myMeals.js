@@ -10,6 +10,8 @@ import ProgressBar from "../components/progress-view";
 import CalendarIndicator from "../components/calendar-indicator";
 import AccountPane from "../components/account-pane";
 import ReferPane from "../components/refer-pane";
+import { updateHasPreferences, updateHasOptions } from '../actions/progressActions';
+
 
 
 
@@ -52,6 +54,8 @@ class myMeals extends Component {
         } else if (res.data.noSuggestions) {
           this.setState({ noSuggestions: true });
         } else {
+          this.props.updateHasOptions(true);
+          this.props.updateHasPreferences(true);
           this.setState(res.data);
         }
       }
@@ -167,7 +171,8 @@ class myMeals extends Component {
 
 myMeals.propTypes = {
   currentUser: propTypes.object,
-  // submit: propTypes.func.isRequired,
+  updateHasOptions: propTypes.func,
+  updateHasPreferences: propTypes.func,
 };
 
 function mapStateToProps(state) {
@@ -176,4 +181,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, {})(myMeals);
+export default connect(mapStateToProps, { updateHasOptions, updateHasPreferences })(myMeals);

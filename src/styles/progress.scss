@@ -8,7 +8,6 @@
     .status-col {
         display:flex;
         align-items: center;
-        // justify-content: space-between;
         color: $text-light;
         svg {
             width: 20px !important;
@@ -23,6 +22,7 @@
 
         &.active {
             color: $cu-primary-one;
+            font-weight: 500;
             svg {
                 width: 20px !important;
                 path {

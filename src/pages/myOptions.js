@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Card from "react-bootstrap/Card";
 import propTypes from "prop-types";
 import moment from 'moment';
+import Truncate from 'react-truncate';
 import { Redirect, Link } from "react-router-dom";
 import foHttp from '../helpers/fohttp';
 import Button from "react-bootstrap/Button";
@@ -10,6 +11,11 @@ import ProgressBar from "../components/progress-view";
 import CalendarIndicator from "../components/calendar-indicator";
 import AccountPane from "../components/account-pane";
 import ReferPane from "../components/refer-pane";
+import { updateHasPreferences, updateHasOptions } from '../actions/progressActions';
+
+
+import Icon from "@mdi/react";
+import { mdiCheckCircle, mdiPlusCircleOutline, mdiMinusCircle, mdiAccountGroup, mdiBarleyOff } from "@mdi/js";
 
 
 
@@ -49,9 +55,12 @@ class myOptions extends Component {
         foHttp("GET", "suggestions", params).then(res => {
             if (res.success) {
                 if (res.data.noPreferences) {
+                    this.props.updateHasPreferences(false);
                     this.setState({ noPreferences: true });
                 } else {
+                    this.props.updateHasPreferences(true);
                     this.setState({ suggestions: res.data.suggestions });
+                    this.setState({ newWeek: res.data.newWeek });
                 }
             }
         })
@@ -73,7 +82,7 @@ class myOptions extends Component {
 
     submit(e) {
 
-        //TODO: after success submit, redirect user choose meals
+
         //TODO: disble submit buitton to prevent double send, add spinner
 
         e.preventDefault();
@@ -86,9 +95,12 @@ class myOptions extends Component {
             suggestions
         };
 
-        foHttp("POST", "suggestions", params).then(() =>
+        foHttp("POST", "suggestions", params).then(() => {
+
+            this.props.updateHasPreferences(true);
+            this.props.updateHasOptions(true);
             this.setState({ redirectToMeals: true })
-        )
+        })
 
 
     }
@@ -96,7 +108,7 @@ class myOptions extends Component {
     render() {
 
         const { progress, currentUser } = this.props;
-        const { suggestions, noPreferences, redirectToMeals } = this.state;
+        const { suggestions, noPreferences, redirectToMeals, newWeek } = this.state;
 
 
         let form;
@@ -107,18 +119,43 @@ class myOptions extends Component {
             form = <Redirect to="/my-preferences" />
         } else if (suggestions) {
             form = (
-                <div>
-                    <div className="row">
+                <div className="options-container">
+                    <div className="row row-eq-height">
                         {suggestions.map((suggestion, i) => (
-                            <div key={suggestion.id} className="col-xs-12 col-sm-6 col-md-4 col-xl-3">
+                            <div key={suggestion.id} className="col col-12 col-sm-6 col-lg-4">
                                 <Card>
                                     <Card.Img variant="top" src={suggestion.image} />
                                     <Card.Body>
-                                        <Card.Title>{suggestion.title}</Card.Title>
-                                        <Card.Text>
-
-                                        </Card.Text>
-                                        <input type="checkbox" name={suggestion.id} value={suggestion.selected} checked={suggestion.selected} onChange={this.handleCheckboxChange(i)} />
+                                        <h6>
+                                            <Truncate lines={3} ellipsis={<span>... <a href='/'></a></span>}>
+                                                {suggestion.title} &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                                            </Truncate>
+                                        </h6>
+                                        <div>
+                                            <p>
+                                                {suggestion.readyInMinutes &&
+                                                    <span title="preparation and cooking time">{suggestion.readyInMinutes} mins &nbsp; | &nbsp; </span>
+                                                }
+                                                {suggestion.servings &&
+                                                    <span title="no. of servings"> <Icon size={.7} path={mdiAccountGroup} /> <span> {suggestion.servings}  &nbsp; | &nbsp;  </span></span>
+                                                }
+                                                {suggestion.glutenFree &&
+                                                    <span className="gluten-free" title="*gluten-free"> <Icon size={.7} path={mdiBarleyOff} /> </span>
+                                                }
+                                            </p>
+                                            <label className="checkbox-body">
+                                                <input type="checkbox" name={suggestion.id} value={suggestion.selected} checked={suggestion.selected} onChange={this.handleCheckboxChange(i)} />
+                                                <div className="checkbox-mask">
+                                                    <div className="checked">
+                                                        <Icon className="plus" path={mdiCheckCircle} />
+                                                        <Icon className="minus" path={mdiMinusCircle} />
+                                                    </div>
+                                                    <div className="unchecked">
+                                                        <Icon path={mdiPlusCircleOutline} />
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
                                     </Card.Body>
                                 </Card>
                             </div>
@@ -143,7 +180,7 @@ class myOptions extends Component {
 
 
         return (
-            <div className="container page-main">
+            <div className="container page-main page-options">
                 <div className="row">
                     <aside className="panel-left d-none d-md-block col-md-3">
                         <div>
@@ -177,11 +214,10 @@ class myOptions extends Component {
                     <div className="panel-main col-xs-12 col-md-9">
                         <div className="card shadow">
                             <div className="card-body">
-                                {/* TODO: fresh options of the week verbiage */}
-                                <h2>Its a brand new week</h2>
+
+                                <h2>{newWeek ? `New meal suggestions for you this week` : `Here are your options for this week`}</h2>
                                 <p>
-                                    Answer a few questions to help us personalize your menu
-                                    options. You can change these any time later.
+                                    Click the plus buttons to select meals below that you wan to cook this week.
                                 </p>
                                 <br />
                                 {form}
@@ -199,7 +235,9 @@ class myOptions extends Component {
 
 myOptions.propTypes = {
     currentUser: propTypes.object,
-    // submit: propTypes.func.isRequired,
+    updateHasOptions: propTypes.func,
+    updateHasPreferences: propTypes.func,
+    proress: propTypes.object
 };
 
 function mapStateToProps(state) {
@@ -208,4 +246,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, {})(myOptions);
+export default connect(mapStateToProps, { updateHasOptions, updateHasPreferences })(myOptions);

@@ -1,5 +1,98 @@
 
-.fo-text {
-    font: 2em 'Roboto', sans-serif;
-    font-weight: 400;
+@import "colors";
+
+.page-options{
+    .options-container{
+        .col{
+            margin-bottom: 24px;
+        }
+        .card{
+            height: 100%;
+            .card-body {
+                padding: 8px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                h6{
+                    text-align: left;
+                    margin-bottom: 30px;
+                    font-weight: 400;
+                }
+                p {
+                    margin: 0;
+                    color: $text-light;
+                    font-size: 14px;
+                    svg{
+                        margin-top: -1px;
+                          path {
+                            fill: $text-light;
+                          }
+                    }
+                }
+                .checkbox-body {
+                    float: right;
+                    margin-top: -50px;
+
+                    input[type="checkbox"] {
+                        visibility: hidden;
+                        float: left;
+                      }
+                    
+                      svg{
+                          width: 40px;
+                          height: 40px;
+                          cursor: pointer;
+                          path {
+                            fill: $cu-primary-one;
+                          }
+                          &.minus{
+                            path {
+                                fill: $text-dark;
+                              }
+                          }
+                      }
+                    
+                      input[type="checkbox"] + .checkbox-mask {
+                        height: 20px;
+                        font-weight: 400;
+                        .checked {
+                            display: none
+                        }
+                        .unchecked {
+                            
+                            display: block;
+                            &:hover{
+                                filter: brightness(75%);
+                            }
+                        }
+                      }
+
+                      input[type="checkbox"]:checked + .checkbox-mask {
+                        .checked {
+                            display: block;
+                            .minus{
+                                display: none;
+                            }
+                            .plus{
+                                display: block
+                            }
+                            &:hover{
+                                .minus{
+                                    display: block
+                                }
+                                .plus{
+                                    display: none
+                                }
+                            }
+                        }
+                        .unchecked {
+                            display: none;
+                        }
+                      }
+                }
+            }
+        }
+        
+    }
 }
