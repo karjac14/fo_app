@@ -6,11 +6,16 @@ import foHttp from '../helpers/fohttp';
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import propTypes from "prop-types";
+import Modal from 'react-modal';
+import SlidingPane from 'react-sliding-pane';
+import 'react-sliding-pane/dist/react-sliding-pane.css';
 import ProgressBar from "../components/progress-view";
 import CalendarIndicator from "../components/calendar-indicator";
 import AccountPane from "../components/account-pane";
 import ReferPane from "../components/refer-pane";
+import RecipePane from "../components/recipe-pane";
 import { updateHasPreferences, updateHasOptions } from '../actions/progressActions';
+
 
 
 
@@ -25,17 +30,20 @@ class myMeals extends Component {
     this.state = {
       noSelection: false,
       noSuggestions: false,
+      meals: null,
       week: moment().week(),
       year: moment().year(),
       today: moment(),
       firstDay: moment().startOf('week'),
-      lastDay: moment().endOf('week')
+      lastDay: moment().endOf('week'),
+      paneOpen: false
     };
 
     // this.toggleMode = this.toggleMode.bind(this);
     // this.handleInputChange = this.handleInputChange.bind(this);
     // this.logIn = this.logIn.bind(this);
     // this.submit = this.submit.bind(this);
+    this.openRecipePane = this.openRecipePane.bind(this);
   }
 
   componentDidMount() {
@@ -56,10 +64,14 @@ class myMeals extends Component {
         } else {
           this.props.updateHasOptions(true);
           this.props.updateHasPreferences(true);
-          this.setState(res.data);
+          this.setState({ meals: res.data.meals });
         }
       }
     })
+
+    Modal.setAppElement(this.el);
+
+
 
 
 
@@ -69,12 +81,21 @@ class myMeals extends Component {
     console.log(`changing week to: ${date}`); // TODO: use this event later when user wants to see previous meals
   }
 
+  openRecipePane = meal => event => {
+    console.log(meal);
+    this.setState({
+      paneOpen: true,
+      activeRecipe: meal
+    });
+  }
+
+
 
 
   render() {
 
     const { progress, currentUser } = this.props;
-    const { noSelection, noSuggestions, meals } = this.state;
+    const { noSelection, noSuggestions, meals, activeRecipe } = this.state;
 
     if (noSelection || noSuggestions) {
       // TODO: if no choices this week redirect user to choose page
@@ -87,12 +108,12 @@ class myMeals extends Component {
       form = (
         <div>
           <div className="row">
-            {meals.map((suggestion, i) => (
-              <div key={suggestion.id} className="col-xs-12 col-sm-6 col-md-4 col-xl-3">
+            {meals.map((meal, i) => (
+              <div key={meal.id} className="col-xs-12 col-sm-6 col-md-4 col-xl-3" onClick={this.openRecipePane(meal)}>
                 <Card>
-                  <Card.Img variant="top" src={suggestion.image} />
+                  <Card.Img variant="top" src={meal.image} />
                   <Card.Body>
-                    <Card.Title>{suggestion.title}</Card.Title>
+                    <Card.Title>{meal.title}</Card.Title>
                     <Card.Text>
 
                     </Card.Text>
@@ -163,7 +184,19 @@ class myMeals extends Component {
               </div>
             </div>
           </div>
-        </div></div>
+        </div>
+        <SlidingPane
+          className='some-custom-class'
+          overlayClassName='some-custom-overlay-class'
+          isOpen={this.state.paneOpen}
+          title='Hey, it is optional pane title.  I can be React component too.'
+          subtitle='Optional subtitle.'
+          onRequestClose={() => {
+            this.setState({ paneOpen: false });
+          }}>
+          <RecipePane recipe={activeRecipe}></RecipePane>
+        </SlidingPane>
+      </div>
 
     )
   }
