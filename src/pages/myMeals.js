@@ -16,6 +16,8 @@ import ReferPane from "../components/refer-pane";
 import RecipePane from "../components/recipe-pane";
 import { updateHasPreferences, updateHasOptions } from '../actions/progressActions';
 
+import "../styles/meals.scss";
+
 
 
 
@@ -186,14 +188,14 @@ class myMeals extends Component {
           </div>
         </div>
         <SlidingPane
-          className='some-custom-class'
-          overlayClassName='some-custom-overlay-class'
+          className='recipe-pane'
+          overlayClassName='recipe-pane-overlay'
           isOpen={this.state.paneOpen}
-          title='Hey, it is optional pane title.  I can be React component too.'
-          subtitle='Optional subtitle.'
+          width='800px'
           onRequestClose={() => {
             this.setState({ paneOpen: false });
           }}>
+
           <RecipePane recipe={activeRecipe}></RecipePane>
         </SlidingPane>
       </div>
