@@ -16,6 +16,11 @@ import ReferPane from "../components/refer-pane";
 import RecipePane from "../components/recipe-pane";
 import { updateHasPreferences, updateHasOptions } from '../actions/progressActions';
 
+import Truncate from 'react-truncate';
+
+import Icon from "@mdi/react";
+import { mdiCheckCircle, mdiPlusCircleOutline, mdiMinusCircle, mdiAccountGroup, mdiBarleyOff } from "@mdi/js";
+
 import "../styles/meals.scss";
 
 
@@ -111,16 +116,32 @@ class myMeals extends Component {
         <div>
           <div className="row">
             {meals.map((meal, i) => (
-              <div key={meal.id} className="col-xs-12 col-sm-6 col-md-4 col-xl-3" onClick={this.openRecipePane(meal)}>
-                <Card>
-                  <Card.Img variant="top" src={meal.image} />
-                  <Card.Body>
-                    <Card.Title>{meal.title}</Card.Title>
-                    <Card.Text>
-
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
+              <div key={meal.id} className="col-12" onClick={this.openRecipePane(meal)}>
+                <div className="card meals-card">
+                  <div className="row no-gutters">
+                    <div className="col-md-4">
+                      <img src={meal.image} alt="" />
+                    </div>
+                    <div className="col-md-8 refer-texts">
+                      <h4>
+                        {meal.title}
+                      </h4>
+                      <div>
+                        <p>
+                          {meal.readyInMinutes &&
+                            <span title="preparation and cooking time">{meal.readyInMinutes} mins &nbsp; | &nbsp; </span>
+                          }
+                          {meal.servings &&
+                            <span title="no. of servings"> <Icon size={.7} path={mdiAccountGroup} /> <span> {meal.servings}  &nbsp; | &nbsp;  </span></span>
+                          }
+                          {meal.glutenFree &&
+                            <span className="gluten-free" title="*gluten-free"> <Icon size={.7} path={mdiBarleyOff} /> </span>
+                          }
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -142,7 +163,7 @@ class myMeals extends Component {
 
     return (
 
-      <div className="container page-main">
+      <div className="container page-main page-meals">
         <div className="row">
           <aside className="panel-left d-none d-md-block col-md-3">
             <div>
