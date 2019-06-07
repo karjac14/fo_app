@@ -5,6 +5,17 @@
             max-width: 100%;
             margin: 0 auto;
         }
-        
+    }
+    h5{
+        text-align: left;
+    }
+    .row-ingredients{
+        padding: 24px 8px 12px;
+    }
+    .row-steps{
+        padding: 24px 8px 12px;
+    }
+    .step-num {
+        min-width: 28px;
     }
 }
