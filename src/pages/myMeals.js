@@ -6,11 +6,23 @@ import foHttp from '../helpers/fohttp';
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import propTypes from "prop-types";
+import Modal from 'react-modal';
+import SlidingPane from 'react-sliding-pane';
+import 'react-sliding-pane/dist/react-sliding-pane.css';
 import ProgressBar from "../components/progress-view";
 import CalendarIndicator from "../components/calendar-indicator";
 import AccountPane from "../components/account-pane";
 import ReferPane from "../components/refer-pane";
+import RecipePane from "../components/recipe-pane";
 import { updateHasPreferences, updateHasOptions } from '../actions/progressActions';
+
+import Truncate from 'react-truncate';
+
+import Icon from "@mdi/react";
+import { mdiCheckCircle, mdiPlusCircleOutline, mdiMinusCircle, mdiAccountGroup, mdiBarleyOff } from "@mdi/js";
+
+import "../styles/meals.scss";
+
 
 
 
@@ -25,17 +37,20 @@ class myMeals extends Component {
     this.state = {
       noSelection: false,
       noSuggestions: false,
+      meals: null,
       week: moment().week(),
       year: moment().year(),
       today: moment(),
       firstDay: moment().startOf('week'),
-      lastDay: moment().endOf('week')
+      lastDay: moment().endOf('week'),
+      paneOpen: false
     };
 
     // this.toggleMode = this.toggleMode.bind(this);
     // this.handleInputChange = this.handleInputChange.bind(this);
     // this.logIn = this.logIn.bind(this);
     // this.submit = this.submit.bind(this);
+    this.openRecipePane = this.openRecipePane.bind(this);
   }
 
   componentDidMount() {
@@ -56,10 +71,14 @@ class myMeals extends Component {
         } else {
           this.props.updateHasOptions(true);
           this.props.updateHasPreferences(true);
-          this.setState(res.data);
+          this.setState({ meals: res.data.meals });
         }
       }
     })
+
+    Modal.setAppElement(this.el);
+
+
 
 
 
@@ -69,12 +88,21 @@ class myMeals extends Component {
     console.log(`changing week to: ${date}`); // TODO: use this event later when user wants to see previous meals
   }
 
+  openRecipePane = meal => event => {
+    console.log(meal);
+    this.setState({
+      paneOpen: true,
+      activeRecipe: meal
+    });
+  }
+
+
 
 
   render() {
 
     const { progress, currentUser } = this.props;
-    const { noSelection, noSuggestions, meals } = this.state;
+    const { noSelection, noSuggestions, meals, activeRecipe } = this.state;
 
     if (noSelection || noSuggestions) {
       // TODO: if no choices this week redirect user to choose page
@@ -87,17 +115,33 @@ class myMeals extends Component {
       form = (
         <div>
           <div className="row">
-            {meals.map((suggestion, i) => (
-              <div key={suggestion.id} className="col-xs-12 col-sm-6 col-md-4 col-xl-3">
-                <Card>
-                  <Card.Img variant="top" src={suggestion.image} />
-                  <Card.Body>
-                    <Card.Title>{suggestion.title}</Card.Title>
-                    <Card.Text>
-
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
+            {meals.map((meal, i) => (
+              <div key={meal.id} className="col-12" onClick={this.openRecipePane(meal)}>
+                <div className="card meals-card">
+                  <div className="row no-gutters">
+                    <div className="col-md-4">
+                      <img src={meal.image} alt="" />
+                    </div>
+                    <div className="col-md-8 refer-texts">
+                      <h4>
+                        {meal.title}
+                      </h4>
+                      <div>
+                        <p>
+                          {meal.readyInMinutes &&
+                            <span title="preparation and cooking time">{meal.readyInMinutes} mins &nbsp; | &nbsp; </span>
+                          }
+                          {meal.servings &&
+                            <span title="no. of servings"> <Icon size={.7} path={mdiAccountGroup} /> <span> {meal.servings}  &nbsp; | &nbsp;  </span></span>
+                          }
+                          {meal.glutenFree &&
+                            <span className="gluten-free" title="*gluten-free"> <Icon size={.7} path={mdiBarleyOff} /> </span>
+                          }
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -119,7 +163,7 @@ class myMeals extends Component {
 
     return (
 
-      <div className="container page-main">
+      <div className="container page-main page-meals">
         <div className="row">
           <aside className="panel-left d-none d-md-block col-md-3">
             <div>
@@ -163,7 +207,19 @@ class myMeals extends Component {
               </div>
             </div>
           </div>
-        </div></div>
+        </div>
+        <SlidingPane
+          className='recipe-pane'
+          overlayClassName='recipe-pane-overlay'
+          isOpen={this.state.paneOpen}
+          width='800px'
+          onRequestClose={() => {
+            this.setState({ paneOpen: false });
+          }}>
+
+          <RecipePane recipe={activeRecipe}></RecipePane>
+        </SlidingPane>
+      </div>
 
     )
   }
