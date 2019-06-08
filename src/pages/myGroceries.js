@@ -49,7 +49,7 @@ class myMeals extends Component {
 
         foHttp("GET", "groceries", params).then(res => {
             if (res.success) {
-                console.log(res);
+                this.setState({ ingredients: res.data.ingredients })
             }
         })
 
@@ -66,7 +66,7 @@ class myMeals extends Component {
     render() {
 
         const { progress, currentUser } = this.props;
-        const { noSelection, noSuggestions, meals } = this.state;
+        const { noSelection, noSuggestions, ingredients } = this.state;
 
         // if (noSelection || noSuggestions) {
         //     // TODO: if no choices this week redirect user to choose page
@@ -75,27 +75,16 @@ class myMeals extends Component {
 
 
         let form;
-        if (meals) {
+        if (ingredients) {
             form = (
                 <div>
-                    <div className="row">
-                        {meals.map((suggestion, i) => (
-                            <div key={suggestion.id} className="col-xs-12 col-sm-6 col-md-4 col-xl-3">
-                                <Card>
-                                    <Card.Img variant="top" src={suggestion.image} />
-                                    <Card.Body>
-                                        <Card.Title>{suggestion.title}</Card.Title>
-                                        <Card.Text>
 
-                                        </Card.Text>
-                                    </Card.Body>
-                                </Card>
-                            </div>
-                        ))}
-                    </div>
-                    {/* <div className="text-center">
-            <Button type="submit" onClick={this.submit}>Save Selection</Button>
-          </div> */}
+                    {ingredients.map((ing, i) => (
+                        <div key={ing.id} className="">
+                            {ing.originalName} {ing.amount} {ing.unit}
+                        </div>
+                    ))}
+
                 </div>
             )
         } else {

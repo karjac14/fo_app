@@ -105,7 +105,6 @@ class myMeals extends Component {
     const { noSelection, noSuggestions, meals, activeRecipe } = this.state;
 
     if (noSelection || noSuggestions) {
-      // TODO: if no choices this week redirect user to choose page
       return <Redirect to="/my-options" />
     }
 
