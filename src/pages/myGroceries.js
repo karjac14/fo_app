@@ -12,6 +12,9 @@ import AccountPane from "../components/account-pane";
 import ReferPane from "../components/refer-pane";
 import { updateHasPreferences, updateHasOptions } from '../actions/progressActions';
 
+import Icon from "@mdi/react";
+import { mdiFridgeOutline, mdiCartOutline } from "@mdi/js";
+
 
 
 
@@ -61,6 +64,26 @@ class myMeals extends Component {
         console.log(`changing week to: ${date}`); // TODO: use this event later when user wants to see previous meals
     }
 
+    handleRadioChange = (ing, i) => event => {
+        this.setState(prevState => {
+            const ingredients = [...prevState.ingredients];
+            ingredients[i].cart = !prevState.ingredients[i].cart;
+
+            let params = {
+                ingredients,
+                week: prevState.week,
+                year: prevState.year
+            }
+            foHttp("PUT", "groceries", params);
+            return {
+                ingredients
+            };
+        });
+
+
+
+    };
+
 
 
     render() {
@@ -78,19 +101,48 @@ class myMeals extends Component {
         if (ingredients) {
             form = (
                 <div>
-
-                    {ingredients.map((ing, i) => (
-                        <div key={ing.id} className="">
-                            {ing.originalName} {ing.amount} {ing.unit}
-                        </div>
-                    ))}
-
+                    <ul className="list-group list-group-flush">
+                        {ingredients.map((ing, i) => (
+                            <li key={ing.weekIngId} className="list-group-item">
+                                <div className="row">
+                                    <div className="col-2">
+                                        <label className="text-center">
+                                            <input
+                                                type="radio"
+                                                name={ing.weekIngId}
+                                                value={ing.cart}
+                                                checked={ing.cart}
+                                                onChange={this.handleRadioChange(ing, i)}
+                                            />
+                                            <div className="radio-body text-center">
+                                                <Icon className="minus" path={mdiCartOutline} />
+                                            </div>
+                                        </label>
+                                        <label className="text-center">
+                                            <input
+                                                type="radio"
+                                                name={ing.weekIngId}
+                                                value={!ing.cart}
+                                                checked={!ing.cart}
+                                                onChange={this.handleRadioChange(ing, i)}
+                                            />
+                                            <div className="radio-body text-center">
+                                                <Icon className="minus" path={mdiFridgeOutline} />
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div className="col-7">{ing.name}</div>
+                                    <div className="col-3">{ing.amount} {ing.unit}</div>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             )
         } else {
             form = (
                 <div className="text-center">
-                    Fetching meals...
+                    Fetching all ingredients...
                 <br />
                     <br />
                     <div id="loading-spinner"></div>
