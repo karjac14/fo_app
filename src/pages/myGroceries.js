@@ -192,10 +192,9 @@ class myMeals extends Component {
                     <div className="panel-main col-xs-12 col-md-9">
                         <div className="card shadow">
                             <div className="card-body">
-                                <h2>Groceries Items</h2>
+                                <h2>Grocery List</h2>
                                 <p>
-                                    Answer a few questions to help us personalize your menu
-                                    options. You can change these any time later.
+                                    Here is your complete shopping list. Click the &apos;fridge&apos; button to mark items you already have in your pantry.
                                 </p>
                                 <br />
                                 {form}
