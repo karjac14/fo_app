@@ -15,9 +15,7 @@ import { updateHasPreferences, updateHasOptions } from '../actions/progressActio
 import Icon from "@mdi/react";
 import { mdiFridgeOutline, mdiCartOutline } from "@mdi/js";
 
-
-
-
+import "../styles/groceries.scss";
 import "../styles/pages.scss";
 
 
@@ -109,7 +107,7 @@ class myMeals extends Component {
         if (ingredients) {
             form = (
                 <div>
-                    <ul className="list-group list-group-flush">
+                    <ul className="list-group list-group-flush ingredients-ul">
                         {ingredients.map((ing, i) => (
                             <li key={ing.weekIngId} className="list-group-item">
                                 <div className="row">
@@ -160,7 +158,7 @@ class myMeals extends Component {
 
         return (
 
-            <div className="container page-main">
+            <div className="container page-main groceries-page">
                 <div className="row">
                     <aside className="panel-left d-none d-md-block col-md-3">
                         <div>
