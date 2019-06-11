@@ -35,7 +35,7 @@ const foHttp = async (method, path, params = {}) => {
           return res;
         }).catch(err => {
           let res = {
-            success : false,
+            success: false,
             errorMessage: err
           }
           return res;
@@ -55,7 +55,7 @@ const foHttp = async (method, path, params = {}) => {
           return res;
         }).catch(err => {
           let res = {
-            success : false,
+            success: false,
             errorMessage: err
           }
           return res;
@@ -69,7 +69,21 @@ const foHttp = async (method, path, params = {}) => {
           return res;
         }).catch(err => {
           let res = {
-            success : false,
+            success: false,
+            errorMessage: err
+          }
+          return res;
+        });
+    }
+
+    case "PATCH": {
+      let payload = params;
+      return await axios.patch(url, payload)
+        .then(res => {
+          return res;
+        }).catch(err => {
+          let res = {
+            success: false,
             errorMessage: err
           }
           return res;
@@ -83,7 +97,7 @@ const foHttp = async (method, path, params = {}) => {
           return res;
         }).catch(err => {
           let res = {
-            success : false,
+            success: false,
             errorMessage: err
           }
           return res;

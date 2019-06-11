@@ -79,9 +79,8 @@ class myPreferences extends Component {
 
 
   componentDidMount() {
-    // TODO: add spinner while waiting for preferences
-    const { isAuth, isNewUser } = this.props.currentUser;
 
+    const { isNewUser } = this.props.currentUser;
     if (!isNewUser) {
       this.setState({ fetchingPreferences: true });
       foHttp("GET", "preferences").then(res => {
@@ -165,9 +164,9 @@ class myPreferences extends Component {
                       <div className="option-title">
                         {option.label}<sup>{'' + String.fromCharCode(option.subtext)}</sup>
                       </div>
-                      <div className="option-desc">
+                      {/* <div className="option-desc">
                         {option.definition}
-                      </div>
+                      </div> */}
                     </div>
                   </label>
                 </div>

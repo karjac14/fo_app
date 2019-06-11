@@ -1,10 +1,10 @@
 
 import React from 'react';
 import PropTypes from "prop-types";
-import Card from "react-bootstrap/Card";
+
 import "../styles/recipe-pane.scss";
 import Icon from "@mdi/react";
-import { mdiCheckCircle, mdiPlusCircleOutline, mdiMinusCircle, mdiAccountGroup, mdiBarleyOff } from "@mdi/js";
+import {mdiAccountGroup, mdiBarleyOff } from "@mdi/js";
 
 
 function RecipePane(props) {
@@ -15,7 +15,7 @@ function RecipePane(props) {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col col-12 col-md-6 recipe-img">
-                        <img src={recipe.image} />
+                        <img alt={recipe.title} src={recipe.image} />
                     </div>
                     <div className="col col-12 col-md-6">
                         <h3>{recipe.title}</h3>
@@ -61,6 +61,10 @@ function RecipePane(props) {
         </div>
     );
 }
+
+RecipePane.propTypes = {
+  recipe: PropTypes.object.isRequired
+};
 
 export default RecipePane;
 
