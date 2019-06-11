@@ -1,7 +1,7 @@
 @import "colors";
 
 .radio-piece {
-  // display: inline-block;
+
   margin-bottom: 15px;
 
   label {
@@ -11,8 +11,6 @@
     height: 100%;
     cursor: pointer;
   }
-
-  
 
   &.single-info {
     vertical-align: middle;
@@ -64,20 +62,14 @@
     transition: transform 300ms ease;
   }
 
-  // input[type="radio"] + .radio-body {
-  //   border: 2px solid $cu-primary;
-  //   background: #fff;
-  //   color: $cu-primary;
-  // }
+
   input[type="radio"]:checked + .radio-body {
     border: 1px solid $cu-primary;
     background: $cu-primary;
     font-weight: 400;
     color: #fff;
-    transform: scale(1.05, 1.05);
+    transform: scale(1.1, 1.1);
   }
-
-  //
 
   input[type="checkbox"] {
     visibility: hidden;
@@ -93,14 +85,11 @@
     transition: transform 300ms ease;
   }
 
-  // input[type="checkbox"] + .radio-body {
-  //   color: $text-light;
-  // }
   input[type="checkbox"]:checked + .radio-body {
     border: 2px solid $cu-primary;
     background: $cu-primary;
     font-weight: 400;
     color: #fff;
-    transform: scale(1.05, 1.05);
+    transform: scale(1.1, 1.1);
   }
 }

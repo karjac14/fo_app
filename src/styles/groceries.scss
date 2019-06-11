@@ -4,6 +4,15 @@
 
 .groceries-page{
     .ingredients-ul{
+
+      .ing-name {
+        text-transform: lowercase;
+    }
+    
+    .ing-name:first-letter {
+        text-transform: uppercase;
+    }
+
         input {
             position: fixed;
           }

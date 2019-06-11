@@ -79,9 +79,8 @@ class myPreferences extends Component {
 
 
   componentDidMount() {
-    // TODO: add spinner while waiting for preferences
-    const { isAuth, isNewUser } = this.props.currentUser;
 
+    const { isNewUser } = this.props.currentUser;
     if (!isNewUser) {
       this.setState({ fetchingPreferences: true });
       foHttp("GET", "preferences").then(res => {

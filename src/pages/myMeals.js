@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect, Link } from "react-router-dom";
 import moment from 'moment';
 import foHttp from '../helpers/fohttp';
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
+
 import propTypes from "prop-types";
 import Modal from 'react-modal';
 import SlidingPane from 'react-sliding-pane';
@@ -16,10 +15,10 @@ import ReferPane from "../components/refer-pane";
 import RecipePane from "../components/recipe-pane";
 import { updateHasPreferences, updateHasOptions } from '../actions/progressActions';
 
-import Truncate from 'react-truncate';
+
 
 import Icon from "@mdi/react";
-import { mdiCheckCircle, mdiPlusCircleOutline, mdiMinusCircle, mdiAccountGroup, mdiBarleyOff } from "@mdi/js";
+import {mdiAccountGroup, mdiBarleyOff } from "@mdi/js";
 
 import "../styles/meals.scss";
 

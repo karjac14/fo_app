@@ -127,7 +127,7 @@ class myOptions extends Component {
                                     <Card.Img variant="top" src={suggestion.image} />
                                     <Card.Body>
                                         <h6>
-                                            <Truncate lines={3} ellipsis={<span>... <a href='/'></a></span>}>
+                                            <Truncate lines={3}>
                                                 {suggestion.title} &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
                                             </Truncate>
                                         </h6>

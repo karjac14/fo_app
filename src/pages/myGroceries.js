@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect, Link } from "react-router-dom";
 import moment from 'moment';
 import foHttp from '../helpers/fohttp';
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
+import dectoFrac from '../helpers/decimal-fraction';
 import propTypes from "prop-types";
 import ProgressBar from "../components/progress-view";
 import CalendarIndicator from "../components/calendar-indicator";
@@ -98,7 +97,6 @@ class myMeals extends Component {
         const { noSelection, noSuggestions, ingredients } = this.state;
 
         if (noSelection || noSuggestions) {
-            // TODO: if no choices this week redirect user to choose page
             return <Redirect to="/my-options" />
         }
 
@@ -137,8 +135,8 @@ class myMeals extends Component {
                                             </div>
                                         </label>
                                     </div>
-                                    <div className="col-7">{ing.name}</div>
-                                    <div className="col-3">{ing.amount} {ing.unit}</div>
+                                    <div className="col-7"><p className="ing-name">{ing.name}</p></div>
+                                    <div className="col-3">{dectoFrac(ing.amount)} {ing.unit}</div>
                                 </div>
                             </li>
                         ))}
