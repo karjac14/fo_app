@@ -165,9 +165,9 @@ class myPreferences extends Component {
                       <div className="option-title">
                         {option.label}<sup>{'' + String.fromCharCode(option.subtext)}</sup>
                       </div>
-                      <div className="option-desc">
+                      {/* <div className="option-desc">
                         {option.definition}
-                      </div>
+                      </div> */}
                     </div>
                   </label>
                 </div>
