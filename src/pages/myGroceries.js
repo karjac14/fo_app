@@ -52,7 +52,15 @@ class myMeals extends Component {
 
         foHttp("GET", "groceries", params).then(res => {
             if (res.success) {
-                this.setState({ ingredients: res.data.ingredients })
+                if (res.data.noSelection) {
+                    this.setState({ noSelection: true });
+                } else if (res.data.noSuggestions) {
+                    this.setState({ noSuggestions: true });
+                } else {
+                    this.props.updateHasOptions(true);
+                    this.props.updateHasPreferences(true);
+                    this.setState({ ingredients: res.data.ingredients })
+                }
             }
         })
 
@@ -91,10 +99,10 @@ class myMeals extends Component {
         const { progress, currentUser } = this.props;
         const { noSelection, noSuggestions, ingredients } = this.state;
 
-        // if (noSelection || noSuggestions) {
-        //     // TODO: if no choices this week redirect user to choose page
-        //     return <Redirect to="/my-options" />
-        // }
+        if (noSelection || noSuggestions) {
+            // TODO: if no choices this week redirect user to choose page
+            return <Redirect to="/my-options" />
+        }
 
 
         let form;
