@@ -18,7 +18,7 @@ import { updateHasPreferences, updateHasOptions } from '../actions/progressActio
 
 
 import Icon from "@mdi/react";
-import {mdiAccountGroup, mdiBarleyOff } from "@mdi/js";
+import { mdiAccountGroup, mdiBarleyOff } from "@mdi/js";
 
 import "../styles/meals.scss";
 
@@ -197,11 +197,13 @@ class myMeals extends Component {
               <div className="card-body">
                 <h2>Your Meals!</h2>
                 <p>
-                  Answer a few questions to help us personalize your menu
-                  options. You can change these any time later.
+                  Here are your selected meals for the week, click on any
                                 </p>
                 <br />
                 {form}
+                <div>
+                  Want to change your selection? <Link to="/my-options">Change meals</Link>
+                </div>
               </div>
             </div>
           </div>

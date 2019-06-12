@@ -20,11 +20,6 @@ const progressReducer = function (state = initialState, action) {
                 ...state,
                 hasChosen: action.payload
             }
-        } case UPDATE_HAS_CHOSEN: { //TO USE on phase 2
-            return {
-                ...state,
-                hasPreferences: action.payload
-            }
         }
         default:
             return state;

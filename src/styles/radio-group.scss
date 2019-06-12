@@ -14,7 +14,7 @@
 
   &.single-info {
     vertical-align: middle;
-    font-size: 1.5em;
+    font-size: 1em;
     .radio-body {
       display: flex;
       justify-content: center;
@@ -36,7 +36,7 @@
       border: 1px solid #ddd;
     }
     .option-title {
-      font-size: 1.5em;
+      font-size: 1em;
     }
     .option-desc {
       font-size: 0.8em;
@@ -56,16 +56,16 @@
   input[type="radio"] + .radio-body {
     height: 100%;
     font-weight: 400;
-    border: 1px solid $cu-primary;
+    border: 1px solid $cu-primary-one;
     background: #fff;
-    color: $cu-primary;
+    color: $cu-primary-one;
     transition: transform 300ms ease;
   }
 
 
   input[type="radio"]:checked + .radio-body {
-    border: 1px solid $cu-primary;
-    background: $cu-primary;
+    border: 1px solid $cu-primary-one;
+    background: $cu-primary-one;
     font-weight: 400;
     color: #fff;
     transform: scale(1.1, 1.1);
@@ -79,15 +79,15 @@
   input[type="checkbox"] + .radio-body {
     height: 100%;
     font-weight: 400;
-    border: 1px solid $cu-primary;
+    border: 1px solid $cu-primary-one;
     background: #fff;
-    color: $cu-primary;
+    color: $cu-primary-one;
     transition: transform 300ms ease;
   }
 
   input[type="checkbox"]:checked + .radio-body {
-    border: 2px solid $cu-primary;
-    background: $cu-primary;
+    border: 2px solid $cu-primary-one;
+    background: $cu-primary-one;
     font-weight: 400;
     color: #fff;
     transform: scale(1.1, 1.1);

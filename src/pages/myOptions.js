@@ -34,7 +34,8 @@ class myOptions extends Component {
             year: moment().year(),
             today: moment(),
             firstDay: moment().startOf('week'),
-            lastDay: moment().endOf('week')
+            lastDay: moment().endOf('week'),
+            disableSave: true
         };
 
         this.submit = this.submit.bind(this);
@@ -71,9 +72,10 @@ class myOptions extends Component {
             const suggestions = [...prevState.suggestions];
             suggestions[i].selected = !prevState.suggestions[i].selected;
             return {
-                suggestions
+                suggestions, disableSave: false
             };
         });
+
     };
 
     changeWeek(date) {
@@ -108,7 +110,7 @@ class myOptions extends Component {
     render() {
 
         const { progress, currentUser } = this.props;
-        const { suggestions, noPreferences, redirectToMeals, newWeek } = this.state;
+        const { suggestions, noPreferences, redirectToMeals, newWeek, disableSave } = this.state;
 
 
         let form;
@@ -162,7 +164,7 @@ class myOptions extends Component {
                         ))}
                     </div>
                     <div className="text-center">
-                        <Button type="submit" onClick={this.submit}>Save Selection</Button>
+                        <Button type="submit" onClick={this.submit} disabled={disableSave}>Save Selection</Button>
                     </div>
                 </div>
             )

@@ -49,6 +49,9 @@ class NavFo extends React.Component {
             <LinkContainer to="/my-meals">
               <NavDropdown.Item>My Meals</NavDropdown.Item>
             </LinkContainer>
+            <LinkContainer to="/my-groceries">
+              <NavDropdown.Item>My Groceries</NavDropdown.Item>
+            </LinkContainer>
             <NavDropdown.Divider />
             <NavDropdown.Item onClick={this.logout}>Logout</NavDropdown.Item>
           </NavDropdown>
