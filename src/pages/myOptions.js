@@ -169,7 +169,7 @@ class myOptions extends Component {
                     <div className="form-bottom-buttons-container">
                         <div className="left-buttons">
                             <Link to="/my-preferences">
-                                <button className="btn btn-link no-left-padding" href="#">Modify Peferences</button>
+                                <button className="btn btn-link no-left-padding" href="#">Modify Preferences</button>
                             </Link>
                         </div>
                         <div className="right-buttons">

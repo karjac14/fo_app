@@ -201,8 +201,17 @@ class myMeals extends Component {
                                 </p>
                 <br />
                 {form}
-                <div>
-                  Want to change your selection? <Link to="/my-options">Change meals</Link>
+                <div className="form-bottom-buttons-container">
+                  <div className="left-buttons">
+                    <Link to="/my-options">
+                      <button className="btn btn-link no-left-padding" href="#">Modify meal sleection</button>
+                    </Link>
+                  </div>
+                  <div className="right-buttons">
+                    <Link to="/my-groceries">
+                      <button className="btn btn-primary" href="#">Shop Ingredients</button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
