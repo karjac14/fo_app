@@ -11,8 +11,6 @@ import ProgressBar from "../components/progress-view";
 import AccountPane from "../components/account-pane";
 import ReferPane from "../components/refer-pane";
 import { updateHasPreferences, updateHasOptions } from '../actions/progressActions';
-
-
 import "../styles/radio-group.scss";
 import "../styles/pages.scss";
 
@@ -200,14 +198,18 @@ class myPreferences extends Component {
           </Form.Group>
         </fieldset>
 
-        <div className="text-center">
-          {this.state.hasExistingPref ?
-            <Link to="/my-meals">
-              <button className="btn btn-link" href="#">Cancel</button>
-            </Link> : null
-          }
-          <Button type="submit" disabled={disableSave}>{submitting ? "Saving..." : "Save Preferences"}</Button>
+        <div className="form-bottom-buttons-container">
+          <div className="left-buttons">
 
+          </div>
+          <div className="right-buttons">
+            {this.state.hasExistingPref ?
+              <Link to="/my-meals">
+                <button className="btn btn-link" href="#">Cancel</button>
+              </Link> : null
+            }
+            <Button type="submit" disabled={disableSave}>{submitting ? "Saving..." : "Save Preferences"}</Button>
+          </div>
         </div>
       </Form>)
     }

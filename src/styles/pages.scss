@@ -56,4 +56,26 @@
     h5{
         text-align: left;
     }
+
+    
+}
+
+.panel-main {
+    .form-bottom-buttons-container{
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        .left-buttons{
+
+        }
+        .right-buttons{
+            
+        }
+        svg{
+            height: 1.4rem;
+            path {
+                fill: #fff;
+              }
+        }
+    }
 }
