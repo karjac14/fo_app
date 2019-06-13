@@ -107,7 +107,7 @@ class myPreferences extends Component {
     if (fetchingPreferences) {
       view = (
         <div className="text-center">
-          Fetching suggestions...
+          Fetching preferences...
           <br />
           <br />
           <div id="loading-spinner"></div>

@@ -60,8 +60,11 @@ class myOptions extends Component {
                     this.setState({ noPreferences: true });
                 } else {
                     this.props.updateHasPreferences(true);
-                    this.setState({ suggestions: res.data.suggestions });
-                    this.setState({ newWeek: res.data.newWeek });
+                    let selected = res.data.suggestions.filter(x => x.selected);
+                    if (selected.length) {
+                        this.setState({ hasExistingSelection: true });
+                    }
+                    this.setState({ suggestions: res.data.suggestions, newWeek: res.data.newWeek });
                 }
             }
         })
@@ -163,8 +166,20 @@ class myOptions extends Component {
                             </div>
                         ))}
                     </div>
-                    <div className="text-center">
-                        <Button type="submit" onClick={this.submit} disabled={disableSave}>Save Selection</Button>
+                    <div className="form-bottom-buttons-container">
+                        <div className="left-buttons">
+                            <Link to="/my-preferences">
+                                <button className="btn btn-link no-left-padding" href="#">Modify Peferences</button>
+                            </Link>
+                        </div>
+                        <div className="right-buttons">
+                            {this.state.hasExistingSelection ?
+                                <Link to="/my-meals">
+                                    <button className="btn btn-link" href="#">Cancel</button>
+                                </Link> : null
+                            }
+                            <Button type="submit" onClick={this.submit} disabled={disableSave}>Save Selection</Button>
+                        </div>
                     </div>
                 </div>
             )

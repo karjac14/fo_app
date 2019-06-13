@@ -66,16 +66,14 @@
         display: flex;
         justify-content: space-between;
         .left-buttons{
+            .no-left-padding{
+                padding-left: 0;
+            }
 
         }
         .right-buttons{
             
         }
-        svg{
-            height: 1.4rem;
-            path {
-                fill: #fff;
-              }
-        }
+        
     }
 }
