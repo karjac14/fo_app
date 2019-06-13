@@ -17,18 +17,6 @@ class NavFo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.logout = this.logout.bind(this);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (!this.props.isAuth && prevProps.isAuth) {
-      console.log("hey");
-      this.props.history.push("/");
-    }
-  }
-
-  logout() {
-    this.props.logOut();
   }
 
   render() {
@@ -43,7 +31,9 @@ class NavFo extends React.Component {
             <LinkContainer to="/my-preferences">
               <NavDropdown.Item>Account Info</NavDropdown.Item>
             </LinkContainer>
-            <NavDropdown.Item onClick={this.logout}>Logout</NavDropdown.Item>
+            <LinkContainer to="/logout">
+              <NavDropdown.Item>Logout</NavDropdown.Item>
+            </LinkContainer>
           </NavDropdown>
         </Nav >
       );
