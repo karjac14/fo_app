@@ -34,7 +34,8 @@ class myOptions extends Component {
             year: moment().year(),
             today: moment(),
             firstDay: moment().startOf('week'),
-            lastDay: moment().endOf('week')
+            lastDay: moment().endOf('week'),
+            disableSave: true
         };
 
         this.submit = this.submit.bind(this);
@@ -59,8 +60,11 @@ class myOptions extends Component {
                     this.setState({ noPreferences: true });
                 } else {
                     this.props.updateHasPreferences(true);
-                    this.setState({ suggestions: res.data.suggestions });
-                    this.setState({ newWeek: res.data.newWeek });
+                    let selected = res.data.suggestions.filter(x => x.selected);
+                    if (selected.length) {
+                        this.setState({ hasExistingSelection: true });
+                    }
+                    this.setState({ suggestions: res.data.suggestions, newWeek: res.data.newWeek });
                 }
             }
         })
@@ -71,9 +75,10 @@ class myOptions extends Component {
             const suggestions = [...prevState.suggestions];
             suggestions[i].selected = !prevState.suggestions[i].selected;
             return {
-                suggestions
+                suggestions, disableSave: false
             };
         });
+
     };
 
     changeWeek(date) {
@@ -108,7 +113,7 @@ class myOptions extends Component {
     render() {
 
         const { progress, currentUser } = this.props;
-        const { suggestions, noPreferences, redirectToMeals, newWeek } = this.state;
+        const { suggestions, noPreferences, redirectToMeals, newWeek, disableSave } = this.state;
 
 
         let form;
@@ -161,8 +166,20 @@ class myOptions extends Component {
                             </div>
                         ))}
                     </div>
-                    <div className="text-center">
-                        <Button type="submit" onClick={this.submit}>Save Selection</Button>
+                    <div className="form-bottom-buttons-container">
+                        <div className="left-buttons">
+                            <Link to="/my-preferences">
+                                <button className="btn btn-link no-left-padding" href="#">Modify Preferences</button>
+                            </Link>
+                        </div>
+                        <div className="right-buttons">
+                            {this.state.hasExistingSelection ?
+                                <Link to="/my-meals">
+                                    <button className="btn btn-link" href="#">Cancel</button>
+                                </Link> : null
+                            }
+                            <Button type="submit" className="less-right-padding" onClick={this.submit} disabled={disableSave}>Save Selection  &nbsp; &#9654;</Button>
+                        </div>
                     </div>
                 </div>
             )
@@ -215,9 +232,9 @@ class myOptions extends Component {
                         <div className="card shadow">
                             <div className="card-body">
 
-                                <h2>{newWeek ? `New meal suggestions for you this week` : `Here are your options for this week`}</h2>
+                                <h2>{newWeek ? `New meal suggestions for you this week` : `Your options for this week`}</h2>
                                 <p>
-                                    Click the plus buttons to select meals below that you wan to cook this week.
+                                    Click the &apos;plus&apos; buttons to select meals below that you wan to cook this week.
                                 </p>
                                 <br />
                                 {form}

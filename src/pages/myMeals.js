@@ -18,7 +18,7 @@ import { updateHasPreferences, updateHasOptions } from '../actions/progressActio
 
 
 import Icon from "@mdi/react";
-import {mdiAccountGroup, mdiBarleyOff } from "@mdi/js";
+import { mdiAccountGroup, mdiBarleyOff } from "@mdi/js";
 
 import "../styles/meals.scss";
 
@@ -143,9 +143,18 @@ class myMeals extends Component {
               </div>
             ))}
           </div>
-          {/* <div className="text-center">
-            <Button type="submit" onClick={this.submit}>Save Selection</Button>
-          </div> */}
+          <div className="form-bottom-buttons-container">
+            <div className="left-buttons">
+              <Link to="/my-options">
+                <button className="btn btn-link no-left-padding" href="#">Modify meal selection</button>
+              </Link>
+            </div>
+            <div className="right-buttons">
+              <Link to="/my-groceries">
+                <button className="btn btn-primary less-right-padding" href="#">Shop Ingredients &nbsp; &#9654;</button>
+              </Link>
+            </div>
+          </div>
         </div>
       )
     } else {
@@ -196,10 +205,7 @@ class myMeals extends Component {
             <div className="card shadow">
               <div className="card-body">
                 <h2>Your Meals!</h2>
-                <p>
-                  Answer a few questions to help us personalize your menu
-                  options. You can change these any time later.
-                                </p>
+                <p>Here are your receipes for the week. Click a recipe to see the complete ingredients and instructions.</p>
                 <br />
                 {form}
               </div>

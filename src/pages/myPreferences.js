@@ -10,11 +10,10 @@ import defaultPreferences from "../hard-data/preferences";
 import ProgressBar from "../components/progress-view";
 import AccountPane from "../components/account-pane";
 import ReferPane from "../components/refer-pane";
-import { updateHasPreferences } from '../actions/progressActions';
-
-
+import { updateHasPreferences, updateHasOptions } from '../actions/progressActions';
 import "../styles/radio-group.scss";
 import "../styles/pages.scss";
+import "../styles/preferences.scss";
 
 class myPreferences extends Component {
   constructor(props) {
@@ -71,6 +70,7 @@ class myPreferences extends Component {
     };
     foHttp("POST", "preferences", params).then(res => {
       this.props.updateHasPreferences(true);
+      this.props.updateHasOptions(false);
       this.setState({ redirectToOptions: true })
       this.setState({ submitting: true });
     });
@@ -86,7 +86,7 @@ class myPreferences extends Component {
       foHttp("GET", "preferences").then(res => {
         this.setState({ fetchingPreferences: false });
         if (res.data) {
-          this.setState({ preferences: res.data });
+          this.setState({ preferences: res.data, hasExistingPref: true });
           this.props.updateHasPreferences(true);
         }
       });
@@ -107,7 +107,7 @@ class myPreferences extends Component {
     if (fetchingPreferences) {
       view = (
         <div className="text-center">
-          Fetching suggestions...
+          Fetching preferences...
           <br />
           <br />
           <div id="loading-spinner"></div>
@@ -164,9 +164,6 @@ class myPreferences extends Component {
                       <div className="option-title">
                         {option.label}<sup>{'' + String.fromCharCode(option.subtext)}</sup>
                       </div>
-                      {/* <div className="option-desc">
-                        {option.definition}
-                      </div> */}
                     </div>
                   </label>
                 </div>
@@ -177,7 +174,7 @@ class myPreferences extends Component {
         <fieldset>
           <Form.Group className="container">
             <h4>
-              Intolerances?{" "}
+              Intolerances?
               <span className="text-secondary">(optional)</span>
             </h4>
             <div className="row">
@@ -202,16 +199,24 @@ class myPreferences extends Component {
           </Form.Group>
         </fieldset>
 
-        <Form.Group>
-          <div className="text-center">
-            <Button type="submit" disabled={disableSave}>{submitting ? "Saving..." : "Save Preferences"}</Button>
+        <div className="form-bottom-buttons-container">
+          <div className="left-buttons">
+
           </div>
-        </Form.Group>
+          <div className="right-buttons">
+            {this.state.hasExistingPref ?
+              <Link to="/my-meals">
+                <button className="btn btn-link" href="#">Cancel</button>
+              </Link> : null
+            }
+            <Button type="submit" className="less-right-padding" disabled={disableSave}>{submitting ? "Saving..." : "Save Preferences"}  &nbsp; &#9654;</Button>
+          </div>
+        </div>
       </Form>)
     }
 
     return (
-      <div className="container page-main">
+      <div className="container page-main preferences-page">
         <div className="row">
           <aside className="panel-left d-none d-md-block col-md-3">
             <div>
@@ -260,7 +265,8 @@ class myPreferences extends Component {
 
 myPreferences.propTypes = {
   currentUser: propTypes.object,
-  updateHasPreferences: propTypes.func
+  updateHasPreferences: propTypes.func,
+  updateHasOptions: propTypes.func
 };
 
 function mapStateToProps(state) {
@@ -270,5 +276,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { updateHasPreferences }
+  { updateHasPreferences, updateHasOptions }
 )(myPreferences);

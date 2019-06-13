@@ -56,4 +56,52 @@
     h5{
         text-align: left;
     }
+
+    
+}
+
+.panel-main {
+    .form-top-buttons-container{
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        .left-buttons{
+            .no-left-padding{
+                padding-left: 0;
+            }
+
+        }
+        .right-buttons{
+            .less-right-padding{
+                padding-right: 20px;
+            }
+            svg {
+                margin-top: -4px;
+                width: 22px;
+                fill: #fff;
+            }
+        }
+    }
+    .form-bottom-buttons-container{
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        .left-buttons{
+            .no-left-padding{
+                padding-left: 0;
+            }
+
+        }
+        .right-buttons{
+            .less-right-padding{
+                padding-right: 20px;
+            }
+            svg {
+                margin-top: -4px;
+                width: 22px;
+                fill: #fff;
+            }
+        }
+        
+    }
 }

@@ -8,8 +8,8 @@ import { connect } from "react-redux";
 import { logOut } from "../actions/currentUserActions";
 import propTypes from "prop-types";
 
-import Icon from "@mdi/react";
-import { mdiChefHat } from "@mdi/js";
+import Icon from '@mdi/react';
+import { mdiChefHat, mdiAccountCircleOutline, } from "@mdi/js";
 
 import "../styles/navbar.scss";
 
@@ -17,18 +17,6 @@ class NavFo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.logout = this.logout.bind(this);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (!this.props.isAuth && prevProps.isAuth) {
-      console.log("hey");
-      this.props.history.push("/");
-    }
-  }
-
-  logout() {
-    this.props.logOut();
   }
 
   render() {
@@ -39,20 +27,15 @@ class NavFo extends React.Component {
     if (isAuth) {
       rightGroupLinks = (
         <Nav>
-          <NavDropdown title="Account" alignRight>
-            <LinkContainer to="/my-preferences">
-              <NavDropdown.Item>Preferences</NavDropdown.Item>
+          <NavDropdown title={<Icon size={1.5} color="888" className="dropdown-icon" path={mdiAccountCircleOutline} />} alignRight>
+            <LinkContainer to="/account">
+              <NavDropdown.Item>Account Info</NavDropdown.Item>
             </LinkContainer>
-            <LinkContainer to="/my-options">
-              <NavDropdown.Item>Suggestions</NavDropdown.Item>
+            <LinkContainer to="/logout">
+              <NavDropdown.Item>Logout</NavDropdown.Item>
             </LinkContainer>
-            <LinkContainer to="/my-meals">
-              <NavDropdown.Item>My Meals</NavDropdown.Item>
-            </LinkContainer>
-            <NavDropdown.Divider />
-            <NavDropdown.Item onClick={this.logout}>Logout</NavDropdown.Item>
           </NavDropdown>
-        </Nav>
+        </Nav >
       );
     } else {
       rightGroupLinks = (
