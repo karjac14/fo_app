@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import "../styles/recipe-pane.scss";
 import Icon from "@mdi/react";
-import {mdiAccountGroup, mdiBarleyOff } from "@mdi/js";
+import { mdiAccountGroup, mdiBarleyOff } from "@mdi/js";
 
 
 function RecipePane(props) {
@@ -63,7 +63,11 @@ function RecipePane(props) {
 }
 
 RecipePane.propTypes = {
-  recipe: PropTypes.object.isRequired
+    recipe: PropTypes.object.isRequired
+};
+
+RecipePane.defaultProps = {
+    recipe: {}
 };
 
 export default RecipePane;

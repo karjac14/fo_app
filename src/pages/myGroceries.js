@@ -141,6 +141,16 @@ class myMeals extends Component {
                             </li>
                         ))}
                     </ul>
+                    <div className="form-bottom-buttons-container">
+                        <div className="left-buttons">
+                            <Link to="/my-meals">
+                                <button className="btn btn-link no-left-padding" href="#">View recipes</button>
+                            </Link>
+                        </div>
+                        <div className="right-buttons">
+                            <button className="btn btn-primary less-right-padding" href="#" disabled>Send to Woolworths &nbsp; &#9654;</button>
+                        </div>
+                    </div>
                 </div>
             )
         } else {
