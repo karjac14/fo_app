@@ -28,7 +28,7 @@ class NavFo extends React.Component {
       rightGroupLinks = (
         <Nav>
           <NavDropdown title={<Icon size={1.5} color="888" className="dropdown-icon" path={mdiAccountCircleOutline} />} alignRight>
-            <LinkContainer to="/my-preferences">
+            <LinkContainer to="/account">
               <NavDropdown.Item>Account Info</NavDropdown.Item>
             </LinkContainer>
             <LinkContainer to="/logout">
