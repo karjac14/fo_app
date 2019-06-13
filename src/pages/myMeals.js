@@ -143,9 +143,18 @@ class myMeals extends Component {
               </div>
             ))}
           </div>
-          {/* <div className="text-center">
-            <Button type="submit" onClick={this.submit}>Save Selection</Button>
-          </div> */}
+          <div className="form-bottom-buttons-container">
+            <div className="left-buttons">
+              <Link to="/my-options">
+                <button className="btn btn-link no-left-padding" href="#">Modify meal sleection</button>
+              </Link>
+            </div>
+            <div className="right-buttons">
+              <Link to="/my-groceries">
+                <button className="btn btn-primary less-right-padding" href="#">Shop Ingredients &nbsp; &#9654;</button>
+              </Link>
+            </div>
+          </div>
         </div>
       )
     } else {
@@ -201,18 +210,6 @@ class myMeals extends Component {
                                 </p>
                 <br />
                 {form}
-                <div className="form-bottom-buttons-container">
-                  <div className="left-buttons">
-                    <Link to="/my-options">
-                      <button className="btn btn-link no-left-padding" href="#">Modify meal sleection</button>
-                    </Link>
-                  </div>
-                  <div className="right-buttons">
-                    <Link to="/my-groceries">
-                      <button className="btn btn-primary" href="#">Shop Ingredients</button>
-                    </Link>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

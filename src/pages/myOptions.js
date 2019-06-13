@@ -178,7 +178,7 @@ class myOptions extends Component {
                                     <button className="btn btn-link" href="#">Cancel</button>
                                 </Link> : null
                             }
-                            <Button type="submit" onClick={this.submit} disabled={disableSave}>Save Selection</Button>
+                            <Button type="submit" className="less-right-padding" onClick={this.submit} disabled={disableSave}>Save Selection  &nbsp; &#9654;</Button>
                         </div>
                     </div>
                 </div>

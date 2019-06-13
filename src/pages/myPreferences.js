@@ -209,7 +209,7 @@ class myPreferences extends Component {
                 <button className="btn btn-link" href="#">Cancel</button>
               </Link> : null
             }
-            <Button type="submit" disabled={disableSave}>{submitting ? "Saving..." : "Save Preferences"}</Button>
+            <Button type="submit" className="less-right-padding" disabled={disableSave}>{submitting ? "Saving..." : "Save Preferences"}  &nbsp; &#9654;</Button>
           </div>
         </div>
       </Form>)
