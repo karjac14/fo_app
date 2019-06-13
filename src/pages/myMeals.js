@@ -146,7 +146,7 @@ class myMeals extends Component {
           <div className="form-bottom-buttons-container">
             <div className="left-buttons">
               <Link to="/my-options">
-                <button className="btn btn-link no-left-padding" href="#">Modify meal sleection</button>
+                <button className="btn btn-link no-left-padding" href="#">Modify meal selection</button>
               </Link>
             </div>
             <div className="right-buttons">
@@ -205,9 +205,7 @@ class myMeals extends Component {
             <div className="card shadow">
               <div className="card-body">
                 <h2>Your Meals!</h2>
-                <p>
-                  Here are your selected meals for the week, click on any
-                                </p>
+                <p>Here are your receipes for the week. Click a recipe to see the complete ingredients and instructions.</p>
                 <br />
                 {form}
               </div>

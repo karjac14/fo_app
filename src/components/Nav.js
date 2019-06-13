@@ -8,8 +8,8 @@ import { connect } from "react-redux";
 import { logOut } from "../actions/currentUserActions";
 import propTypes from "prop-types";
 
-import Icon from "@mdi/react";
-import { mdiChefHat } from "@mdi/js";
+import Icon from '@mdi/react';
+import { mdiChefHat, mdiAccountCircleOutline, } from "@mdi/js";
 
 import "../styles/navbar.scss";
 
@@ -39,23 +39,13 @@ class NavFo extends React.Component {
     if (isAuth) {
       rightGroupLinks = (
         <Nav>
-          <NavDropdown title="Account" alignRight>
+          <NavDropdown title={<Icon size={1.5} color="888" className="dropdown-icon" path={mdiAccountCircleOutline} />} alignRight>
             <LinkContainer to="/my-preferences">
-              <NavDropdown.Item>Preferences</NavDropdown.Item>
+              <NavDropdown.Item>Account Info</NavDropdown.Item>
             </LinkContainer>
-            <LinkContainer to="/my-options">
-              <NavDropdown.Item>Suggestions</NavDropdown.Item>
-            </LinkContainer>
-            <LinkContainer to="/my-meals">
-              <NavDropdown.Item>My Meals</NavDropdown.Item>
-            </LinkContainer>
-            <LinkContainer to="/my-groceries">
-              <NavDropdown.Item>My Groceries</NavDropdown.Item>
-            </LinkContainer>
-            <NavDropdown.Divider />
             <NavDropdown.Item onClick={this.logout}>Logout</NavDropdown.Item>
           </NavDropdown>
-        </Nav>
+        </Nav >
       );
     } else {
       rightGroupLinks = (

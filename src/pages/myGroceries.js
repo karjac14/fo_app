@@ -105,6 +105,13 @@ class myMeals extends Component {
         if (ingredients) {
             form = (
                 <div>
+                    <div className="form-top-buttons-container">
+                        <div className="left-buttons">
+                        </div>
+                        <div className="right-buttons">
+                            <button className="btn btn-primary less-right-padding" href="#">Send to Woolworths <Icon path={mdiCartOutline} /></button>
+                        </div>
+                    </div>
                     <ul className="list-group list-group-flush ingredients-ul">
                         {ingredients.map((ing, i) => (
                             <li key={ing.weekIngId} className="list-group-item">
@@ -119,7 +126,7 @@ class myMeals extends Component {
                                                 onChange={this.handleRadioChange(ing, i)}
                                             />
                                             <div className="radio-body text-center">
-                                                <Icon className="minus" path={mdiCartOutline} />
+                                                <Icon path={mdiCartOutline} />
                                             </div>
                                         </label>
                                         <label className="text-center">
@@ -131,7 +138,7 @@ class myMeals extends Component {
                                                 onChange={this.handleRadioChange(ing, i)}
                                             />
                                             <div className="radio-body text-center">
-                                                <Icon className="minus" path={mdiFridgeOutline} />
+                                                <Icon path={mdiFridgeOutline} />
                                             </div>
                                         </label>
                                     </div>
@@ -148,7 +155,7 @@ class myMeals extends Component {
                             </Link>
                         </div>
                         <div className="right-buttons">
-                            <button className="btn btn-primary less-right-padding" href="#" disabled>Send to Woolworths &nbsp; &#9654;</button>
+                            <button className="btn btn-primary less-right-padding" href="#">Send to Woolworths <Icon path={mdiCartOutline} /></button>
                         </div>
                     </div>
                 </div>
@@ -202,7 +209,7 @@ class myMeals extends Component {
                             <div className="card-body">
                                 <h2>Grocery List</h2>
                                 <p>
-                                    Here is your complete shopping list. Click the &apos;fridge&apos; button to mark items you already have in your pantry.
+                                    Here is your complete shopping list. Click the &apos;fridge&apos; button to mark items you already have in your pantry for easy reference.
                                 </p>
                                 <br />
                                 {form}

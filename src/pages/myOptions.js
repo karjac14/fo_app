@@ -232,9 +232,9 @@ class myOptions extends Component {
                         <div className="card shadow">
                             <div className="card-body">
 
-                                <h2>{newWeek ? `New meal suggestions for you this week` : `Here are your options for this week`}</h2>
+                                <h2>{newWeek ? `New meal suggestions for you this week` : `Your options for this week`}</h2>
                                 <p>
-                                    Click the plus buttons to select meals below that you wan to cook this week.
+                                    Click the &apos;plus&apos; buttons to select meals below that you wan to cook this week.
                                 </p>
                                 <br />
                                 {form}
