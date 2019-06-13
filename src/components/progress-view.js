@@ -12,8 +12,8 @@ function ProgressBar(props) {
         <div className="container">
             <div className="status-row">
                 <div className={"col-3 status-col " + (activeRoute === '1' ? 'active' : '')}><div><Icon path={progress.hasPreferences ? mdiCheckboxMarkedCircle : mdiNumeric1CircleOutline} /></div><div className="status-name">Set Diet Preferences</div></div>
-                <div className={"col-3 status-col " + (activeRoute === '2' ? 'active' : '')}><div><Icon path={progress.hasChosen ? mdiCheckboxMarkedCircle : mdiNumeric2CircleOutline} /></div><div className="status-name">Choose Meals</div></div>
-                <div className={"col-3 status-col " + (activeRoute === '3' ? 'active' : '')}><div><Icon path={progress.hasChosen ? mdiCheckboxMarkedCircle : mdiNumeric3CircleOutline} /></div><div className="status-name">Open Meals</div></div>
+                <div className={"col-3 status-col " + (activeRoute === '2' ? 'active' : '')}><div><Icon path={progress.hasChosen ? mdiCheckboxMarkedCircle : mdiNumeric2CircleOutline} /></div><div className="status-name">Choose Recipes</div></div>
+                <div className={"col-3 status-col " + (activeRoute === '3' ? 'active' : '')}><div><Icon path={progress.hasChosen ? mdiCheckboxMarkedCircle : mdiNumeric3CircleOutline} /></div><div className="status-name">View Recipes</div></div>
                 <div className={"col-3 status-col " + (activeRoute === '4' ? 'active' : '')}><div><Icon path={mdiNumeric4CircleOutline} /></div><div className="status-name">Order Ingredients</div></div>
             </div>
         </div>

@@ -13,6 +13,7 @@ import ReferPane from "../components/refer-pane";
 import { updateHasPreferences, updateHasOptions } from '../actions/progressActions';
 import "../styles/radio-group.scss";
 import "../styles/pages.scss";
+import "../styles/preferences.scss";
 
 class myPreferences extends Component {
   constructor(props) {
@@ -215,7 +216,7 @@ class myPreferences extends Component {
     }
 
     return (
-      <div className="container page-main">
+      <div className="container page-main preferences-page">
         <div className="row">
           <aside className="panel-left d-none d-md-block col-md-3">
             <div>
