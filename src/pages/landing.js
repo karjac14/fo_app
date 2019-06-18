@@ -14,6 +14,9 @@ import meal_2_sm from "../assets/img/meal_2_sm.jpg";
 import meal_3_sm from "../assets/img/meal_3_sm.jpg";
 import meal_4_sm from "../assets/img/meal_4_sm.jpg";
 
+import Icon from "@mdi/react";
+import { mdiPlaylistCheck, mdiBookOpenOutline, mdiCartOutline } from "@mdi/js";
+
 class landing extends Component {
   constructor(props, context) {
     super(props, context);
@@ -133,7 +136,7 @@ class landing extends Component {
 
           {/* RECOMENDED FOR YOU SM BELOW*/}
           <div className="d-md-none">
-            <h3>Recommended diets for you</h3>
+            <h4>Recommended diets for you</h4>
             <Carousel>
               <Carousel.Item>
                 <img
@@ -194,10 +197,12 @@ class landing extends Component {
               <div className="col-md-4">
                 <div className="card">
                   <div className="card-body">
-                    <h6 className="card-title">It's Free</h6>
-                    <p className="card-text">
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content.
+                    <div className="text-center">
+                      <Icon className="notes-icons" path={mdiBookOpenOutline} />
+                    </div>
+                    <h6 className="card-title">Personalized Meals</h6>
+                    <p className="card-text text-center">
+                      Exciting new meal suggestions every week tailored-made based on your diet preferences and food tolerances.
                     </p>
                   </div>
                 </div>
@@ -205,23 +210,26 @@ class landing extends Component {
               <div className="col-md-4">
                 <div className="card">
                   <div className="card-body">
-                    <h6 className="card-title">Personalized Menus</h6>
-                    <p className="card-text">
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content. Some quick example
-                      text to build on the card title and make up the bulk of
-                      the card's content.
+                    <div className="text-center">
+                      <Icon className="notes-icons" path={mdiCartOutline} />
+                    </div>
+                    <h6 className="card-title">Hassle-free Grocery Order*</h6>
+                    <p className="card-text text-center">
+                      Easily transfers your groceries list to Woolworths or Coles for fast online ordering and pick up.
                     </p>
+                    <p className="text-center"><small>*coming August 2019</small></p>
                   </div>
                 </div>
               </div>
               <div className="col-md-4">
                 <div className="card">
                   <div className="card-body">
+                    <div className="text-center">
+                      <Icon className="notes-icons" path={mdiPlaylistCheck} />
+                    </div>
                     <h6 className="card-title">Easy to Use</h6>
-                    <p className="card-text">
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content.
+                    <p className="card-text text-center">
+                      With step-by-step instructions and complete list of ingredients, you will never miss a beat.
                     </p>
                   </div>
                 </div>
@@ -287,7 +295,7 @@ class landing extends Component {
         <Modal show={this.state.showModal} onHide={this.handleModalClose}>
           <Modal.Body>
             <div className="landing-modal text-center">
-              <h3>Thank you for checking out <br/> Cook Up!</h3>
+              <h3>Thank you for checking out <br /> Cook Up!</h3>
               <br />
               This web application is currently in the prototype stage and will
               be ready soon (June 2019). Feel free to visit the 'about' section
