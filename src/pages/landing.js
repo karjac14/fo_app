@@ -81,7 +81,7 @@ class landing extends Component {
                   <div className="recommended-caption text-center">
                     <h4 className="recommended-title">Ketogenic</h4>
                     <span className="recommended-text">
-                      High fat &#38; protien, low carbs
+                      Very low in carbs
                     </span>
                   </div>
                 </div>
@@ -146,7 +146,7 @@ class landing extends Component {
                 />
                 <Carousel.Caption>
                   <h3>Ketogenic</h3>
-                  <p>High fat &#38; protien, low carbs</p>
+                  <p>Very low in carbs</p>
                 </Carousel.Caption>
               </Carousel.Item>
               <Carousel.Item>
@@ -215,7 +215,7 @@ class landing extends Component {
                     </div>
                     <h6 className="card-title">Hassle-free Grocery Order*</h6>
                     <p className="card-text text-center">
-                      Easily transfers your groceries list to Woolworths or Coles for fast online ordering and pick up.
+                      Easily transfer your groceries list to Woolworths or Coles for fast online ordering and pick up.
                     </p>
                     <p className="text-center"><small>*coming August 2019</small></p>
                   </div>
@@ -245,41 +245,27 @@ class landing extends Component {
 
           <div className="row row-eq-height">
             <div className="col-xs-12 col-sm-6">
-              <strong>Lorem Ipsum</strong>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              <p className="how-text text-center">
+                First, set your dietary preferences and tolerances. Every week, choose from 12 new recipes that you can try.
               </p>
-              <p>
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est
-                laborum.
+              <p className="how-text text-center">
+                View your recipes everywhere from your phone or your computer for easy access.
               </p>
             </div>
 
-            <div className="card col-xs-12 col-sm-6" />
+            <div className="col-xs-12 col-sm-6" />
           </div>
           <br />
+          <br />
           <div className="row row-eq-height">
-            <div className="card col-xs-12 col-sm-6" />
+            <div className="col-xs-12 col-sm-6" />
 
             <div className="col-xs-12 col-sm-6">
-              <strong>Lorem Ipsum</strong>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              <p className="how-text text-center">
+                When doing groceries, you can easily look on your grocery list from your phone.  Mark those items you already have in your pantry beforehand for easy reference.
               </p>
-              <p>
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est
-                laborum.
-              </p>
+              <p className="how-text text-center">
+                Soon, you will be able to transfer your orders to your Woolworth or Coles carts easily. Making your grocery task a breeze.              </p>
             </div>
           </div>
         </div>
