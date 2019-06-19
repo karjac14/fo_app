@@ -78,7 +78,16 @@ h5 {
     color: #fff;
     background-color: $cu-primary-one;
     margin-bottom: 20px;
+    svg{
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      path {
+        fill: #fff;
+      }
   }
+  }
+
 }
 
 .landing-footer {
@@ -116,4 +125,8 @@ h5 {
   button {
     margin: 10px 10px;
   }
+}
+
+.how-text{
+  padding: 15px 30px;
 }

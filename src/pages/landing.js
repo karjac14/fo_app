@@ -14,6 +14,9 @@ import meal_2_sm from "../assets/img/meal_2_sm.jpg";
 import meal_3_sm from "../assets/img/meal_3_sm.jpg";
 import meal_4_sm from "../assets/img/meal_4_sm.jpg";
 
+import Icon from "@mdi/react";
+import { mdiPlaylistCheck, mdiBookOpenOutline, mdiCartOutline } from "@mdi/js";
+
 class landing extends Component {
   constructor(props, context) {
     super(props, context);
@@ -78,7 +81,7 @@ class landing extends Component {
                   <div className="recommended-caption text-center">
                     <h4 className="recommended-title">Ketogenic</h4>
                     <span className="recommended-text">
-                      High fat &#38; protien, low carbs
+                      Very low in carbs
                     </span>
                   </div>
                 </div>
@@ -133,7 +136,7 @@ class landing extends Component {
 
           {/* RECOMENDED FOR YOU SM BELOW*/}
           <div className="d-md-none">
-            <h3>Recommended diets for you</h3>
+            <h4>Recommended diets for you</h4>
             <Carousel>
               <Carousel.Item>
                 <img
@@ -143,7 +146,7 @@ class landing extends Component {
                 />
                 <Carousel.Caption>
                   <h3>Ketogenic</h3>
-                  <p>High fat &#38; protien, low carbs</p>
+                  <p>Very low in carbs</p>
                 </Carousel.Caption>
               </Carousel.Item>
               <Carousel.Item>
@@ -194,10 +197,12 @@ class landing extends Component {
               <div className="col-md-4">
                 <div className="card">
                   <div className="card-body">
-                    <h6 className="card-title">It's Free</h6>
-                    <p className="card-text">
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content.
+                    <div className="text-center">
+                      <Icon className="notes-icons" path={mdiBookOpenOutline} />
+                    </div>
+                    <h6 className="card-title">Personalized Meals</h6>
+                    <p className="card-text text-center">
+                      Exciting new meal suggestions every week tailored-made based on your diet preferences and food tolerances.
                     </p>
                   </div>
                 </div>
@@ -205,23 +210,26 @@ class landing extends Component {
               <div className="col-md-4">
                 <div className="card">
                   <div className="card-body">
-                    <h6 className="card-title">Personalized Menus</h6>
-                    <p className="card-text">
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content. Some quick example
-                      text to build on the card title and make up the bulk of
-                      the card's content.
+                    <div className="text-center">
+                      <Icon className="notes-icons" path={mdiCartOutline} />
+                    </div>
+                    <h6 className="card-title">Hassle-free Grocery Order*</h6>
+                    <p className="card-text text-center">
+                      Easily transfer your groceries list to Woolworths or Coles for fast online ordering and pick up.
                     </p>
+                    <p className="text-center"><small>*coming August 2019</small></p>
                   </div>
                 </div>
               </div>
               <div className="col-md-4">
                 <div className="card">
                   <div className="card-body">
+                    <div className="text-center">
+                      <Icon className="notes-icons" path={mdiPlaylistCheck} />
+                    </div>
                     <h6 className="card-title">Easy to Use</h6>
-                    <p className="card-text">
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content.
+                    <p className="card-text text-center">
+                      With step-by-step instructions and complete list of ingredients, you will never miss a beat.
                     </p>
                   </div>
                 </div>
@@ -237,41 +245,27 @@ class landing extends Component {
 
           <div className="row row-eq-height">
             <div className="col-xs-12 col-sm-6">
-              <strong>Lorem Ipsum</strong>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              <p className="how-text text-center">
+                First, set your dietary preferences and tolerances. Every week, choose from 12 new recipes that you can try.
               </p>
-              <p>
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est
-                laborum.
+              <p className="how-text text-center">
+                View your recipes everywhere from your phone or your computer for easy access.
               </p>
             </div>
 
-            <div className="card col-xs-12 col-sm-6" />
+            <div className="col-xs-12 col-sm-6" />
           </div>
           <br />
+          <br />
           <div className="row row-eq-height">
-            <div className="card col-xs-12 col-sm-6" />
+            <div className="col-xs-12 col-sm-6" />
 
             <div className="col-xs-12 col-sm-6">
-              <strong>Lorem Ipsum</strong>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              <p className="how-text text-center">
+                When doing groceries, you can easily look on your grocery list from your phone.  Mark those items you already have in your pantry beforehand for easy reference.
               </p>
-              <p>
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est
-                laborum.
-              </p>
+              <p className="how-text text-center">
+                Soon, you will be able to transfer your orders to your Woolworth or Coles carts easily. Making your grocery task a breeze.              </p>
             </div>
           </div>
         </div>
@@ -287,7 +281,7 @@ class landing extends Component {
         <Modal show={this.state.showModal} onHide={this.handleModalClose}>
           <Modal.Body>
             <div className="landing-modal text-center">
-              <h3>Thank you for checking out <br/> Cook Up!</h3>
+              <h3>Thank you for checking out <br /> Cook Up!</h3>
               <br />
               This web application is currently in the prototype stage and will
               be ready soon (June 2019). Feel free to visit the 'about' section
