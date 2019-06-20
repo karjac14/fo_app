@@ -8,6 +8,7 @@ import myPreferences from "./pages/myPreferences";
 import myOptions from "./pages/myOptions";
 import myGroceries from "./pages/myGroceries";
 import logOutPage from "./pages/logout";
+import status from "./pages/status";
 import accountInfo from "./pages/accountInfo";
 import moment from 'moment';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
@@ -70,6 +71,7 @@ class App extends Component {
             <Route exact path="/" component={landing} />
             <Route exact path="/about" component={about} />
             <Route exact path="/login" component={login} />
+            <Route exact path="/status" component={status} />
             <PrivateRoute path="/account" component={accountInfo} isAuth={isAuth} />
             <Route exact path="/logout" component={logOutPage} />
             <PrivateRoute path="/my-preferences" component={myPreferences} isAuth={isAuth} />
