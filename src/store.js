@@ -7,12 +7,16 @@ const initialState = {};
 
 const middleware = [thunk];
 
+const enhancers = process.env.NODE_ENV === "production" ?
+    compose(applyMiddleware(...middleware)) :
+    compose(applyMiddleware(...middleware),
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    );
+
 const store = createStore(
     allReducers,
     initialState,
-    compose(applyMiddleware(...middleware),
-        // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-    )
+    enhancers
 );
 
 export default store;
