@@ -30,26 +30,30 @@ class status extends Component {
 
 
         const { week, year } = this.state;
+        const { isAuth } = this.props.currentUser;
 
 
         let params = {
             week,
             year
         };
-        foHttp("GET", "status", params).then(res => {
-            if (res.success) {
-                if (res.data.hasChosen) {
-                    this.setState({ hasChosen: true });
-                    this.props.updateHasOptions(true);
-                    this.props.updateHasPreferences(true);
-                } else if (res.data.hasPreferences) {
-                    this.setState({ hasPreferences: true });
-                    this.props.updateHasPreferences(true);
-                } else {
-                    this.setState({ hasPreferences: false });
+
+        if (isAuth) {
+            foHttp("GET", "status", params).then(res => {
+                if (res.success) {
+                    if (res.data.hasChosen) {
+                        this.setState({ hasChosen: true });
+                        this.props.updateHasOptions(true);
+                        this.props.updateHasPreferences(true);
+                    } else if (res.data.hasPreferences) {
+                        this.setState({ hasPreferences: true });
+                        this.props.updateHasPreferences(true);
+                    } else {
+                        this.setState({ hasPreferences: false });
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 
     render() {
@@ -58,7 +62,7 @@ class status extends Component {
         const { hasChosen, hasPreferences, } = this.state;
 
         if (!isAuth) {
-            return <Redirect to="/login" />
+            return <Redirect to="/welcome" />
         }
 
         if (hasChosen) {
