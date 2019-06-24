@@ -52,7 +52,7 @@ class NavFo extends React.Component {
 
     return (
       <Navbar collapseOnSelect expand="lg" bg="white" variant="light">
-        <LinkContainer to="/">
+        <LinkContainer to="/welcome">
           <Navbar.Brand><Icon className="logo-icon" path={mdiChefHat} />
             Cook Up</Navbar.Brand>
         </LinkContainer>

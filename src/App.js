@@ -68,10 +68,10 @@ class App extends Component {
         <div className="App">
           <Nav />
           <Switch>
-            <Route exact path="/" component={landing} />
+            <Route exact path="/" component={status} />
             <Route exact path="/about" component={about} />
             <Route exact path="/login" component={login} />
-            <Route exact path="/status" component={status} />
+            <Route exact path="/welcome" component={landing} />
             <PrivateRoute path="/account" component={accountInfo} isAuth={isAuth} />
             <Route exact path="/logout" component={logOutPage} />
             <PrivateRoute path="/my-preferences" component={myPreferences} isAuth={isAuth} />

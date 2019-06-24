@@ -57,7 +57,7 @@ class landing extends Component {
             over 300,000 recipes.
           </p>
           <p className="lead">
-            <Link to="/status">
+            <Link to="/login">
               <button className="btn btn-primary btn-lg" href="#">
                 Plan meals
               </button>
