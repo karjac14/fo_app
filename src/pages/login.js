@@ -97,237 +97,229 @@ class login extends Component {
 
   render() {
 
-    const { from } = this.props.location.state || { from: { pathname: '/' } }
+    const { isSignUpMode, validated, errorPassword } = this.state;
 
-    if (this.props.newUser === true) {
-        //TODO: Show some welcome message, and inform user that he will be redirected to preferences page
-        return <Redirect to="/my-preferences" />
+    if (this.props.isNewUser === true) {
+      //TODO: Show some welcome message, and inform user that he will be redirected to preferences page
+      return <Redirect to="/my-preferences" />
     }
-
 
     if (this.props.isAuth === true) {
-      if(from.pathname === "/"){
-        return <Redirect to="/my-meals" />
-      } else{
-        return <Redirect to={from} />
-      }
+      return <Redirect to="/" />
     }
-
-
-    const { isSignUpMode, validated, errorPassword } = this.state;
 
     let form;
 
     if (isSignUpMode) {
       form = (
         <div className="col-xs-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-        <Card className="login-card signup">
-          <Card.Body>
-            <Card.Title>Sign Up</Card.Title>
-            <Form
-              validated={validated} onSubmit={this.signUp}>
-              <Row>
-                <Col xs={12} sm={6}>
-                  <Form.Group controlId="f_name">
-                    <Form.Label>First name</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="First name"
-                      value={this.state.f_name || ""}
-                      onChange={this.handleInputChange}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-                <Col xs={12} sm={6}>
-                  <Form.Group controlId="l_name">
-                    <Form.Label>Last name</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Last name"
-                      value={this.state.l_name || ""}
-                      onChange={this.handleInputChange}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={6} sm={6} lg={3}>
-                  <Form.Group controlId="country">
-                    <Form.Label>Country</Form.Label>
-                    <Form.Control
-                      as="select"
-                      placeholder="Select Country"
-                      value={this.state.country || "Australia"}
-                      onChange={this.handleInputChange}
-                      required
-                    >
-                      <option value="Australia">Australia</option>
-                      <option value="United States">United States</option>
-                      <option value="Others">Others</option>
+          <Card className="login-card signup">
+            <Card.Body>
+              <Card.Title>Sign Up</Card.Title>
+              <Form
+                validated={validated} onSubmit={this.signUp}>
+                <Row>
+                  <Col xs={12} sm={6}>
+                    <Form.Group controlId="f_name">
+                      <Form.Label>First name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="First name"
+                        value={this.state.f_name || ""}
+                        onChange={this.handleInputChange}
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col xs={12} sm={6}>
+                    <Form.Group controlId="l_name">
+                      <Form.Label>Last name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Last name"
+                        value={this.state.l_name || ""}
+                        onChange={this.handleInputChange}
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={6} sm={6} lg={3}>
+                    <Form.Group controlId="country">
+                      <Form.Label>Country</Form.Label>
+                      <Form.Control
+                        as="select"
+                        placeholder="Select Country"
+                        value={this.state.country || "Australia"}
+                        onChange={this.handleInputChange}
+                        required
+                      >
+                        <option value="Australia">Australia</option>
+                        <option value="United States">United States</option>
+                        <option value="Others">Others</option>
 
-                    </Form.Control>
-                  </Form.Group>
-                </Col>
-                <Col xs={6} sm={6} lg={3}>
-                  <Form.Group controlId="state">
-                    <Form.Label>State</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder=""
-                      value={this.state.state || ""}
-                      onChange={this.handleInputChange}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
+                      </Form.Control>
+                    </Form.Group>
+                  </Col>
+                  <Col xs={6} sm={6} lg={3}>
+                    <Form.Group controlId="state">
+                      <Form.Label>State</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder=""
+                        value={this.state.state || ""}
+                        onChange={this.handleInputChange}
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
 
-                <Col xs={6} sm={6} lg={3}>
-                  <Form.Group controlId="city">
-                    <Form.Label>City</Form.Label>
-                    <Form.Control
-                      name="sCity"
-                      type="text"
-                      placeholder=""
-                      value={this.state.city || ""}
-                      onChange={this.handleInputChange}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-                <Col xs={6} sm={6} lg={3}>
-                  <Form.Group controlId="zip">
-                    <Form.Label>Zip</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder=""
-                      value={this.state.zip || ""}
-                      onChange={this.handleInputChange}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
+                  <Col xs={6} sm={6} lg={3}>
+                    <Form.Group controlId="city">
+                      <Form.Label>City</Form.Label>
+                      <Form.Control
+                        name="sCity"
+                        type="text"
+                        placeholder=""
+                        value={this.state.city || ""}
+                        onChange={this.handleInputChange}
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col xs={6} sm={6} lg={3}>
+                    <Form.Group controlId="zip">
+                      <Form.Label>Zip</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder=""
+                        value={this.state.zip || ""}
+                        onChange={this.handleInputChange}
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
 
-              <Form.Group controlId="email">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Email"
-                  value={this.state.email || ""}
-                  onChange={this.handleInputChange}
-                  required
-                />
-              </Form.Group>
-              <Row>
-              <Col xs={6}>
-              <Form.Group controlId="password">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  value={this.state.password || ""}
-                  onChange={this.handleInputChange}
-                  minLength="6"
-                  isInvalid={errorPassword}
-                  required
-                />
-                {errorPassword ?
-                  <small id="" className="text-danger">
-                    Password does not match</small>
-                  : ''}
-              </Form.Group>
-              </Col>
-              <Col xs={6}>
-              <Form.Group controlId="password2">
-                <Form.Label>Confirm Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Confirm Password"
-                  value={this.state.password2 || ""}
-                  onChange={this.handleInputChange}
-                  isInvalid={errorPassword}
-                  minLength="6"
-                  required
-                />
-                {errorPassword ?
-                  <small id="" className="text-danger">
-                    Password does not match</small>
-                  : ''}
-              </Form.Group>
-              </Col>
-              </Row>
-              <div className="text-danger text-center">{this.props.authErrorMessage ? this.props.authErrorMessage : <br/>}</div>
-              <br/>
-              <div className="text-center">
-              <Button variant="primary" type="submit">
-                Sign Up
+                <Form.Group controlId="email">
+                  <Form.Label>Email address</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Email"
+                    value={this.state.email || ""}
+                    onChange={this.handleInputChange}
+                    required
+                  />
+                </Form.Group>
+                <Row>
+                  <Col sm={6}>
+                    <Form.Group controlId="password">
+                      <Form.Label>Password</Form.Label>
+                      <Form.Control
+                        type="password"
+                        placeholder="Password"
+                        value={this.state.password || ""}
+                        onChange={this.handleInputChange}
+                        minLength="6"
+                        isInvalid={errorPassword}
+                        required
+                      />
+                      {errorPassword ?
+                        <small id="" className="text-danger">
+                          Password does not match</small>
+                        : ''}
+                    </Form.Group>
+                  </Col>
+                  <Col sm={6}>
+                    <Form.Group controlId="password2">
+                      <Form.Label>Confirm Password</Form.Label>
+                      <Form.Control
+                        type="password"
+                        placeholder="Confirm Password"
+                        value={this.state.password2 || ""}
+                        onChange={this.handleInputChange}
+                        isInvalid={errorPassword}
+                        minLength="6"
+                        required
+                      />
+                      {errorPassword ?
+                        <small id="" className="text-danger">
+                          Password does not match</small>
+                        : ''}
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <div className="text-danger text-center">{this.props.authErrorMessage ? this.props.authErrorMessage : <br />}</div>
+                <br />
+                <div className="text-center">
+                  <Button variant="primary" type="submit">
+                    Sign Up
                 </Button>
-              </div>
-            </Form>
-            <div className="button-container">
-              <span>Already have an account? &nbsp;</span> 
-              <button className="btn btn-link" onClick={this.toggleMode}>
-                Login here
+                </div>
+              </Form>
+              <div className="button-container">
+                <span>Already have an account? &nbsp;</span>
+                <button className="btn btn-link" onClick={this.toggleMode}>
+                  Login here
               </button>
-            </div>
-          </Card.Body>
-        </Card>
+              </div>
+            </Card.Body>
+          </Card>
         </div>
       );
     } else {
       form = (
         <div className="col-xs-12 col-sm-10 offset-sm-1 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
-        <Card className="login-card login">
-          <Card.Body>
-            <Card.Title>Login</Card.Title>
-            <Form onSubmit={this.logIn}>
-              <Form.Group controlId="user">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Enter email"
-                  value={this.state.user || ""}
-                  onChange={this.handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="pass">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  value={this.state.pass || ""}
-                  onChange={this.handleInputChange}
-                />
-              </Form.Group>
-              <div className="text-danger text-center">{this.props.authErrorMessage ? this.props.authErrorMessage : <br/>}</div>
-              <br/>
-              <div className="text-center">
-              <Button variant="primary" type="submit">
-                Login
+          <Card className="login-card login">
+            <Card.Body>
+              <Card.Title>Login</Card.Title>
+              <Form onSubmit={this.logIn}>
+                <Form.Group controlId="user">
+                  <Form.Label>Email address</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Enter email"
+                    value={this.state.user || ""}
+                    onChange={this.handleInputChange}
+                  />
+                </Form.Group>
+                <Form.Group controlId="pass">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Password"
+                    value={this.state.pass || ""}
+                    onChange={this.handleInputChange}
+                  />
+                </Form.Group>
+                <div className="text-danger text-center">{this.props.authErrorMessage ? this.props.authErrorMessage : <br />}</div>
+                <br />
+                <div className="text-center">
+                  <Button variant="primary" type="submit">
+                    Login
               </Button>
+                </div>
+              </Form>
+              <div className="button-container d-flex justify-content-between">
+                <button className="btn btn-link" onClick={this.toggleMode}>
+                  Sign up here
+              </button>
+                <button className="btn btn-link">
+                  Forgot password
+              </button>
               </div>
-            </Form>
-            <div className="button-container d-flex justify-content-between">
-              <button className="btn btn-link" onClick={this.toggleMode}>
-                Sign up here
-              </button>
-              <button className="btn btn-link">
-                Forgot password
-              </button>
-            </div>
-          </Card.Body>
-        </Card>
+            </Card.Body>
+          </Card>
         </div>
       );
     }
 
     return (
       <div className="container-fluid">
-      <div className="login-wrapper row">
-        {form}
-      </div>
+        <div className="login-wrapper row">
+          {form}
+        </div>
       </div>
     );
   }
@@ -340,12 +332,13 @@ login.propTypes = {
   location: propTypes.object,
   isAuth: propTypes.bool,
   user: propTypes.object,
+  isNewUser: propTypes.bool
 };
 
 function mapStateToProps(state) {
 
   const { currentUser } = state
-  return { isAuth: currentUser.isAuth, authErrorMessage : currentUser.authErrorMessage, newUser: currentUser.newUser }
+  return { isAuth: currentUser.isAuth, authErrorMessage: currentUser.authErrorMessage, isNewUser: currentUser.isNewUser }
 }
 
 export default connect(mapStateToProps, { logIn, signUp, setAsNotAuth })(login);

@@ -90,6 +90,8 @@ class myPreferences extends Component {
           this.props.updateHasPreferences(true);
         }
       });
+    } else {
+      this.setState({ fetchingPreferences: false });
     }
 
   }
