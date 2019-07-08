@@ -142,7 +142,13 @@ class myMeals extends Component {
                                             </div>
                                         </label>
                                     </div>
-                                    <div className="col-7"><p className="ing-name">{ing.name}</p></div>
+                                    <div className="col-7">
+                                        <p className="ing-name">{ing.name}
+                                            <br />
+                                            <small>{ing.aisle}</small>
+                                        </p>
+
+                                    </div>
                                     <div className="col-3">{dectoFrac(ing.amount)} {ing.unit}</div>
                                 </div>
                             </li>
