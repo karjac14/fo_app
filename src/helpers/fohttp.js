@@ -64,7 +64,12 @@ const foHttp = async (method, path, params = {}) => {
 
     case "PUT": {
       let payload = params;
-      return await axios.put(url, payload)
+      let config = {
+        headers: {
+          authorization: 'Bearer ' + idToken
+        }
+      }
+      return await axios.put(url, payload, config)
         .then(res => {
           return res;
         }).catch(err => {
