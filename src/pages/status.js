@@ -58,7 +58,7 @@ class status extends Component {
 
     render() {
 
-        const { isAuth } = this.props.currentUser;
+        const { isAuth, f_name } = this.props.currentUser;
         const { hasChosen, hasPreferences, } = this.state;
 
         if (!isAuth) {
@@ -79,7 +79,15 @@ class status extends Component {
 
         return (
             <div className="container page-main groceries-page">
-
+                <div className="text-center">
+                    <br />
+                    <br />
+                    <h2>Welcome Back, {f_name}</h2>
+                    Logging you in...
+                    <br />
+                    <br />
+                    <div id="loading-spinner"></div>
+                </div>
             </div>
         )
     }
