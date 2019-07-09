@@ -8,7 +8,7 @@ function ReferPane() {
             <div className="card">
                 <div className="row no-gutters">
                     <div className="col">
-                        <img src={refer} alt="" />
+                        <img src={refer} alt="people pics" />
                     </div>
                     <div className="col refer-texts">
                         <p className="card-text">Share the love, share Cook Up to your friends!</p>
