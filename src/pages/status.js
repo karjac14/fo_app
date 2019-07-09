@@ -5,12 +5,7 @@ import moment from 'moment';
 import foHttp from '../helpers/fohttp';
 
 import propTypes from "prop-types";
-
-
 import { updateHasPreferences, updateHasOptions } from '../actions/progressActions';
-
-import Icon from "@mdi/react";
-import { mdiFridgeOutline, mdiCartOutline } from "@mdi/js";
 
 import "../styles/groceries.scss";
 import "../styles/pages.scss";
