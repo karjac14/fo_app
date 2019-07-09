@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import refer from "../assets/img/refer.jpg";
 
 function ReferPane() {
-
-
     return (
         <div className="refer-pane">
             <div className="card">
