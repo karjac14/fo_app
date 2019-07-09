@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import refer from "../assets/img/refer.jpg";
 
-function ReferPane(props) {
+function ReferPane() {
 
 
     return (
