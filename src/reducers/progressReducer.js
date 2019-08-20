@@ -1,21 +1,31 @@
-import { UPDATE_HAS_PREFERENCES, UPDATE_HAS_OPTIONS, UPDATE_HAS_CHOSEN } from '../actions/progressTypes';
+import { UPDATE_HAS_PREFERENCES, UPDATE_HAS_CHOSEN, FETCHING_STATUS, FETCHED_STATUS } from '../actions/progressTypes';
 
 
-const initialState = {
-    hasPreferences: false, //if user have set preferences 
-    hasChosen: false, //if user had chosen meals for the week
-}
+const initialState = {}
 
 const progressReducer = function (state = initialState, action) {
 
     switch (action.type) {
+        case FETCHING_STATUS: {
+            return {
+                ...state,
+                fetchingStatus: true
+            }
+        }
+        case FETCHED_STATUS: {
+            return {
+                ...state,
+                fetchingStatus: false,
+                fetchedStatus: true
+            }
+        }
         case UPDATE_HAS_PREFERENCES: {
             return {
                 ...state,
                 hasPreferences: action.payload
             }
         }
-        case UPDATE_HAS_OPTIONS: {
+        case UPDATE_HAS_CHOSEN: {
             return {
                 ...state,
                 hasChosen: action.payload

@@ -15,9 +15,6 @@ const foHttp = async (method, path, params = {}) => {
   params.uid = uid;
 
 
-
-
-
   switch (method) {
 
     case "GET": {

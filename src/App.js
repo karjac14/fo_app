@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import Nav from "./components/Nav";
-import landing from "./pages/landing";
-import about from "./pages/about";
-import login from "./pages/login";
-import myMeals from "./pages/myMeals";
-import myPreferences from "./pages/myPreferences";
-import myOptions from "./pages/myOptions";
-import myGroceries from "./pages/myGroceries";
-import logOutPage from "./pages/logout";
-import status from "./pages/status";
-import accountInfo from "./pages/accountInfo";
+import landing from "./pages/Landing";
+import about from "./pages/About";
+import login from "./pages/Login";
+import myMeals from "./pages/MyMeals";
+import myPreferences from "./pages/MyPreferences";
+import myOptions from "./pages/MyOptions";
+import myGroceries from "./pages/MyGroceries";
+import logOutPage from "./pages/Logout";
+import status from "./pages/Triage";
+import accountInfo from "./pages/AccountInfo";
 import moment from 'moment';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
@@ -18,8 +18,8 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import propTypes from "prop-types";
 
-
 import "./styles/global.scss";
+
 
 
 
@@ -61,9 +61,9 @@ class App extends Component {
         </div>
       );
     }
-
     //else if the `isAuth` is known to be true or false, show the router
     return (
+
       < Router >
         <div className="App">
           <Nav />
@@ -108,7 +108,14 @@ function PrivateRoute({ component: Component, isAuth, ...rest }) {
 
 App.propTypes = {
   setAsAuth: propTypes.func.isRequired,
-  setAsNotAuth: propTypes.func.isRequired
+  setAsNotAuth: propTypes.func.isRequired,
+  location: propTypes.object
+}
+
+PrivateRoute.propTypes = {
+  component: propTypes.object,
+  location: propTypes.object,
+  isAuth: propTypes.bool
 }
 
 function mapStateToProps(state) {

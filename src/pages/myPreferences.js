@@ -10,7 +10,7 @@ import defaultPreferences from "../hard-data/preferences";
 import ProgressBar from "../components/progress-view";
 import AccountPane from "../components/account-pane";
 import ReferPane from "../components/refer-pane";
-import { updateHasPreferences, updateHasOptions } from '../actions/progressActions';
+import { updateHasPreferences, updateHasChosen } from '../actions/progressActions';
 import "../styles/radio-group.scss";
 import "../styles/pages.scss";
 import "../styles/preferences.scss";
@@ -70,7 +70,7 @@ class myPreferences extends Component {
     };
     foHttp("POST", "preferences", params).then(res => {
       this.props.updateHasPreferences(true);
-      this.props.updateHasOptions(false);
+      this.props.updateHasChosen(false);
       this.setState({ redirectToOptions: true })
       this.setState({ submitting: true });
     });
@@ -268,7 +268,7 @@ class myPreferences extends Component {
 myPreferences.propTypes = {
   currentUser: propTypes.object,
   updateHasPreferences: propTypes.func,
-  updateHasOptions: propTypes.func
+  updateHasChosen: propTypes.func
 };
 
 function mapStateToProps(state) {
@@ -278,5 +278,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { updateHasPreferences, updateHasOptions }
+  { updateHasPreferences, updateHasChosen }
 )(myPreferences);
