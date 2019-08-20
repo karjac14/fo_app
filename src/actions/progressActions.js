@@ -1,55 +1,64 @@
 import {
-  UPDATE_HAS_PREFERENCES, UPDATE_HAS_OPTIONS, UPDATE_HAS_CHOSEN
+  UPDATE_HAS_PREFERENCES, UPDATE_HAS_CHOSEN, FETCHING_STATUS, FETCHED_STATUS
 } from "./progressTypes";
+import foHttp from '../helpers/fohttp';
 
 
+export const getStatus = (params) => {
 
+  return dispatch => {
 
+    dispatch({
+      type: FETCHING_STATUS
+    });
 
-// import firebase from 'firebase/app';
-// import 'firebase/auth';
-// import 'firebase/firestore';
+    foHttp("GET", "status", params).then(res => {
 
-
-// var config = {
-//   apiKey: "AIzaSyD3kLueJdPx0Ckt2lCpm8MmGjauWzE8cs8",
-//   authDomain: "fo-db-e5cab.firebaseapp.com",
-//   databaseURL: "https://fo-db-e5cab.firebaseio.com",
-//   projectId: "fo-db-e5cab",
-//   storageBucket: "fo-db-e5cab.appspot.com",
-//   messagingSenderId: "763871220167"
-// };
-// firebase.initializeApp(config);
-
-// var db = firebase.firestore();
-// var usersRef = db.collection("users");
-// var auth = firebase.auth();
-
-
-
-export function updateHasPreferences(val) {
-  return function (dispatch) {
       dispatch({
-                type: UPDATE_HAS_PREFERENCES,
-                payload: val
-              })
+        type: FETCHED_STATUS
+      });
+
+      if (res.success) {
+        if (res.data.hasChosen) {
+          dispatch({
+            type: UPDATE_HAS_CHOSEN,
+            payload: true
+          })
+          dispatch({
+            type: UPDATE_HAS_PREFERENCES,
+            payload: true
+          })
+        } else if (res.data.hasPreferences) {
+          dispatch({
+            type: UPDATE_HAS_PREFERENCES,
+            payload: true
+          })
+        }
+      }
+    })
   };
 }
 
-export function updateHasOptions(val) {
+
+
+export const updateHasPreferences = (val) => {
   return function (dispatch) {
-      dispatch({
-                type: UPDATE_HAS_OPTIONS,
-                payload: val
-              })
+    dispatch({
+      type: UPDATE_HAS_PREFERENCES,
+      payload: val
+    })
   };
 }
 
-export function updateHasChosen(val) {
+export const updateHasChosen = (val) => {
   return function (dispatch) {
-      dispatch({
-                type: UPDATE_HAS_CHOSEN,
-                payload: val
-              })
+    dispatch({
+      type: UPDATE_HAS_CHOSEN,
+      payload: val
+    })
   };
 }
+
+
+
+

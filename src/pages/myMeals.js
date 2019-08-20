@@ -13,7 +13,7 @@ import CalendarIndicator from "../components/calendar-indicator";
 import AccountPane from "../components/account-pane";
 import ReferPane from "../components/refer-pane";
 import RecipePane from "../components/recipe-pane";
-import { updateHasPreferences, updateHasOptions } from '../actions/progressActions';
+import { updateHasPreferences, updateHasChosen } from '../actions/progressActions';
 
 
 
@@ -68,7 +68,7 @@ class myMeals extends Component {
         } else if (res.data.noSuggestions) {
           this.setState({ noSuggestions: true });
         } else {
-          this.props.updateHasOptions(true);
+          this.props.updateHasChosen(true);
           this.props.updateHasPreferences(true);
           this.setState({ meals: res.data.meals });
         }
@@ -231,7 +231,7 @@ class myMeals extends Component {
 
 myMeals.propTypes = {
   currentUser: propTypes.object,
-  updateHasOptions: propTypes.func,
+  updateHasChosen: propTypes.func,
   updateHasPreferences: propTypes.func,
 };
 
@@ -241,4 +241,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, { updateHasOptions, updateHasPreferences })(myMeals);
+export default connect(mapStateToProps, { updateHasChosen, updateHasPreferences })(myMeals);

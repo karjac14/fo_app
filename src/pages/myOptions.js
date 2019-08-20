@@ -11,7 +11,7 @@ import ProgressBar from "../components/progress-view";
 import CalendarIndicator from "../components/calendar-indicator";
 import AccountPane from "../components/account-pane";
 import ReferPane from "../components/refer-pane";
-import { updateHasPreferences, updateHasOptions } from '../actions/progressActions';
+import { updateHasPreferences, updateHasChosen } from '../actions/progressActions';
 
 
 import Icon from "@mdi/react";
@@ -102,8 +102,7 @@ class myOptions extends Component {
 
         foHttp("POST", "suggestions", params).then(() => {
 
-            this.props.updateHasPreferences(true);
-            this.props.updateHasOptions(true);
+            this.props.updateHasChosen(true);
             this.setState({ redirectToMeals: true })
         })
 
@@ -252,7 +251,7 @@ class myOptions extends Component {
 
 myOptions.propTypes = {
     currentUser: propTypes.object,
-    updateHasOptions: propTypes.func,
+    updateHasChosen: propTypes.func,
     updateHasPreferences: propTypes.func,
     proress: propTypes.object
 };
@@ -263,4 +262,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, { updateHasOptions, updateHasPreferences })(myOptions);
+export default connect(mapStateToProps, { updateHasChosen, updateHasPreferences })(myOptions);
