@@ -2,8 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import refer from "../assets/img/refer.jpg";
 
-function ReferPane(props) {
-
+const ReferPane = () => {
 
     return (
         <div className="refer-pane">
@@ -15,7 +14,7 @@ function ReferPane(props) {
                     <div className="col refer-texts">
                         <p className="card-text">Share the love, share Cook Up to your friends!</p>
                         <Link to="/">
-                            <button className="btn btn-primary btn-sm">
+                            <button id="refer-button" className="btn btn-primary btn-sm">
                                 Invite Friends
                             </button>
                         </Link>

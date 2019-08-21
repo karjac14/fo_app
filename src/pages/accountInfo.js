@@ -93,6 +93,7 @@ class accountInfo extends Component {
 
 accountInfo.propTypes = {
     isAuth: propTypes.bool,
+    currentUser: propTypes.object
 };
 
 function mapStateToProps(state) {
