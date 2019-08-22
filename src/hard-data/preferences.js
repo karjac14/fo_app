@@ -3,6 +3,7 @@
 
 export default {
   dietFilters: {
+    name: "diet",
     type: "radio",
     options: [
       {
@@ -55,6 +56,7 @@ export default {
     ]
   },
   moreFilters: {
+    name: "more",
     type: "checkbox",
     options: [
       {
@@ -97,6 +99,7 @@ export default {
     ]
   },
   dishCountFilters: {
+    name: "dishCount",
     type: "radio",
     options: [
       {
@@ -138,6 +141,7 @@ export default {
     ]
   },
   servingsFilters: {
+    name: "servings",
     type: "radio",
     options: [
       {
@@ -161,6 +165,7 @@ export default {
     ]
   },
   timeFilters: {
+    name: "time",
     type: "radio",
     options: [
       {

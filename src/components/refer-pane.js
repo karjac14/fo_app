@@ -5,19 +5,21 @@ import refer from "../assets/img/refer.jpg";
 const ReferPane = () => {
 
     return (
-        <div className="refer-pane">
-            <div className="card">
-                <div className="row no-gutters">
-                    <div className="col">
-                        <img src={refer} alt="" />
-                    </div>
-                    <div className="col refer-texts">
-                        <p className="card-text">Share the love, share Cook Up to your friends!</p>
-                        <Link to="/">
-                            <button id="refer-button" className="btn btn-primary btn-sm">
-                                Invite Friends
+        <div className="panel-left-sub">
+            <div className="refer-pane">
+                <div className="card">
+                    <div className="row no-gutters">
+                        <div className="col">
+                            <img src={refer} alt="" />
+                        </div>
+                        <div className="col refer-texts">
+                            <p className="card-text">Share the love, share Cook Up to your friends!</p>
+                            <Link to="/">
+                                <button id="refer-button" className="btn btn-primary btn-sm">
+                                    Invite Friends
                             </button>
-                        </Link>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
