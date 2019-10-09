@@ -8,6 +8,8 @@ export const getStatus = (params) => {
 
   return dispatch => {
 
+
+
     dispatch({
       type: FETCHING_STATUS
     });
@@ -32,6 +34,15 @@ export const getStatus = (params) => {
           dispatch({
             type: UPDATE_HAS_PREFERENCES,
             payload: true
+          })
+        } else {
+          dispatch({
+            type: UPDATE_HAS_CHOSEN,
+            payload: false
+          })
+          dispatch({
+            type: UPDATE_HAS_PREFERENCES,
+            payload: false
           })
         }
       }
